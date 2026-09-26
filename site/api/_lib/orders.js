@@ -1,104 +1,78 @@
-/**
- * Pedidos de coins — gravados no banco do jogo (`historico_pagamentos`)
- * e creditados em `accounts.pontos`, que é o saldo que o cliente do
- * Pokeworld lê. Sem banco paralelo: o pagamento cai direto no jogo.
- *
- * Semântica das colunas (a tabela já existia no schema do servidor):
- *   payment_id   id da order do Mercado Pago (ORD...)
- *   tipo         'mercadopago'
- *   account_id   conta que comprou
- *   currency     'BRL'
- *   valor        coins creditados (já com o bônus)
- *   id_pacote    número do pacote do catálogo (packages.js, campo num: 901 a 906)
- *   promocional_id % de desconto do cupom usado (0 = sem cupom)
- *   status       0 pendente · 1 pago
- *   entregue     0 não creditado · 1 creditado  <- trava de idempotência
- */
+import { randomUUID } from 'node:crypto';
 import { q, one, run, tx } from './gamedb.js';
-import { PACKAGES, packageIdFromNum, CUSTOM_NUM } from './packages.js';
+import { cents, validatePayment } from './payment-validation.js';
 
-/** Cria o pedido local ANTES de chamar o Mercado Pago, com status pendente. */
-export async function createLocalOrder({ userId, packageId, amount, coins, cupomPct = 0 }) {
-  const num = packageId === 'custom' ? CUSTOM_NUM : (PACKAGES[packageId] ? PACKAGES[packageId].num : null);
-  if (!num) throw new Error(`Pacote inexistente: ${packageId}`);
-  const r = await run(
-    `INSERT INTO historico_pagamentos
-       (payment_id, tipo, account_id, player_id, currency, valor, id_pacote, multiplicador, promocional_id, status, entregue, date_created)
-     VALUES ('', 'mercadopago', ?, 0, 'BRL', ?, ?, 1.0, ?, 0, 0, NOW())`,
-    [userId, coins, num, Math.max(0, Math.min(90, Math.round(Number(cupomPct) || 0)))]
-  );
-  return { id: r.insertId, package_id: packageId, amount, coins, status: 'pending' };
-}
-
-/** Guarda o id da order do Mercado Pago (ORD...) no pedido local. */
-export async function attachMpOrderId(localOrderId, mpOrderId) {
-  await run('UPDATE historico_pagamentos SET payment_id = ? WHERE id = ?', [String(mpOrderId), localOrderId]);
-}
-
-export async function findOrderByMpId(mpOrderId) {
-  const r = await one(
-    'SELECT id, account_id, valor, id_pacote, promocional_id, status, entregue FROM historico_pagamentos WHERE payment_id = ? LIMIT 1',
-    [String(mpOrderId)]
-  );
+const columns = 'id, account_id, valor, tipo, currency, payment_id, pwu_package_id, pwu_amount_cents, pwu_reference, pwu_credit_unit, entregue';
+function model(r) {
   if (!r) return null;
-  return {
-    id: r.id,
-    account_id: r.account_id,
-    coins: Number(r.valor || 0),
-    package_id: packageIdFromNum(r.id_pacote) || '',
-    // fração do preço que devia ser paga (cupom de 10% -> 0.9)
-    fator: (100 - Math.max(0, Math.min(90, Number(r.promocional_id) || 0))) / 100,
-    status: Number(r.entregue) === 1 ? 'paid' : 'pending'
-  };
+  return { id: r.id, account_id: r.account_id, credit_unit: r.pwu_credit_unit, coins: Number(r.valor), provider: r.tipo,
+    currency: r.currency, payment_id: r.payment_id, package_id: r.pwu_package_id,
+    amount_cents: Number(r.pwu_amount_cents), reference: r.pwu_reference,
+    status: Number(r.entregue) === 1 ? 'paid' : 'pending' };
 }
 
-/**
- * Marca como pago e credita os coins — NA MESMA TRANSAÇÃO.
- *
- * A trava é o `WHERE entregue = 0`: se não afetar nenhuma linha, outro webhook
- * já creditou. É isso que torna seguro o reenvio do Mercado Pago (a cada 15 min
- * até receber 200) e dois webhooks simultâneos.
- */
-export async function markPaidAndCredit(localOrderId, { mpPaymentId }) {
-  return tx(async (conn) => {
-    const [upd] = await conn.execute(
-      'UPDATE historico_pagamentos SET status = 1, entregue = 1 WHERE id = ? AND entregue = 0',
-      [localOrderId]
-    );
-    if (!upd.affectedRows) return false;               // já creditado por outro webhook
+export async function createLocalOrder({ userId, packageId, amount, coins, provider }) {
+  if (!Number.isSafeInteger(userId) || userId <= 0) throw new Error('invalid-account');
+  if (!['mercadopago', 'stripe'].includes(provider) || !Number.isSafeInteger(coins) || coins <= 0) throw new Error('invalid-order');
+  const amountCents = cents(amount);
+  const reference = randomUUID();
+  // The game's numeric id_pacote is preserved. The website slug has its own column.
+  const r = await run(`INSERT INTO historico_pagamentos
+    (payment_id, tipo, account_id, player_id, currency, valor, id_pacote, multiplicador, promocional_id, status, entregue, date_created,
+     pwu_package_id, pwu_amount_cents, pwu_reference, pwu_credit_unit)
+    VALUES ('', ?, ?, NULL, 'BRL', ?, NULL, 1.0, 0, 0, 0, NOW(), ?, ?, ?, 'account_diamond_points')`,
+    [provider, userId, coins, packageId, amountCents, reference]);
+  return { id: r.insertId, reference, package_id: packageId, amount, coins, status: 'pending' };
+}
 
-    const [rows] = await conn.execute(
-      'SELECT account_id, valor FROM historico_pagamentos WHERE id = ? LIMIT 1',
-      [localOrderId]
-    );
-    const p = rows[0];
-    if (!p) return false;
+export async function attachMpOrderId(localOrderId, paymentId, provider) {
+  if (typeof paymentId !== 'string' || !paymentId || paymentId.length > 250) throw new Error('invalid-provider-id');
+  return tx(async conn => {
+    const [rows] = await conn.execute(`SELECT ${columns} FROM historico_pagamentos WHERE id = ? FOR UPDATE`, [localOrderId]);
+    const local = model(rows[0]);
+    if (!local || local.provider !== provider || (local.payment_id && local.payment_id !== paymentId)) throw new Error('payment-binding-mismatch');
+    await conn.execute('UPDATE historico_pagamentos SET payment_id = ? WHERE id = ?', [paymentId, localOrderId]);
+  });
+}
 
-    await conn.execute('UPDATE accounts SET pontos = pontos + ? WHERE id = ?', [Number(p.valor || 0), p.account_id]);
-    if (mpPaymentId) {
-      await conn.execute('UPDATE historico_pagamentos SET qrcode = ? WHERE id = ?', [String(mpPaymentId).slice(0, 250), localOrderId]);
-    }
+// The reference must come from a verified webhook or authenticated provider response.
+// UUID recovers notifications arriving before the checkout handler saves payment_id.
+export async function findOrderByMpId(paymentId, provider, reference) {
+  if (typeof reference !== 'string' || !reference) return null;
+  const local = model(await one(`SELECT ${columns} FROM historico_pagamentos
+    WHERE tipo = ? AND pwu_reference = ? LIMIT 1`, [provider, reference]));
+  if (local?.payment_id && local.payment_id !== paymentId) throw new Error('payment-binding-mismatch');
+  return local;
+}
+
+export async function markPaidAndCredit(localOrderId, payment) {
+  return tx(async conn => {
+    const [rows] = await conn.execute(`SELECT ${columns} FROM historico_pagamentos WHERE id = ? FOR UPDATE`, [localOrderId]);
+    const local = model(rows[0]);
+    validatePayment(local, payment);
+    if (local.status === 'paid') return false;
+    // Old orders are never reinterpreted as purchases of the new currency.
+    if (local.credit_unit !== 'account_diamond_points') throw new Error('payment-credit-unit-manual-review');
+    const [credited] = await conn.execute('UPDATE accounts SET diamond_points = diamond_points + ? WHERE id = ? AND diamond_points <= 2147483647 - ?', [local.coins, local.account_id, local.coins]);
+    if (credited.affectedRows !== 1) throw new Error('payment-account-not-credited');
+    const [delivered] = await conn.execute(`UPDATE historico_pagamentos
+      SET payment_id = ?, status = 1, entregue = 1, qrcode = ? WHERE id = ? AND entregue = 0`,
+      [payment.id, String(payment.mpPaymentId || payment.id).slice(0, 250), localOrderId]);
+    if (delivered.affectedRows !== 1) throw new Error('payment-delivery-not-recorded');
     return true;
   });
 }
 
-/** Log cru do que o Mercado Pago mandou. Nunca derruba o webhook. */
-export async function logWebhookEvent({ mpOrderId, action, payload }) {
+export async function logWebhookEvent({ mpOrderId, action }) {
   try {
-    await run(
-      `INSERT INTO historico_mp (payment_id, account_id, valor, multiplicador, promocional_id, status, date_created, create_admin_id)
-       VALUES (?, 0, 0, 1, 0, 0, CURDATE(), 0)`,
-      [String(mpOrderId || action || '').slice(0, 250)]
-    );
-  } catch (e) { console.warn('[webhook] não consegui gravar o log', e.message); }
+    await run(`INSERT INTO historico_mp (payment_id, account_id, valor, multiplicador, promocional_id, status, date_created, create_admin_id)
+      VALUES (?, 0, 0, 1, 0, 0, CURDATE(), 0)`, [String(mpOrderId || action || '').slice(0, 250)]);
+  } catch { console.warn('[webhook] log indisponível'); }
 }
 
-/** Últimas compras da conta, para mostrar em Minha Conta. */
 export async function listOrders(accountId, limit = 10) {
-  return q(
-    `SELECT id, payment_id, valor, id_pacote, status, entregue, date_created
-       FROM historico_pagamentos WHERE account_id = ? AND tipo = 'mercadopago'
-      ORDER BY id DESC LIMIT ${Number(limit)}`,
-    [accountId]
-  );
+  const n = Math.max(1, Math.min(100, Number.isSafeInteger(limit) ? limit : 10));
+  return q(`SELECT id, payment_id, valor, COALESCE(pwu_package_id, CAST(id_pacote AS CHAR)) AS id_pacote,
+    tipo, status, entregue, date_created FROM historico_pagamentos
+    WHERE account_id = ? AND tipo IN ('mercadopago', 'stripe') ORDER BY id DESC LIMIT ${n}`, [accountId]);
 }

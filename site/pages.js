@@ -11,6 +11,13 @@
   if (G) G.registerPlugin(ScrollTrigger);
 
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function imageUrl(value) {
+    try {
+      var url = new URL(String(value || ''), location.href);
+      if (url.protocol !== 'https:' || url.username || url.password) return '';
+      return esc(url.href);
+    } catch (_) { return ''; }
+  }
   function renderBody(lines) {
     var out = '', list = [];
     function flush() { if (list.length) { out += '<ul>' + list.map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ul>'; list = []; } }
@@ -28,25 +35,43 @@
   function DEX() { return (window.PWU && PWU.store) ? PWU.store.pokemon() : (PWU.pokedex || []); }
   function whenReady(fn) { if (window.PWU && PWU.store) PWU.store.ready.then(fn); else fn(); }
   function qs(k) { return new URLSearchParams(location.search).get(k); }
+  var pixRequestPayers = new WeakMap();
+  function validCpf(value) {
+    var cpf = String(value || '').replace(/\D/g, '');
+    if (!/^\d{11}$/.test(cpf) || /^(\d)\1{10}$/.test(cpf)) return false;
+    for (var length = 9; length <= 10; length++) {
+      var sum = 0;
+      for (var i = 0; i < length; i++) sum += Number(cpf[i]) * (length + 1 - i);
+      if ((sum * 10 % 11) % 10 !== Number(cpf[length])) return false;
+    }
+    return true;
+  }
 
   /* Pagamento (Mercado Pago, API de Orders): o site manda SÓ o id do pacote;
      o servidor define preço e coins, cria a order e devolve o checkout_url. */
-  function pay(packageId, btn, provedor, cupom, amount) {
+  function pay(packageId, btn, provedor, cupom, amount, onError, cpf) {
+    if (['stripe','mercadopago'].indexOf(provedor)<0) { PWU.toast('Meio de pagamento indisponível.'); return; }
+    var requestShape = JSON.stringify([provedor,packageId,cupom||'',amount||null]);
+    if (provedor === 'mercadopago' && btn && pixRequestPayers.get(btn) !== cpf) { delete btn.dataset.requestShape; pixRequestPayers.set(btn, cpf); }
+    if (btn && btn.dataset.requestShape !== requestShape) { btn.dataset.requestId = crypto.randomUUID(); btn.dataset.requestShape = requestShape; }
+    var requestId = btn ? btn.dataset.requestId : crypto.randomUUID();
     var conteudo = btn ? btn.innerHTML : '';
     var rota = provedor === 'stripe' ? '/api/stripe-checkout' : '/api/checkout';
-    var nome = provedor === 'stripe' ? 'Stripe' : 'Mercado Pago';
-    function fail(msg) { PWU.toast(msg); if (btn) { btn.disabled = false; btn.classList.remove('is-indo'); btn.innerHTML = conteudo; } }
+    var nome = provedor === 'stripe' ? 'Stripe' : 'Pix';
+    function fail(msg) { if (onError) onError(msg); else PWU.toast(msg); if (btn) { btn.disabled = false; btn.classList.remove('is-indo'); btn.innerHTML = conteudo; } }
     if (btn) { btn.disabled = true; btn.classList.add('is-indo'); btn.innerHTML = '<span class="pay-way__head"><b>Abrindo ' + nome + '…</b></span>'; }
     return PWU.auth.token().then(function (token) {
       if (!token) throw new Error('Pagamentos exigem a conta conectada ao servidor. Entre novamente.');
-      return fetch(rota, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token }, body: JSON.stringify(Object.assign({ packageId: packageId }, cupom ? { coupon: cupom } : {}, amount ? { amount: amount } : {})) });
+      return fetch(rota, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token }, body: JSON.stringify(Object.assign({ packageId: packageId, requestId: requestId }, cupom ? { coupon: cupom } : {}, amount ? { amount: amount } : {}, provedor === 'mercadopago' && cpf ? { cpf: cpf } : {})) });
     }).then(function (r) {
       return r.json().catch(function () { return {}; }).then(function (d) {
         if (r.status === 401) throw new Error('Sua sessão expirou. Entre novamente.');
-        if (r.status === 503) throw new Error('Pagamento ainda não configurado no servidor.');
-        if (r.status === 400 && d.error) throw new Error(d.error);
+        if (r.status === 503) throw new Error(d.error || 'Pagamento temporariamente indisponível.');
+        if ([400,409,429].indexOf(r.status)>-1 && d.error) throw new Error(d.error);
         if (!r.ok || !d.checkoutUrl) throw new Error('Não foi possível iniciar o pagamento.');
-        location.href = d.checkoutUrl;   // redirect pro checkout do Mercado Pago
+        var target = new URL(d.checkoutUrl);
+        if (target.protocol !== 'https:' || (provedor === 'stripe' ? target.hostname !== 'checkout.stripe.com' : (target.hostname !== 'www.mercadopago.com.br' || !/^\/payments\/[0-9]+\/ticket$/.test(target.pathname))) || target.username || target.password || target.port) throw new Error('Endereço de pagamento inválido.');
+        location.href = target.href;
       });
     }).catch(function (e) { fail(e.message === 'Failed to fetch' ? 'Pagamento indisponível neste ambiente.' : e.message); });
   }
@@ -131,7 +156,7 @@
     var track = document.querySelector('.pk-marquee__track');
     if (track && window.PWU) whenReady(function () {
       var list = DEX().slice(0, 28);
-      var html = list.map(function (p) { return '<a href="wiki.html?p=' + p.id + '" title="' + esc(p.name) + '"><img src="' + p.image + '" alt="' + esc(p.name) + '" loading="lazy"></a>'; }).join('');
+      var html = list.map(function (p) { return '<a href="wiki.html?p=' + esc(p.id) + '" title="' + esc(p.name) + '"><img src="' + imageUrl(p.image) + '" alt="' + esc(p.name) + '" loading="lazy"></a>'; }).join('');
       track.innerHTML = html + html;
     });
     var counters = document.querySelectorAll('.stat-box [data-count], .geracoes [data-count]');
@@ -146,18 +171,14 @@
   }
 
   /* =====================================================================
-     DOWNLOAD — links vindos do banco do jogo
+     DOWNLOAD — instalador oficial Windows, independente de login e banco
      ===================================================================== */
   if (page === 'download') {
-    fetch('/api/game?resource=links').then(function (r) { return r.ok ? r.json() : null; }).then(function (l) {
-      if (!l) return;
-      var mapa = { 'dl-pc': l.pc, 'dl-android': l.mobile64 || l.mobile32 };
-      Object.keys(mapa).forEach(function (id) {
-        var el = document.getElementById(id); if (!el) return;
-        if (mapa[id]) { el.href = mapa[id]; el.removeAttribute('data-require-auth'); el.setAttribute('target', '_blank'); el.setAttribute('rel', 'noopener'); }
-      });
-      if (l.discord) document.querySelectorAll('a[href*="discord.gg"]').forEach(function (a) { a.href = l.discord; });
-    }).catch(function () {});
+    var downloadPC = document.getElementById('dl-pc');
+    if (downloadPC) {
+      downloadPC.href = 'https://www.pokeworlduniverse.com/downloads/PokeWorldUniverse.exe';
+      downloadPC.removeAttribute('data-require-auth');
+    }
   }
 
   /* =====================================================================
@@ -165,10 +186,10 @@
      ===================================================================== */
   function newsCard(n) {
     return '<article class="ncard" data-reveal>' +
-      '<a class="ncard__img" href="noticia.html?id=' + n.slug + '"><img src="' + n.image + '" alt="" loading="lazy"></a>' +
+      '<a class="ncard__img" href="noticia.html?id=' + encodeURIComponent(n.slug) + '"><img src="' + imageUrl(n.image) + '" alt="" loading="lazy"></a>' +
       '<div class="ncard__body"><div class="news-meta"><span class="tag">' + esc(n.tag) + '</span><span>' + PWU.fmtDate(n.date) + '</span></div>' +
-      '<h3><a href="noticia.html?id=' + n.slug + '">' + esc(n.title) + '</a></h3><p>' + esc(n.excerpt) + '</p>' +
-      '<a class="more" href="noticia.html?id=' + n.slug + '">Saiba mais</a></div></article>';
+      '<h3><a href="noticia.html?id=' + encodeURIComponent(n.slug) + '">' + esc(n.title) + '</a></h3><p>' + esc(n.excerpt) + '</p>' +
+      '<a class="more" href="noticia.html?id=' + encodeURIComponent(n.slug) + '">Saiba mais</a></div></article>';
   }
   if (page === 'noticias' && window.PWU) whenReady(function () {
     var grid = document.getElementById('news-grid'), feat = document.getElementById('news-featured');
@@ -177,8 +198,8 @@
       var list = NEWS().filter(function (n) { return filter === 'todas' || n.tag === filter; });
       var first = list[0];
       if (feat) {
-        feat.innerHTML = first ? '<img src="' + first.image + '" alt=""><div class="news-featured__body"><div class="news-meta"><span class="tag">' + esc(first.tag) + '</span><span>' + PWU.fmtDate(first.date) + '</span></div>' +
-          '<h2>' + esc(first.title) + '</h2><p>' + esc(first.excerpt) + '</p><div class="btn-row" style="margin-top:2.4rem"><a class="btn btn--yellow btn--sm" href="noticia.html?id=' + first.slug + '">Ler notícia</a></div></div>' : '';
+        feat.innerHTML = first ? '<img src="' + imageUrl(first.image) + '" alt=""><div class="news-featured__body"><div class="news-meta"><span class="tag">' + esc(first.tag) + '</span><span>' + PWU.fmtDate(first.date) + '</span></div>' +
+          '<h2>' + esc(first.title) + '</h2><p>' + esc(first.excerpt) + '</p><div class="btn-row" style="margin-top:2.4rem"><a class="btn btn--yellow btn--sm" href="noticia.html?id=' + encodeURIComponent(first.slug) + '">Ler notícia</a></div></div>' : '';
       }
       grid.innerHTML = list.slice(1).map(newsCard).join('') || '<p class="empty">Nenhuma notícia nesta categoria.</p>';
       reveal(grid);
@@ -202,7 +223,7 @@
     if (!n) return;
     document.title = n.title + ' — Pokeworld Universe';
     var el = document.getElementById('article');
-    el.innerHTML = '<div class="article__hero"><img src="' + n.image + '" alt=""></div>' +
+    el.innerHTML = '<div class="article__hero"><img src="' + imageUrl(n.image) + '" alt=""></div>' +
       '<h1>' + esc(n.title) + '</h1>' +
       '<div class="news-meta"><span class="tag">' + esc(n.tag) + '</span><span>' + PWU.fmtDate(n.date) + '</span><span>·</span><span>' + Math.max(2, Math.round(n.body.join(' ').length / 900)) + ' min de leitura</span></div>' +
       '<div class="article__body">' + renderBody(n.body) + '</div>' +
@@ -231,24 +252,24 @@
     var vivo = {};      // cache do que veio do banco do jogo
     function fmt(v) { return Number(v || 0).toLocaleString('pt-BR'); }
 
-    /* Busca no banco do jogo; se não estiver configurado, usa os dados de exemplo. */
+    /* Apenas dados reais; falhas não são substituídas por rankings fictícios. */
     function carregar(cat) {
       if (vivo[cat]) return Promise.resolve(vivo[cat]);
       return fetch('/api/game?resource=ranking&cat=' + encodeURIComponent(cat))
         .then(function (r) { if (!r.ok) throw new Error('offline'); return r.json(); })
         .then(function (d) { vivo[cat] = d; return d; })
-        .catch(function () { return null; });
+        .catch(function () { var d = { rows: [], unavailable: true }; vivo[cat] = d; return d; });
     }
 
     function linhas(cat, d) {
       if (d && d.rows && d.rows.length) return d.rows;
       if (d && d.rows && !d.rows.length) return [];
-      return (R[cat] || []).map(function (p, i) { return { pos: i + 1, name: p.name, value: p.value, guild: p.guild, members: p.members, team: (p.team || []).map(function (t) { return { name: t.id, level: t.lvl, pct: t.pct }; }) }; });
+      return [];
     }
 
     function renderCats() {
       catsEl.innerHTML = cats.map(function (c) {
-        var d = vivo[c.id], top = (d && d.rows && d.rows[0]) || (R[c.id] && R[c.id][0]);
+        var d = vivo[c.id], top = d && d.rows && d.rows[0];
         return '<button type="button" class="rank-cat' + (c.id === current ? ' is-active' : '') + '" data-cat="' + c.id + '"><small>' + esc(c.label) + '</small><b>' + (top ? esc(top.name) + ' · <em>' + fmt(top.value) + '</em>' : '—') + '</b></button>';
       }).join('');
     }
@@ -257,7 +278,11 @@
     function renderList() {
       var cat = cats.find(function (c) { return c.id === current; });
       var d = vivo[current];
-      descEl.textContent = cat.desc + (d ? '' : ' (dados de exemplo — conecte o banco do jogo)');
+      descEl.textContent = cat.desc;
+      if (!d || d.unavailable) {
+        listEl.innerHTML = '<p class="rank-empty">' + (!d ? 'Carregando ranking...' : 'Ranking indisponível nesta prévia. Tente novamente mais tarde.') + '</p>';
+        return;
+      }
       var q = (search.value || '').toLowerCase();
       var list = linhas(current, d).filter(function (p) { return p.name.toLowerCase().indexOf(q) > -1 || (p.guild || '').toLowerCase().indexOf(q) > -1; });
 
@@ -272,14 +297,14 @@
         for (var k = 0; k < 6; k++) {
           var m = p.team && p.team[k];
           var id = m ? String(m.name || '').toLowerCase().replace(/\s+/g, '-') : null;
-          slots.push(m ? '<div class="slot"><span class="slot__ini" aria-hidden="true">' + esc(String(m.name || '?').charAt(0).toUpperCase()) + '</span><span class="slot__lvl">LVL <b>' + (m.level || 0) + '</b></span><div class="bar"><i data-w="' + (m.pct != null ? m.pct : Math.min(100, (m.level || 0))) + '"></i></div><span class="slot__pct">' + String(m.name).replace(/^./, function (c) { return c.toUpperCase(); }) + '</span></div>'
+          slots.push(m ? '<div class="slot"><span class="slot__ini" aria-hidden="true">' + esc(String(m.name || '?').charAt(0).toUpperCase()) + '</span><span class="slot__lvl">LVL <b>' + (m.level || 0) + '</b></span><div class="bar"><i data-w="' + (m.pct != null ? m.pct : Math.min(100, (m.level || 0))) + '"></i></div><span class="slot__pct">' + esc(String(m.name).replace(/^./, function (c) { return c.toUpperCase(); })) + '</span></div>'
             : '<div class="slot slot--empty"><span class="slot__ini" aria-hidden="true">—</span><span class="slot__lvl">LVL <b>0</b></span><div class="bar"><i></i></div><span class="slot__pct">—</span></div>');
         }
         var you = me && p.name.toLowerCase() === (me.name || '').toLowerCase();
         var sub = current === 'guildas' ? esc(p.guild || '') + (p.members ? ' · ' + p.members + ' membros' : '') : esc(p.guild || 'Sem guilda') + (p.level ? ' · nível ' + p.level : '');
         return '<article class="rank-card' + (p.pos <= 3 ? ' rank-card--top' : '') + (you ? ' you' : '') + '" data-reveal>' +
           '<div class="rank-card__head">' +
-            '<div class="rank-card__pos' + (trophy ? '' : ' rank-card__pos--plain') + '">' + (trophy ? '<img src="' + trophy + '" alt="">' : '') + '<b>' + p.pos + '</b></div>' +
+            '<div class="rank-card__pos' + (trophy ? '' : ' rank-card__pos--plain') + '">' + (trophy ? '<img src="' + trophy + '" alt="">' : '') + '<b>' + esc(p.pos) + '</b></div>' +
             '<div class="rank-card__name"><b>' + esc(p.name) + '</b><small>' + sub + '</small></div>' +
             '<div class="rank-card__value"><b>' + fmt(p.value) + '</b><small>' + esc((d && d.unit) || cat.unit) + '</small></div>' +
           '</div><div class="rank-team">' + slots.join('') + '</div></article>';
@@ -335,7 +360,7 @@
       var list = PWU.shop.filter(function (i) { return filter === 'todos' || i.type === filter; });
       grid2.innerHTML = list.map(function (it) {
         return '<div class="item" data-reveal>' + (it.badge ? '<span class="item__badge">' + esc(it.badge) + '</span>' : '') +
-          '<div class="item__img"><img src="' + it.image + '" alt="" loading="lazy"></div><h3>' + esc(it.name) + '</h3><p>' + esc(it.desc) + '</p>' +
+          '<div class="item__img"><img src="' + imageUrl(it.image) + '" alt="" loading="lazy"></div><h3>' + esc(it.name) + '</h3><p>' + esc(it.desc) + '</p>' +
           '<div class="item__price">' + price(it) + '</div><button class="btn btn--yellow btn--sm" data-require-auth data-add="' + it.id + '">Comprar</button></div>';
       }).join('');
       reveal(grid2);
@@ -360,7 +385,7 @@
       var c = readCart(), items = c.map(function (id) { return PWU.shop.find(function (i) { return i.id === id; }); }).filter(Boolean);
       fab.querySelector('b').textContent = items.length;
       var list = cart.querySelector('.cart__list');
-      list.innerHTML = items.map(function (it, i) { return '<div class="cart__item"><img src="' + it.image + '" alt=""><div>' + esc(it.name) + '<small>' + (it.price ? PWU.brl(it.price) : it.gems ? it.gems + ' gemas' : it.coins + ' créditos') + '</small></div><button type="button" data-rm="' + i + '" aria-label="Remover">×</button></div>'; }).join('') || '<p class="empty">Seu carrinho está vazio.</p>';
+      list.innerHTML = items.map(function (it, i) { return '<div class="cart__item"><img src="' + imageUrl(it.image) + '" alt=""><div>' + esc(it.name) + '<small>' + (it.price ? PWU.brl(it.price) : it.gems ? it.gems + ' gemas' : it.coins + ' créditos') + '</small></div><button type="button" data-rm="' + i + '" aria-label="Remover">×</button></div>'; }).join('') || '<p class="empty">Seu carrinho está vazio.</p>';
       var total = items.reduce(function (s, it) { return s + (it.price || 0); }, 0), gems = items.reduce(function (s, it) { return s + (it.gems || 0); }, 0);
       cart.querySelector('.cart__total b').textContent = (total ? PWU.brl(total) : '') + (gems ? (total ? ' + ' : '') + gems + ' gemas' : '') || 'R$ 0,00';
     }
@@ -370,7 +395,7 @@
       var rm = e.target.closest('[data-rm]'); if (rm) { var c = readCart(); c.splice(+rm.dataset.rm, 1); writeCart(c); }
       if (e.target.closest('[data-checkout]')) {
         if (!readCart().length) return PWU.toast('Seu carrinho está vazio.');
-        PWU.toast('As compras usam créditos. Vamos te levar para comprar créditos.');
+        PWU.toast('As compras usam Diamond Points. Vamos te levar para comprar Diamond Points.');
         setTimeout(function () { location.href = 'minha-conta.html#coins'; }, 1200);
       }
     });
@@ -408,7 +433,7 @@
       var term = (q.value || '').toLowerCase();
       var list = DEX().filter(function (p) { return (role === 'todos' || p.role === role) && p.name.toLowerCase().indexOf(term) > -1; });
       dex.innerHTML = list.map(function (p) {
-        return '<div class="dex" data-id="' + p.id + '" style="--role:' + PWU.roles[p.role].color + '"><img src="' + p.image + '" alt="" loading="lazy"><h3>' + esc(p.name) + '</h3><span>' + PWU.roles[p.role].label + '</span></div>';
+        return '<div class="dex" data-id="' + esc(p.id) + '" style="--role:' + PWU.roles[p.role].color + '"><img src="' + imageUrl(p.image) + '" alt="" loading="lazy"><h3>' + esc(p.name) + '</h3><span>' + PWU.roles[p.role].label + '</span></div>';
       }).join('') || '<p class="empty">Nenhum Pokémon encontrado.</p>';
       document.getElementById('dex-count').textContent = list.length;
       if (G) G.fromTo(dex.children, { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .45, stagger: .025, ease: 'power2.out', overwrite: true });
@@ -421,7 +446,7 @@
       var p = DEX().find(function (x) { return x.id === id; }); if (!p) return;
       var stats = [['Ataque', p.stats.ataque], ['Defesa', p.stats.defesa], ['Resistência', p.stats.resistencia], ['Suporte', p.stats.suporte], ['Mobilidade', p.stats.mobilidade]];
       modal.querySelector('.dex-modal__card').innerHTML = '<button class="close" type="button" data-close>×</button>' +
-        '<div class="dex-modal__img"><img src="' + p.image + '" alt=""></div><div>' +
+        '<div class="dex-modal__img"><img src="' + imageUrl(p.image) + '" alt=""></div><div>' +
         '<h2>' + esc(p.name) + '</h2>' + (p.description ? '<p class="dex-modal__desc">' + esc(p.description) + '</p>' : '') + '<div class="meta"><span style="background:' + PWU.roles[p.role].color + ';color:#000">' + PWU.roles[p.role].label + '</span><span>' + (p.range === 'melee' ? 'Curto alcance' : 'Longo alcance') + '</span><span>Dificuldade <i class="stars">' + '★'.repeat(p.difficulty) + '☆'.repeat(5 - p.difficulty) + '</i></span></div>' +
         stats.map(function (s) { return '<div class="statbar"><span>' + s[0] + '</span><div class="bar"><i data-w="' + s[1] + '"></i></div><b>' + s[1] + '</b></div>'; }).join('') +
         '<div class="btn-row" style="margin-top:2.4rem"><a class="btn btn--yellow btn--sm" href="loja.html">Ver na loja</a><a class="btn btn--ghost btn--sm" href="o-jogo.html">Como jogar</a></div></div>';
@@ -465,14 +490,14 @@
       document.getElementById('acc-name').value = shown.name ? (jogo ? jogo.name : u.name) : ' *  *  *  *  *';
       document.getElementById('acc-email').value = shown.email ? (jogo ? jogo.email : u.email) : ' *  *  *  *  *';
       var av = document.getElementById('acc-avatar');
-      if (av) av.src = (PWU.avatarUrl ? PWU.avatarUrl(u) : 'assets/logo-sigla.png');
-      document.getElementById('acc-diamonds').textContent = (pr.diamonds || 0).toLocaleString('pt-BR');
+      if (av) av.src = (PWU.avatarUrl ? PWU.avatarUrl(u) : 'assets/img/pokemon/pikachu.png');
+      document.getElementById('acc-diamonds').textContent = jogo && Number.isSafeInteger(jogo.diamondPoints) ? jogo.diamondPoints.toLocaleString('pt-BR') : 'Indisponível';
       document.getElementById('acc-plan').textContent = pr.plan || 'Conta Grátis';
       var tw = document.querySelector('[data-acc="twitch"]'); if (tw) tw.textContent = pr.twitch ? 'Twitch: ' + pr.twitch : 'Vincular Twitch';
       document.getElementById('acc-tcount').textContent = '(' + pr.trainers.length + ')';
       document.getElementById('acc-trainers').innerHTML = pr.trainers.map(function (t, i) {
         return '<div class="trainer">' + (jogo ? '' : '<button class="rm" type="button" data-rm-trainer="' + i + '" aria-label="Excluir">×</button>') +
-          '<img src="assets/img/art/player-girl.png?v=3" alt=""><h5>' + esc(t.name) + '</h5><span class="lvl">Nível ' + t.level + '</span><span class="world">' + esc(t.world) + '</span></div>';
+          '<img src="assets/img/art/player-girl.png?v=3" alt=""><h5>' + esc(t.name) + '</h5><span class="lvl">Nível ' + esc(t.level) + '</span><span class="world">' + esc(t.world) + '</span></div>';
       }).join('') || '<div class="trainers__empty">' + (jogo ? 'Sua conta ainda não tem treinadores.<br>Baixe o cliente, entre no jogo e crie o primeiro.' : 'Você ainda não tem treinadores.<br>Crie o primeiro aqui ou baixe o cliente e comece sua jornada.') + '</div>';
       if (G) G.fromTo('#acc-trainers .trainer', { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .4, stagger: .06, ease: 'power2.out', overwrite: true });
     }
@@ -491,7 +516,7 @@
         openP('<h3>Tickets</h3><p class="sub">Abra um chamado para a equipe. Respondemos pelo e-mail da sua conta.</p>' +
           '<form id="f-ticket" novalidate><label class="field"><span>Assunto</span><select name="subject"><option>Problema com a conta</option><option>Pagamento ou doação</option><option>Bug no jogo</option><option>Denúncia</option><option>Outro</option></select></label>' +
           '<label class="field"><span>Mensagem</span><textarea name="message" rows="5" placeholder="Descreva o que aconteceu"></textarea></label><p class="auth__error" hidden></p><button class="auth__submit" type="submit"><span>Enviar ticket</span></button></form>' +
-          '<div class="ticket-list">' + (pr.tickets.length ? pr.tickets.slice().reverse().map(function (t) { return '<div class="ticket"><b>#' + t.id + ' · ' + esc(t.subject) + '</b><small>' + new Date(t.at).toLocaleString('pt-BR') + ' · Aberto</small></div>'; }).join('') : '') + '</div>');
+          '<div class="ticket-list">' + (pr.tickets.length ? pr.tickets.slice().reverse().map(function (t) { return '<div class="ticket"><b>#' + esc(t.id) + ' · ' + esc(t.subject) + '</b><small>' + new Date(t.at).toLocaleString('pt-BR') + ' · Aberto</small></div>'; }).join('') : '') + '</div>');
         document.getElementById('f-ticket').addEventListener('submit', function (ev) {
           ev.preventDefault(); var f = ev.currentTarget, msg = f.message.value.trim();
           if (msg.length < 10) return perr('Escreva pelo menos 10 caracteres.');
@@ -509,7 +534,7 @@
         var opcoes = (PWU.avatares || []).map(function (x) { return { url: x.image, nome: x.name }; });
         var atual = PWU.avatarUrl ? PWU.avatarUrl(PWU.auth.user) : '';
         openP('<h3>Foto de perfil</h3><p class="sub">Escolha um parceiro para representar você no site, ou informe o endereço de uma imagem.</p>' +
-          '<div class="avatar-grid">' + opcoes.map(function (o) { return '<button type="button" data-av="' + o.url + '" class="' + (o.url === atual ? 'is-active' : '') + '" title="' + esc(o.nome) + '"><img src="' + o.url + '" alt=""></button>'; }).join('') + '</div>' +
+          '<div class="avatar-grid">' + opcoes.map(function (o) { return '<button type="button" data-av="' + imageUrl(o.url) + '" class="' + (o.url === atual ? 'is-active' : '') + '" title="' + esc(o.nome) + '"><img src="' + imageUrl(o.url) + '" alt=""></button>'; }).join('') + '</div>' +
           '<form id="f-av" novalidate><label class="field"><span>Ou cole um endereço de imagem (https)</span><input type="url" name="url" placeholder="https://..." value="' + (/^https:/.test(atual) ? esc(atual) : '') + '"></label><p class="auth__error" hidden></p><button class="auth__submit" type="submit"><span>Salvar foto</span></button></form>');
         pmBody.addEventListener('click', function (ev) {
           var b2 = ev.target.closest('[data-av]'); if (!b2) return;
@@ -557,19 +582,29 @@
       }
 
       if (act === 'new-trainer') {
-        if (jogo) return PWU.toast('Treinadores são criados dentro do jogo. Baixe o cliente e entre com esta conta.');
-        if (pr.trainers.length >= 8) return PWU.toast('Limite de 8 treinadores por conta.');
-        openP('<h3>Novo treinador</h3><p class="sub">Escolha o nome, o mundo e o parceiro inicial.</p><form id="f-tr" novalidate>' +
-          '<label class="field"><span>Nome do treinador</span><input type="text" name="name" maxlength="20" placeholder="Ex.: Ash Ketchum"></label>' +
-          '<label class="field"><span>Mundo</span><select name="world"><option>Sun</option><option>Moon</option></select></label>' +
-          '<label class="field"><span>Parceiro</span><select name="avatar">' + AVATARS.map(function (a2) { return '<option value="' + a2 + '">' + a2.charAt(0).toUpperCase() + a2.slice(1) + '</option>'; }).join('') + '</select></label>' +
+        if (!jogo || !PWU.auth.user || String(jogo.id) !== String(PWU.auth.user.id)) return PWU.toast('Aguarde o carregamento da conta. Se necessário, entre novamente.');
+        if (jogo.trainers.length >= 8) return PWU.toast('Limite de 8 personagens por conta.');
+        var creatingAccountId = jogo.id;
+        openP('<h3>Novo personagem</h3><p class="sub">Crie seu personagem nesta conta. Ele começará no nível 2, com os padrões do servidor.</p><form id="f-tr" novalidate>' +
+          '<label class="field"><span>Nome do personagem</span><input type="text" name="name" minlength="3" maxlength="20" placeholder="Ex.: Ash Ketchum" required></label>' +
+          '<p class="sub">Use apenas letras sem acentos e espaços simples entre palavras.</p>' +
+          '<label class="field"><span>Gênero</span><select name="sex"><option value="1">Masculino</option><option value="0">Feminino</option></select></label>' +
           '<p class="auth__error" hidden></p><button class="auth__submit" type="submit"><span>Criar treinador</span></button></form>');
         document.getElementById('f-tr').addEventListener('submit', function (ev) {
           ev.preventDefault(); var f = ev.currentTarget, nm = f.name.value.trim();
-          if (!/^[A-Za-zÀ-ú0-9 ]{3,20}$/.test(nm)) return perr('Nome de 3 a 20 caracteres, sem símbolos.');
-          var p4 = PWU.auth.profile();
-          if (p4.trainers.some(function (t) { return t.name.toLowerCase() === nm.toLowerCase(); })) return perr('Você já tem um treinador com este nome.');
-          p4.trainers.push({ name: nm, world: f.world.value, avatar: f.avatar.value, level: 1 }); PWU.auth.saveProfile(p4); closeP(); renderAcc(); PWU.toast('Treinador criado!', 'ok');
+          if (nm.length < 3 || nm.length > 20 || !/^[A-Za-z]+(?: [A-Za-z]+)*$/.test(nm)) return perr('Use de 3 a 20 letras sem acentos e espaços simples entre palavras.');
+          if (!PWU.auth.user || String(PWU.auth.user.id) !== String(creatingAccountId)) return perr('Sua sessão mudou. Feche este formulário e entre novamente.');
+          var submit = f.querySelector('.auth__submit');
+          if (submit.disabled) return;
+          submit.disabled = true; submit.classList.add('is-loading');
+          PWU.auth.api.createCharacter(nm, Number(f.sex.value)).then(function (result) {
+            if (!PWU.auth.user || String(PWU.auth.user.id) !== String(creatingAccountId)) return;
+            if (jogo && String(jogo.id) === String(creatingAccountId)) jogo.trainers.push(result.character);
+            closeP(); renderAcc(); puxarJogo(0);
+            PWU.toast('Personagem criado! Atualize a lista de personagens no cliente para entrar.', 'ok');
+          }).catch(function (error) {
+            perr(error.offline ? 'Não foi possível confirmar a criação. Atualize a conta antes de tentar novamente.' : error.message);
+          }).finally(function () { submit.disabled = false; submit.classList.remove('is-loading'); });
         });
       }
     });
@@ -581,7 +616,7 @@
       packsEl.innerHTML = PWU.coinPackages.map(function (k, i) {
         var moeda = 'assets/img/coins/pcoin-' + Math.min(6, i + 1) + '.png';
         return '<div class="pack' + (k.badge ? ' is-hot' : '') + '">' + (k.badge ? '<span class="pack__badge">' + esc(k.badge) + '</span>' : '') +
-          '<div class="pack__moeda"><img src="' + moeda + '" alt="" loading="lazy"></div><b>' + k.coins.toLocaleString('pt-BR') + '</b><small>créditos</small>' +
+          '<div class="pack__moeda"><img src="' + moeda + '" alt="" loading="lazy"></div><b>' + k.coins.toLocaleString('pt-BR') + '</b><small>Diamond Points</small>' +
           '<em class="pack__bonus">+' + k.bonusPct + '%</em>' +
           '<button type="button" class="btn btn--yellow btn--sm" data-pack="' + k.id + '">' + PWU.brl(k.price) + '</button></div>';
       }).join('');
@@ -591,7 +626,7 @@
         var k = PWU.coinPackages.find(function (x) { return x.id === b.dataset.pack; }) || {};
         openP('<h3>Como quer pagar?</h3><p class="sub"><b>' + Number(k.coins || 0).toLocaleString('pt-BR') + ' coins</b> por ' + PWU.brl(k.price || 0) + '. Os coins caem na sua conta do jogo assim que o pagamento for confirmado.</p>' +
           '<div class="pay-ways">' +
-          '<button type="button" class="pay-way" data-prov="mercadopago"><b>Mercado Pago</b><small>Pix, boleto ou cartão · Brasil</small></button>' +
+          '<button type="button" class="pay-way" data-prov="mercadopago"><b>Pix</b><small>QR Code ou Copia e Cola</small></button>' +
           '<button type="button" class="pay-way" data-prov="stripe"><b>Stripe</b><small>Cartão de crédito · internacional</small></button>' +
           '</div><p class="mp-note"><i class="ico ico-lock" aria-hidden="true"></i> Você é levado para o site do provedor. Nenhum dado de cartão passa pelo Pokeworld.</p>');
         pmBody.addEventListener('click', function (ev) {
@@ -602,44 +637,32 @@
     }
     if (location.hash === '#coins') setTimeout(function () { var d = document.getElementById('coins'); if (d && PWU.auth.user) d.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 900);
 
-    // saldo real (tabela wallets). Depois de voltar do pagamento, confere algumas vezes:
-    // quem credita é o webhook, que pode chegar alguns segundos depois do redirect.
-    function refreshCoins(tries) {
-      PWU.auth.coins().then(function (c) {
-        if (c == null) return;
-        var el = document.getElementById('acc-diamonds'), before = +String(el.textContent).replace(/\D/g, '') || 0;
-        el.textContent = c.toLocaleString('pt-BR');
-        if (tries > 0 && c === before) setTimeout(function () { refreshCoins(tries - 1); }, 4000);
-        else if (c > before && tries < 8) PWU.toast('Créditos adicionados na sua conta!', 'ok');
-      }).catch(function () {});
-    }
 
     // retorno do Mercado Pago
     var pg = qs('pagamento'), al = document.getElementById('acc-alert');
     if (pg && al) {
       al.hidden = false;
-      if (pg === 'retorno' || pg === 'aprovado') al.textContent = 'Recebemos seu retorno do Mercado Pago. Os coins entram na conta assim que o pagamento for confirmado (normalmente em segundos).';
-      else if (pg === 'pendente') { al.textContent = 'Pagamento pendente. Assim que o Mercado Pago confirmar, creditamos na sua conta.'; al.classList.add('is-warn'); }
-      else { al.textContent = 'O pagamento não foi concluído. Nenhum valor foi cobrado.'; al.classList.add('is-err'); }
+      if (pg === 'retorno' || pg === 'aprovado') al.textContent = 'A confirmação é feita diretamente com a Stripe. Assim que confirmada, os Diamond Points aparecem no saldo desta conta.';
+      else if (pg === 'pendente') { al.textContent = 'Pagamento pendente. Assim que o Mercado Pago confirmar, creditamos na conta.'; al.classList.add('is-warn'); }
+      else { al.textContent = 'Você retornou do pagamento. Se concluiu a compra, aguarde a confirmação no saldo; em caso de dúvida, consulte o suporte.'; al.classList.add('is-err'); }
       history.replaceState(null, '', location.pathname);
     }
 
     function puxarJogo(tries) {
       if (!PWU.auth.game) return;
       PWU.auth.game().then(function (d) {
-        if (!d || !d.id) return;
-        var antes = jogo ? jogo.coins : null;
+        if (!d || !d.id || !PWU.auth.user || String(d.id) !== String(PWU.auth.user.id)) {
+          jogo = null; renderAcc(); return;
+        }
         jogo = d; renderAcc();
-        if (antes != null && d.coins > antes) PWU.toast('Créditos adicionados na sua conta!', 'ok');
-        else if (tries > 0) setTimeout(function () { puxarJogo(tries - 1); }, 4000);
+        if (tries > 0) setTimeout(function () { puxarJogo(tries - 1); }, 4000);
       }).catch(function () {});
     }
 
     renderAcc();
     puxarJogo(pg ? 8 : 0);
-    refreshCoins(0);
     if (!PWU.auth.user) setTimeout(function () { PWU.auth.open('login'); }, 500);
-    document.addEventListener('auth:change', function () { renderAcc(); refreshCoins(0); });
+    document.addEventListener('auth:change', function () { jogo = null; renderAcc(); puxarJogo(0); });
   }
 
   /* =====================================================================
@@ -659,7 +682,7 @@
         return '<tr><td class="val">' + PWU.brl(k.price) + '</td>' +
           '<td class="base">' + k.base.toLocaleString('pt-BR') + '</td>' +
           '<td><span class="bonus">+' + k.bonusPct + '% · ' + k.bonus.toLocaleString('pt-BR') + '</span></td>' +
-          '<td class="coins">' + k.coins.toLocaleString('pt-BR') + ' créditos</td>' +
+          '<td class="coins">' + k.coins.toLocaleString('pt-BR') + ' Diamond Points</td>' +
           '<td><button type="button" class="btn btn--yellow btn--sm" data-pack="' + k.id + '">Doar</button></td></tr>';
       }).join('');
     }
@@ -668,7 +691,7 @@
       grade.innerHTML = pacotes.map(function (k, i) {
         var moeda = 'assets/img/coins/pcoin-' + Math.min(6, i + 1) + '.png';
         return '<div class="pack' + (k.badge ? ' is-hot' : '') + '">' + (k.badge ? '<span class="pack__badge">' + esc(k.badge) + '</span>' : '') +
-          '<div class="pack__moeda"><img src="' + moeda + '" alt="" loading="lazy"></div><b>' + k.coins.toLocaleString('pt-BR') + '</b><small>créditos</small>' +
+          '<div class="pack__moeda"><img src="' + moeda + '" alt="" loading="lazy"></div><b>' + k.coins.toLocaleString('pt-BR') + '</b><small>Diamond Points</small>' +
           '<em class="pack__bonus">+' + k.bonusPct + '%</em>' +
           '<button type="button" class="btn btn--yellow btn--sm" data-pack="' + k.id + '">' + PWU.brl(k.price) + '</button></div>';
       }).join('');
@@ -744,11 +767,11 @@
     pmD.addEventListener('click', function (e) { if (e.target.closest('[data-pclose]')) { pmD.hidden = true; document.body.classList.remove('is-locked'); } });
     document.addEventListener('click', function (e) {
       var b = e.target.closest('[data-pack]'); if (!b) return;
-      if (!PWU.auth.user) { PWU.toast('Entre na sua conta para doar e receber os créditos.'); setTimeout(function () { location.href = 'login.html'; }, 1200); return; }
+      if (!PWU.auth.user) { PWU.toast('Entre na sua conta para doar e receber os Diamond Points.'); setTimeout(function () { location.href = 'login.html'; }, 1200); return; }
       location.href = 'pagamento.html?pacote=' + encodeURIComponent(b.dataset.pack); return;
       var k = pacotes.find(function (x) { return x.id === b.dataset.pack; }) || {};
       abrirD('<h3>Como quer pagar?</h3><p class="sub"><b>' + Number(k.coins || 0).toLocaleString('pt-BR') + ' coins</b> por ' + PWU.brl(k.price || 0) + (k.bonusPct ? ' · já com ' + k.bonusPct + '% de bônus' : '') + '.</p>' +
-        '<div class="pay-ways"><button type="button" class="pay-way" data-prov="mercadopago"><b>Mercado Pago</b><small>Pix, boleto ou cartão · Brasil</small></button>' +
+        '<div class="pay-ways"><button type="button" class="pay-way" data-prov="mercadopago"><b>Pix</b><small>QR Code ou Copia e Cola</small></button>' +
         '<button type="button" class="pay-way" data-prov="stripe"><b>Stripe</b><small>Cartão de crédito · internacional</small></button></div>' +
         '<p class="mp-note"><i class="ico ico-lock" aria-hidden="true"></i> Você é levado para o site do provedor. Nenhum dado de cartão passa pelo Pokeworld.</p>');
       pmBodyD.addEventListener('click', function (ev) {
@@ -798,7 +821,17 @@
       bAtivar.style.display = on ? 'none' : ''; bDesat.style.display = on ? '' : 'none';   // [hidden] perde para o display do .btn
       var old = area.querySelector('.totp__setup'); if (old) old.remove();
     }
-    PWU.auth.game().then(function (d) { estadoAtual(!!(d && d.totp)); }).catch(function () {});
+    PWU.auth.game().then(function (d) {
+      estadoAtual(!!(d && d.totp));
+      if (d && d.totpDisponivel === false) {
+        estado.textContent = 'em preparação';
+        bAtivar.disabled = true; bDesat.style.display = 'none';
+        msg('O autenticador por aplicativo será disponibilizado após a ativação pela equipe. A confirmação por e-mail continua funcionando.');
+      } else if (d && d.totp) {
+        bDesat.style.display = 'none';
+        msg('Verificação obrigatória. Se perder o acesso ao aplicativo, contate o suporte.');
+      }
+    }).catch(function () {});
 
     bAtivar.addEventListener('click', function () {
       bAtivar.disabled = true; msg('');
@@ -858,7 +891,7 @@
       if (lista) {
         var ts = (PWU.auth.profile() || {}).tickets || [];
         lista.innerHTML = ts.length ? ts.slice().reverse().map(function (t) {
-          return '<div class="ticket"><b>#' + t.id + ' · ' + esc(t.subject) + '</b><small>' + new Date(t.at).toLocaleString('pt-BR') + ' · Aberto</small></div>';
+          return '<div class="ticket"><b>#' + esc(t.id) + ' · ' + esc(t.subject) + '</b><small>' + new Date(t.at).toLocaleString('pt-BR') + ' · Aberto</small></div>';
         }).join('') : '<p class="sec__sub" style="margin:0">Você ainda não abriu nenhum chamado.</p>';
       }
       // ----- foto de perfil -----
@@ -867,7 +900,7 @@
         grade.dataset.pronto = '1';
         var atual = PWU.avatarUrl ? PWU.avatarUrl(PWU.auth.user) : '';
         grade.innerHTML = (PWU.avatares || []).map(function (x) {
-          return '<button type="button" data-av="' + x.image + '" class="' + (x.image === atual ? 'is-active' : '') + '" title="' + esc(x.name) + '"><img src="' + x.image + '" alt=""></button>';
+          return '<button type="button" data-av="' + imageUrl(x.image) + '" class="' + (x.image === atual ? 'is-active' : '') + '" title="' + esc(x.name) + '"><img src="' + imageUrl(x.image) + '" alt=""></button>';
         }).join('');
         grade.addEventListener('click', function (e) {
           var b = e.target.closest('[data-av]'); if (!b) return;
@@ -1000,9 +1033,48 @@
       }
 
       var meios = document.getElementById('meios-pagamento');
+
+      var pixCpf = document.getElementById('pix-cpf');
+      var pixEmail = document.getElementById('pix-email');
+      var payerError = document.getElementById('payment-payer-error');
+      function payerMessage(message) { payerError.textContent = message || ''; payerError.hidden = !message; }
+      function refreshPayer() {
+        pixEmail.value = PWU.auth.user ? PWU.auth.user.email || '' : '';
+        pixCpf.value = ''; pixCpf.removeAttribute('aria-invalid'); payerMessage('');
+      }
+      if (pixCpf && pixEmail) {
+        refreshPayer();
+        document.addEventListener('auth:change', refreshPayer);
+        window.addEventListener('pagehide', function () { pixCpf.value = ''; });
+        pixCpf.addEventListener('input', function () {
+          var digits = pixCpf.value.replace(/\D/g, '').slice(0, 11);
+          pixCpf.value = digits.replace(/^(\d{3})(\d)/, '$1.$2').replace(/^(\d{3}\.\d{3})(\d)/, '$1.$2').replace(/(\d{3}\.\d{3}\.\d{3})(\d)/, '$1-$2');
+          pixCpf.removeAttribute('aria-invalid'); payerMessage('');
+        });
+      }
       if (meios) meios.addEventListener('click', function (e) {
-        var w = e.target.closest('[data-prov]'); if (!w) return;
-        pay(k.id, w, w.dataset.prov, cupomAplicado ? cupomAplicado.code : null, valorLivre ? valorLivre.price : null);
+        var w = e.target.closest('[data-prov]'); if (!w || meios.querySelector('[data-prov]:disabled') || !k) return;
+        if (bt && bt.disabled) { PWU.toast('Aguarde a confirmação do cupom.'); return; }
+        var cpf = null;
+        if (w.dataset.prov === 'mercadopago') {
+          if (!pixCpf || !validCpf(pixCpf.value)) {
+            payerMessage('Informe um CPF válido para gerar o Pix.');
+            if (pixCpf) { pixCpf.setAttribute('aria-invalid', 'true'); pixCpf.focus(); }
+            return;
+          }
+          cpf = pixCpf.value.replace(/\D/g, '');
+        }
+        payerMessage('');
+        if (pixCpf) pixCpf.disabled = true;
+        if (campo) campo.disabled = true;
+        if (bt) bt.disabled = true;
+        pay(k.id, w, w.dataset.prov, cupomAplicado ? cupomAplicado.code : null, valorLivre ? valorLivre.price : null, payerMessage, cpf).then(function () {
+          if (!w.disabled) {
+            if (pixCpf) pixCpf.disabled = false;
+            if (campo) campo.disabled = false;
+            if (bt) bt.disabled = false;
+          }
+        });
       });
     }
 

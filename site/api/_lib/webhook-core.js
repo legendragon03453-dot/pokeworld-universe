@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import { customPackage } from './packages.js';
+import { cents, validatePayment } from './payment-validation.js';
 
 /**
  * Valida a assinatura do webhook do Mercado Pago.
@@ -22,7 +22,7 @@ export function assinaturaValida({ xSignature = '', xRequestId = '', dataId, sec
     if (k === 'ts') ts = v;
     if (k === 'v1') hash = v;
   }
-  if (!ts || !hash) return false;
+  if (!ts || !hash || !/^\d+$/.test(ts)) return false;
 
   const partes = [];
   if (dataId) partes.push(`id:${String(dataId).toLowerCase()}`);
@@ -46,34 +46,23 @@ export function assinaturaValida({ xSignature = '', xRequestId = '', dataId, sec
  * os cenários do README sem banco nem Mercado Pago.
  * Devolve uma string com o desfecho (só para log/teste).
  */
-export async function processar(mpOrderId, { fetchOrder, isPaid, findOrderByMpId, markPaidAndCredit, getPackage }) {
+export async function processar(mpOrderId, { fetchOrder, isPaid, findOrderByMpId, markPaidAndCredit }) {
   // 1. NUNCA confie no corpo do webhook. Pergunte pro Mercado Pago.
   const order = await fetchOrder(mpOrderId);
   if (!isPaid(order)) return 'nao-pago';
 
   // 2. Acha o pedido local.
-  const local = await findOrderByMpId(mpOrderId);
-  if (!local) return 'sem-pedido-local';
+  if (order.id !== mpOrderId) throw new Error('payment-binding-mismatch');
+  const local = await findOrderByMpId(mpOrderId, 'mercadopago', order.external_reference);
+  const payment = { id: mpOrderId, provider: 'mercadopago', reference: order.external_reference,
+    currency: order.currency, amount_cents: cents(order.total_paid_amount),
+    mpPaymentId: order.transactions?.payments?.[0]?.id ?? null };
+  validatePayment(local, payment);
 
   // 3. Idempotência: se já pagou, sai sem creditar de novo.
   if (local.status === 'paid') return 'ja-creditado';
 
-  // 4. Confere se o valor pago bate com o pacote comprado.
-  const pago = Number(order.total_paid_amount ?? order.total_amount);
-  if (local.package_id === 'custom') {
-    // valor livre: os créditos gravados não podem passar do que o valor pago compra
-    let permitido;
-    try { permitido = customPackage(pago / (local.fator || 1)).credits; } catch (e) { return 'valor-divergente'; }
-    if (local.coins > permitido + 1) return 'valor-divergente';
-  } else {
-    const pkg = getPackage(local.package_id);
-    const esperado = Math.round(pkg.price * (local.fator || 1) * 100) / 100;   // com cupom, se houver
-    if (!(pago + 0.001 >= esperado)) return 'valor-divergente';
-  }
-
-  // 5. Credita. O UPDATE condicional dentro de markPaidAndCredit é a trava real
-  //    contra webhooks simultâneos.
-  const mpPaymentId = order.transactions?.payments?.[0]?.id ?? null;
-  const creditou = await markPaidAndCredit(local.id, { mpPaymentId });
+  // Lock + validation + account credit + delivered flag in one transaction.
+  const creditou = await markPaidAndCredit(local.id, payment);
   return creditou ? 'creditado' : 'ja-creditado';
 }

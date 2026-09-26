@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pagamento — Pokeworld Universe</title>
-  <meta name="description" content="Escolha como pagar seus créditos do Pokeworld Universe.">
+  <meta name="description" content="Escolha como pagar seus Diamond Points do Pokeworld Universe.">
   <link rel="icon" href="assets/logo-sigla.png">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="pages.css">
+  <link rel="stylesheet" href="styles.css?pwu=80dee41-20260924b">
+  <link rel="stylesheet" href="pages.css?pwu=pix-inline-20260925">
 </head>
 <body data-page="pagamento">
 <div class="scroll-progress" aria-hidden="true"></div>
@@ -34,7 +34,7 @@
       <nav class="banner__crumb" aria-label="Você está em"><a href="index.html">Início</a><i aria-hidden="true"></i><span>Pagamento</span></nav>
       
       <h1 class="banner__title">Como quer pagar?</h1>
-      <p class="banner__sub">Você é levado para o site do provedor. Nenhum dado de cartão passa pelo Pokeworld.</p>
+      <p class="banner__sub">Você é levado para o site do provedor. Os dados do cartão são informados diretamente à Stripe.</p>
     </div>
   </section>
 
@@ -54,37 +54,46 @@
           <article class="acc-card acc-card--pedido">
             <div class="pedido-topo"><h2 class="acc-card__title">Seu <span class="grad grad--yellow">pedido</span></h2><a class="voltar" href="Donate">← Escolher outro pacote</a></div>
             <div class="resumo" id="resumo-pedido"></div>
-            <form class="cupom" id="f-cupom" novalidate>
-              <label for="cupom-codigo">Cupom</label>
-              <div class="cupom__linha">
-                <input id="cupom-codigo" name="cupom" type="text" inputmode="text" autocomplete="off" maxlength="32" placeholder="Tem um cupom? Digite aqui">
-                <button type="submit">Aplicar</button>
+            <p class="mp-note">Os Diamond Points são compartilhados entre os personagens da conta.</p>
+            <div class="payment-payer">
+              <div>
+                <label for="pix-email">Seu e-mail</label>
+                <input id="pix-email" type="email" autocomplete="off" readonly>
               </div>
-              <p class="cupom__msg" hidden></p>
-            </form>
+              <div>
+                <label for="pix-cpf">CPF</label>
+                <input id="pix-cpf" name="cpf" type="text" inputmode="numeric" autocomplete="off" maxlength="14" placeholder="000.000.000-00" aria-describedby="payment-payer-error">
+              </div>
+              <form class="cupom" id="f-cupom" novalidate>
+                <label for="cupom-codigo">Cupom de desconto</label>
+                <div class="cupom__linha">
+                  <input id="cupom-codigo" name="cupom" type="text" inputmode="text" autocomplete="off" maxlength="32" placeholder="Código do cupom">
+                  <button type="submit">Aplicar</button>
+                </div>
+                <p class="cupom__msg" hidden></p>
+              </form>
+              <p class="payment-payer__error" id="payment-payer-error" role="alert" hidden></p>
+            </div>
             <h3 class="pay-title">Escolha o meio de pagamento <span>clique em uma das opções</span></h3>
             <div class="pay-ways" id="meios-pagamento">
               <button type="button" class="pay-way pay-way--mp" data-prov="mercadopago">
-                <span class="pay-way__head"><b>Mercado Pago</b><i class="pay-way__seta" aria-hidden="true"></i></span>
-                <span class="pay-way__li">Pix, boleto ou cartão</span>
-                <span class="pay-way__li">Confirmação na hora</span>
+                <span class="pay-way__head"><b class="pay-way__label"><svg class="pay-way__qr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="3" width="6" height="6" rx="1"/><rect x="3" y="15" width="6" height="6" rx="1"/><path d="M15 15h3v3h3v3h-6v-3M3 12h3m6-9v3m0 6h3m6 0v3m-9 3v3"/></svg>Pix</b><i class="pay-way__seta" aria-hidden="true"></i></span>
+                <span class="pay-way__li">QR Code ou Pix Copia e Cola</span>
               </button>
               <button type="button" class="pay-way pay-way--st" data-prov="stripe">
                 <span class="pay-way__head"><b>Stripe</b><i class="pay-way__seta" aria-hidden="true"></i></span>
                 <span class="pay-way__li">Cartão de crédito ou débito</span>
-                <span class="pay-way__li">Aceita cartão internacional</span>
               </button>
             </div>
-            <p class="mp-note"><i class="ico ico-lock" aria-hidden="true"></i> O pagamento acontece no site do provedor. Nenhum dado de cartão passa pelo Pokeworld.</p>
-            <p class="mp-regras">** Ao gerar o QR Code você automaticamente declara aceitar <a href="regras.html" target="_blank" rel="noopener">as regras</a></p>
+            <p class="mp-regras">Antes de pagar, consulte <a href="regras.html" target="_blank" rel="noopener">as regras</a></p>
           </article>
 
           <article class="acc-card">
             <h2 class="acc-card__title">O que acontece <span class="grad grad--yellow">agora</span></h2>
             <ol class="passos">
-              <li><b>1</b><div><strong>Escolha o meio de pagamento</strong><span>Mercado Pago para Pix, boleto e cartão. Stripe para cartão internacional.</span></div></li>
-              <li><b>2</b><div><strong>Pague no site do provedor</strong><span>Você sai do Pokeworld e volta assim que terminar. Nenhum dado de cartão passa por aqui.</span></div></li>
-              <li><b>3</b><div><strong>Bônus liberado na conta</strong><span>Assim que o pagamento é confirmado, o bônus entra na conta que está logada agora.</span></div></li>
+              <li><b>1</b><div><strong>Escolha o meio de pagamento</strong><span>Cartões nacionais e internacionais pela Stripe. Pix com QR Code ou Copia e Cola.</span></div></li>
+              <li><b>2</b><div><strong>Pague no site do provedor</strong><span>Depois de pagar, volte à sua conta para conferir o saldo. Os dados do cartão são informados diretamente à Stripe.</span></div></li>
+              <li><b>3</b><div><strong>Pontos liberados na conta</strong><span>Assim que o pagamento é confirmado, os pontos entram no saldo compartilhado da conta desta compra.</span></div></li>
             </ol>
           </article>
         </div>
@@ -129,13 +138,15 @@
 
 </div>
 
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="config.js"></script>
+<script src="config.js?pwu=80dee41-20260924b"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
-<script src="data.js"></script>
-<script src="store.js"></script>
-<script src="ui.js"></script>
-<script src="pages.js"></script>
+<script src="data.js?pwu=80dee41-20260924b"></script>
+<script src="store.js?pwu=80dee41-20260924b"></script>
+<script src="ui.js?pwu=80dee41-20260924b"></script>
+<script src="pages.js?pwu=pix-inline-20260925"></script>
 </body>
 </html>

@@ -2,11 +2,11 @@
  * Webhook da Stripe. POST /api/webhook/stripe
  *
  * Precisa do corpo CRU para validar a assinatura, por isso o bodyParser
- * fica desligado. Só `checkout.session.completed` com payment_status `paid`
- * credita, e o crédito é idempotente (UPDATE ... WHERE entregue = 0).
+ * fica desligado. Eventos de conclusão/sucesso assíncrono só creditam quando
+ * payment_status é paid. A entrega usa lock e transação no banco.
  */
 import { assinaturaStripeValida, rawBody } from '../_lib/stripe.js';
-import { getPackage, customPackage } from '../_lib/packages.js';
+import { validatePayment } from '../_lib/payment-validation.js';
 import { findOrderByMpId, markPaidAndCredit } from '../_lib/orders.js';
 
 export const config = { api: { bodyParser: false } };
@@ -25,33 +25,20 @@ export default async function handler(req, res) {
   let evento;
   try { evento = JSON.parse(cru); } catch (e) { return res.status(400).end(); }
 
-  // Só o fim do checkout importa para creditar.
-  if (evento.type !== 'checkout.session.completed') return res.status(200).end();
+  // Never deliver on a redirect; only signed successful payment events.
+  if (!['checkout.session.completed', 'checkout.session.async_payment_succeeded'].includes(evento.type)) return res.status(200).end();
 
   try {
     const s = evento.data && evento.data.object;
     if (!s || s.payment_status !== 'paid') { console.log('[stripe] sessão não paga', s && s.id); return res.status(200).end(); }
 
-    const local = await findOrderByMpId(s.id);
-    if (!local) { console.error('[stripe] sessão sem pedido local', s.id); return res.status(200).end(); }
+    const local = await findOrderByMpId(s.id, 'stripe', s.client_reference_id);
+    const payment = { id: s.id, provider: 'stripe', reference: s.client_reference_id,
+      currency: s.currency, amount_cents: s.amount_total, mpPaymentId: s.payment_intent || s.id };
+    validatePayment(local, payment);
     if (local.status === 'paid') return res.status(200).end();
 
-    // confere o valor contra o pacote (em centavos)
-    const pagoReais = Number(s.amount_total || 0) / 100;
-    let divergente;
-    if (local.package_id === 'custom') {
-      // valor livre: os créditos gravados não podem passar do que o valor pago compra
-      try { divergente = local.coins > customPackage(pagoReais / (local.fator || 1)).credits + 1; } catch (e) { divergente = true; }
-    } else {
-      const pkg = getPackage(local.package_id);
-      divergente = pagoReais + 0.001 < Math.round(pkg.price * (local.fator || 1) * 100) / 100;
-    }
-    if (divergente) {
-      console.error('[stripe] valor divergente', { sessao: s.id, pago: s.amount_total, pacote: local.package_id, creditos: local.coins });
-      return res.status(200).end();
-    }
-
-    const creditou = await markPaidAndCredit(local.id, { mpPaymentId: s.payment_intent || s.id });
+    const creditou = await markPaidAndCredit(local.id, payment);
     console.log('[stripe]', s.id, creditou ? 'creditado' : 'já creditado');
   } catch (err) {
     console.error('[stripe] erro ao processar', err);

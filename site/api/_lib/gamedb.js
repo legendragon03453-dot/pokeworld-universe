@@ -28,7 +28,10 @@ export function pool() {
       enableKeepAlive: true,
       charset: 'utf8mb4',
       timezone: 'Z',
-      ssl: process.env.GAME_DB_SSL === 'true' ? { rejectUnauthorized: false } : undefined
+      ssl: process.env.GAME_DB_SSL === 'true' ? {
+        rejectUnauthorized: true,
+        ...(process.env.GAME_DB_SSL_CA ? { ca: process.env.GAME_DB_SSL_CA.replace(/\\n/g, '\n') } : {})
+      } : undefined
     });
   }
   return _pool;

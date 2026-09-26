@@ -1,4 +1,3 @@
-import { randomUUID } from 'crypto';
 import { mpOrder, mpConfigured } from './_lib/mercadopago.js';
 import { resolvePackage } from './_lib/packages.js';
 import { findCoupon, precoComCupom } from './_lib/coupons.js';
@@ -15,7 +14,7 @@ export default async function handler(req, res) {
 
   try {
     // 1. Quem está comprando: a conta do JOGO. Sem ela não há pra quem creditar.
-    const accountId = accountFromRequest(req);
+    const accountId = await accountFromRequest(req);
     if (!accountId) return res.status(401).json({ error: 'não autenticado' });
     const user = await one('SELECT id, email, name FROM accounts WHERE id = ? LIMIT 1', [accountId]);
     if (!user) return res.status(401).json({ error: 'conta não encontrada' });
@@ -24,19 +23,18 @@ export default async function handler(req, res) {
     let body = req.body;
     if (typeof body === 'string') { try { body = JSON.parse(body || '{}'); } catch (e) { body = {}; } }
     let pkg;
-    try { pkg = resolvePackage(body && body.packageId, body && body.amount); }
-    catch (e) { return res.status(400).json({ error: body && body.packageId === 'custom' ? 'Informe um valor entre R$ 10 e R$ 20.000.' : 'pacote inexistente' }); }
 
-    // cupom opcional: se veio e não vale, recusa em vez de cobrar cheio sem avisar
-    let cupom = null;
-    if (body && body.coupon) {
-      cupom = findCoupon(body.coupon);
-      if (!cupom) return res.status(400).json({ error: 'Cupom inválido ou expirado.' });
-    }
+
+
+
+    try { pkg = resolvePackage(body && body.packageId, body && body.amount); } catch (e) { return res.status(400).json({ error: 'pacote inexistente' }); }
+
+    const cupom = findCoupon(body && body.coupon);
+    if (body?.coupon && !cupom) return res.status(400).json({error:'Cupom inválido ou expirado.'});
     const preco = precoComCupom(pkg, cupom);
 
-    // 3. Pedido local primeiro, com status pending.
-    const local = await createLocalOrder({ userId: user.id, packageId: pkg.id, amount: preco, coins: pkg.coins, cupomPct: cupom ? cupom.pct : 0 });
+    // Pedido com valor e créditos imutáveis, validados na confirmação.
+    const local = await createLocalOrder({ userId: accountId, packageId: pkg.id, amount: preco, coins: pkg.coins, provider: 'mercadopago' });
 
     // 4. Cria a order no Mercado Pago. Valores monetários são STRING (number dá 400).
     const order = await mpOrder().create({
@@ -45,8 +43,8 @@ export default async function handler(req, res) {
         processing_mode: 'manual',   // valor fixo do Checkout Pro
         capture_mode: 'automatic',
         total_amount: preco.toFixed(2),
-        external_reference: String(local.id),
-        description: `PokeWorld Universe — ${pkg.title}` + (cupom ? ` (cupom ${cupom.code})` : ''),
+        external_reference: local.reference,
+        description: `PokeWorld Universe — ${pkg.title}`,
         expiration_time: 'PT2H',
         payer: { email: user.email || user.name },
         items: [{ title: pkg.title, quantity: 1, unit_price: preco.toFixed(2), unit_measure: 'unit' }],
@@ -62,10 +60,10 @@ export default async function handler(req, res) {
           payment_method: { max_installments: 1 }
         }
       },
-      requestOptions: { idempotencyKey: randomUUID() } // sem isso, duplo clique vira duas orders
+      requestOptions: { idempotencyKey: local.reference }
     });
 
-    await attachMpOrderId(local.id, order.id);
+    await attachMpOrderId(local.id, order.id, 'mercadopago');
 
     // 5. Devolve a URL do checkout que veio da API (não montar à mão).
     return res.status(200).json({ checkoutUrl: order.checkout_url });

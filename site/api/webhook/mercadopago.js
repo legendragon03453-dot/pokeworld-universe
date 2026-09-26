@@ -1,5 +1,4 @@
 import { fetchOrder, isPaid } from '../_lib/mercadopago.js';
-import { getPackage } from '../_lib/packages.js';
 import { findOrderByMpId, markPaidAndCredit, logWebhookEvent } from '../_lib/orders.js';
 import { assinaturaValida, processar } from '../_lib/webhook-core.js';
 
@@ -22,7 +21,7 @@ export default async function handler(req, res) {
   if (topic !== 'order' || !dataId) return res.status(200).end();
 
   try {
-    const desfecho = await processar(dataId, { fetchOrder, isPaid, findOrderByMpId, markPaidAndCredit, getPackage });
+    const desfecho = await processar(dataId, { fetchOrder, isPaid, findOrderByMpId, markPaidAndCredit });
     console.log('[webhook]', dataId, desfecho);
   } catch (err) {
     console.error('[webhook] erro ao processar', dataId, err);

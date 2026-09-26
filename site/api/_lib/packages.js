@@ -1,9 +1,9 @@
 /**
- * Catálogo de pacotes de créditos do PokeWorld Universe.
+ * Catálogo de pacotes de Diamond Points do PokeWorld Universe.
  *
- * REGRA DE OURO: o preço e a quantidade de créditos vivem AQUI, no servidor.
+ * REGRA DE OURO: o preço e a quantidade de Diamond Points vivem AQUI, no servidor.
  * O frontend manda só o `id` do pacote. Se o preço viesse do cliente,
- * qualquer pessoa compraria 1.950 créditos por R$ 1 com o DevTools aberto.
+ * qualquer pessoa compraria 1.950 Diamond Points por R$ 1 com o DevTools aberto.
  *
  * Base: 1 crédito por R$ 1. O bônus é o degrau por faixa e já vem somado
  * em `credits` (o total que o jogador recebe).
@@ -60,13 +60,13 @@ export function packageIdFromNum(num) {
 }
 
 export function getPackage(id) {
-  const pkg = PACKAGES[id];
+  const pkg = typeof id === 'string' && Object.hasOwn(PACKAGES, id) ? PACKAGES[id] : null;
   if (!pkg) throw new Error(`Pacote inexistente: ${id}`);
   // `coins` fica como apelido de `credits` para o código que já usa esse nome.
   return { ...pkg, coins: pkg.credits };
 }
 
-/** Quanto de bônus o jogador ganhou, em créditos. Só para exibir no recibo. */
+/** Quanto de bônus o jogador ganhou, em Diamond Points. Só para exibir no recibo. */
 export function bonusCredits(pkg) {
   return pkg.credits - pkg.price;
 }

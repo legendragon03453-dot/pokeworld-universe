@@ -1,38 +1,11 @@
-# Banco do jogo (poke) — o que o site usa
+# Banco do jogo e integração do site
 
-O site lê e escreve direto no banco MariaDB do servidor do Pokeworld.
-Não há banco paralelo: a conta criada no site é a conta do jogo, e os
-coins comprados caem em `accounts.pontos`, que o cliente já lê.
+O site oficial autentica contas e consulta personagens no mesmo banco MariaDB do jogo. A carteira usada pela integração Stripe atual é **`accounts.diamond_points`**, compartilhada entre os personagens da conta. Não usar a antiga referência `accounts.pontos` para esta integração.
 
-## Tabelas usadas (todas já existem no seu dump)
+`pwu-stripe-production.sql` registra os objetos adicionados à instalação de produção: pedidos, revisões e rotinas de criação, vinculação e confirmação. A entrega passa por `pwu_diamond_operations` e seu trigger transacional existente, sem conceder UPDATE direto no saldo ao usuário do site.
 
-| Tabela | Para quê |
-|---|---|
-| `accounts` | login e cadastro do site · saldo em `pontos` |
-| `players` | treinadores da conta, ranking, time em `pokemons` |
-| `players_online` | quantos estão online agora |
-| `server_config` | recorde de jogadores (`players_record`) |
-| `guilds`, `guild_members` | ranking de guildas |
-| `player_deaths` | ranking de mortes |
-| `noticias` | notícias do site |
-| `pacotes` | pacotes da loja |
-| `historico_pagamentos` | pedidos de coins (Mercado Pago e Stripe) |
-| `historico_mp` | log dos avisos recebidos do Mercado Pago |
-| `suporte` | tickets abertos em Minha Conta |
-| `config_inicio`, `download` | links de download e redes sociais |
+**A migration já foi aplicada no servidor oficial. Não executar novamente para atualizar a cópia local do Git.** Ela não é idempotente e depende da carteira, trigger, contas e colunas de histórico já instalados. Não configura uma base vazia nem contém dados reais de jogadores.
 
-## Como o pagamento grava
+Consulte [Stripe em produção](../docs/stripe-producao.md) para roteamento, dependências, testes e operação.
 
-1. O jogador escolhe o pacote → o site cria uma linha em `historico_pagamentos`
-   com `status = 0`, `entregue = 0` e `valor` = coins do pacote.
-2. O provedor confirma o pagamento e chama o webhook.
-3. O webhook faz `UPDATE ... SET status = 1, entregue = 1 WHERE entregue = 0`.
-   Se não afetar nenhuma linha, outro aviso já creditou e nada acontece.
-   É essa trava que impede crédito em dobro quando o provedor reenvia.
-4. Na mesma transação: `UPDATE accounts SET pontos = pontos + valor`.
-
-## Tabela opcional
-
-`site-tables.sql` cria `site_exp_snapshots`, usada só pelo ranking de
-"ganho de experiência" (guarda um retrato diário da experiência).
-Sem ela, esse ranking aparece vazio com um aviso; os outros três funcionam.
+`site-tables.sql` é a tabela opcional de snapshots utilizada pelo ranking de ganho de experiência. Não é uma migration da carteira nem do pagamento Stripe.
