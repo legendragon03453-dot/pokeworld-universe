@@ -1,0 +1,43 @@
+.rk-purchase { display:flex; align-items:center; justify-content:space-between; gap:24px; margin-top:24px; padding-top:22px; border-top:1px solid #57728b70; }
+.rk-purchase[hidden], .rk-dialog [hidden] { display:none!important; }
+.rk-purchase h3 { color:#f7dc91; font:600 17px/1.4 var(--montreal); margin:0 0 6px; }
+.rk-purchase p { color:#c2d0e4; font:400 14px/1.6 var(--montreal); margin:0; max-width:520px; }
+.rk-purchase .rk-purchase__last { margin-top:8px; color:#9ce1cc; font-size:12px; }
+.rk-purchase button { flex-shrink:0; }
+.rk-purchase > a { flex-shrink:0; }
+.rk-dialog { width:min(590px,calc(100% - 28px)); max-height:calc(100dvh - 32px); margin:auto; padding:30px; color:#e9f0ff; background:linear-gradient(135deg,#18374e,#0c2044); border:1px solid #ceaf61; border-radius:18px; box-shadow:0 24px 80px #0009; font:400 15px/1.55 var(--montreal); }
+.rk-dialog::backdrop { background:#020b20b8; backdrop-filter:blur(4px); }
+.rk-dialog h2 { margin:0 0 12px; color:#ffe299; font:400 35px/1.1 var(--bebas); }
+.rk-dialog p { margin:12px 0; }
+.rk-dialog__price { display:flex; justify-content:space-between; gap:16px; padding:16px 18px; margin:18px 0; border:1px solid #526788; border-radius:10px; background:#071930; }
+.rk-dialog__price b { display:block; font-size:22px; color:#ffda73; }
+.rk-dialog__price small { color:#b2c6e1; font-size:12px; }
+.rk-dialog__price span:last-child { text-align:right; }
+.rk-dialog .field { margin:16px 0 0; }
+.rk-dialog .field input { font-size:16px; min-height:44px; }
+.rk-dialog__consent { display:flex; align-items:flex-start; gap:10px; margin:18px 0; cursor:pointer; }
+.rk-dialog__consent input { width:19px; height:19px; margin-top:3px; flex-shrink:0; accent-color:#ffd15f; }
+.rk-dialog__actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:24px; }
+.rk-dialog__actions .btn { flex:1; min-height:44px; }
+.rk-dialog :focus-visible { outline:3px solid #82e5f3; outline-offset:3px; }
+.rk-dialog__note { color:#b7cbe3; font-size:13px; }
+.rk-dialog__message { color:#ffda90; padding:12px 0 0; overflow-wrap:anywhere; }
+@media(max-width:640px) { .rk-purchase { align-items:flex-start; flex-direction:column; gap:16px; } .rk-purchase button { width:100%; } .rk-dialog { padding:22px; } .rk-dialog h2 { font-size:30px; } .rk-dialog__actions { flex-direction:column; } }
+body[data-page="comprar-rk"] .page--sub { min-height:100vh; background:linear-gradient(130deg,#14243eeb,#071735ee),url('assets/img/bg/hex-plain.png') center/400px repeat; }
+.rk-page { width:min(820px,calc(100% - 36px)); margin:38px auto 64px; color:#e9f0ff; font:400 15px/1.55 var(--montreal); }
+.rk-page [hidden] { display:none!important; }
+.rk-page > .voltar { margin-bottom:25px; display:inline-flex; font-size:14px; }
+.rk-page__head { margin-bottom:26px; }
+.rk-page__eyebrow { color:#a3d6e8; font-size:11px; font-weight:700; letter-spacing:.15em; margin:0 0 8px; }
+.rk-page__head h1 { font:400 46px/1.05 var(--bebas); margin:0 0 12px; color:#fff; }
+.rk-page__head h1 span { color:#ffd366; }
+.rk-page__head > p:last-child { max-width:680px; color:#bfd0e7; margin:0; }
+.rk-page__status { padding:32px; border:1px solid #587191; border-radius:16px; background:#102847; }
+.rk-page__status p { margin:0 0 20px; }
+.rk-page__last { padding:13px 18px; margin:0 0 16px; color:#a6e5cd; background:#15364a; border:1px solid #40756d; border-radius:10px; font-size:13px; }
+.rk-dialog--page { width:100%; max-height:none; margin:0; padding:30px 34px; border-color:#647b98; border-top:2px solid #e6c474; box-shadow:0 14px 50px #0003; }
+.rk-dialog--page .rk-dialog__price { margin:22px 0; }
+.rk-dialog--page .rk-dialog__actions { justify-content:flex-end; }
+.rk-dialog--page .rk-dialog__actions .btn { flex:0 1 auto; padding-left:30px; padding-right:30px; }
+.rk-dialog--page .rk-dialog__actions .btn--ghost { order:-1; }
+@media(max-width:640px) { .rk-page { width:calc(100% - 28px); margin:28px auto 42px; } .rk-page__head h1 { font-size:40px; } .rk-dialog--page { padding:22px; } .rk-dialog--page .rk-dialog__price { gap:12px; padding:14px; } .rk-dialog--page .rk-dialog__price b { font-size:20px; white-space:nowrap; } .rk-dialog--page .rk-dialog__actions .btn--ghost { order:0; } .rk-purchase>a { width:100%; } }

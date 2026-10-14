@@ -1,0 +1,245 @@
+/* =====================================================================
+   POKEWORLD UNIVERSE — Notícias (Figma "NOTICIAS POKEWORLD UNIVERSE GERAL")
+   Escala do site: 1rem = 10px do design em 1920. Fontes/tokens do styles.css.
+   ===================================================================== */
+
+.nw-wrap { width: min(172rem, 100% - 8rem); margin: 0 auto; }
+.nw .grad { background-size: 100% 100%; }
+.nw .grad--yellow { background-image: var(--grad-yellow); background-size: 100% 100%; }
+
+/* ---------- topo: breadcrumb + título ---------- */
+.nw-top { padding: 4rem 0 5rem; background: #fff; overflow: visible; } /* overflow visível: senão a lateral sticky não gruda na tela */
+.nw-crumb { display: flex; align-items: center; gap: .9rem; font: 400 1.75rem var(--montreal); color: rgba(0,0,0,.75); }
+.nw-crumb a { color: rgba(0,0,0,.6); transition: color .2s; }
+.nw-crumb a:hover { color: #0530ef; }
+.nw-crumb i { width: .6rem; height: .6rem; border-radius: 50%; background: rgba(0,0,0,.35); }
+.nw-title { margin: 1.6rem 0 3rem; font: 400 6.24rem/1.2 var(--bebas); letter-spacing: .005em; color: #000; }
+
+/* ---------- grade principal: conteúdo + lateral ---------- */
+.nw-grid { display: grid; grid-template-columns: minmax(0, 1fr) 70.5rem; gap: 2.2rem; align-items: start; }
+.nw-main { min-width: 0; }
+.nw-side { position: sticky; top: 2.4rem; display: flex; flex-direction: column; gap: 3.5rem; } /* acompanha a rolagem da coluna principal */
+
+/* destaque (imagem de fundo com texto sobreposto) */
+.nw-hero {
+  position: relative; display: flex; flex-direction: column; justify-content: flex-end; min-height: 46.1rem;
+  padding: 3.2rem 4.4rem 3.6rem; border-radius: 1.5rem; overflow: hidden; color: #fff; background: #d9d9d9; isolation: isolate;
+}
+.nw-hero__bg { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(.2,.8,.2,1); }
+.nw-hero:hover .nw-hero__bg { transform: scale(1.03); }
+.nw-hero::before { content: ""; position: absolute; inset: 0; z-index: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 36%, #000 100%); pointer-events: none; }
+.nw-hero > :not(.nw-hero__bg) { position: relative; z-index: 1; } /* a imagem de fundo continua absoluta, cobrindo o card */
+.nw-hero__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 1.2rem; font: 400 1.4rem var(--montreal); color: rgba(255,255,255,.7); }
+.nw-hero__meta .tag { padding: .45rem 1.3rem; border-radius: 10rem; background: var(--lime); color: #000; font: 400 1.4rem var(--bebas); letter-spacing: .08em; }
+.nw-hero__row { display: flex; align-items: flex-end; justify-content: space-between; gap: 3rem; margin-top: 1.2rem; }
+.nw-hero h2 { max-width: 52rem; font: 400 3.5rem/1.05 var(--bebas); letter-spacing: .008em; }
+.nw-hero h2 .grad { background-image: var(--grad-yellow); background-size: 100% 100%; }
+.nw-hero .btn { flex: none; }
+
+/* cabeçalho de lista com linha */
+.nw-sec-head { display: flex; align-items: center; gap: 2.4rem; margin: 5rem 0 4.4rem; }
+.nw-sec-head h2 { flex: none; font: 500 3.04rem/1.3 var(--montreal); color: #000; letter-spacing: .01em; }
+.nw-sec-head i { flex: 1; height: .1rem; background: #000; opacity: .9; }
+
+/* lateral: últimas */
+.nh-latest { display: flex; flex-direction: column; border-radius: 2.4rem; overflow: hidden; background: #f7f7f7; border: .1rem solid rgba(0,0,0,.08); }
+.nh-latest__head { display: flex; align-items: center; justify-content: space-between; height: 7.2rem; padding: 0 2.8rem; border-bottom: .1rem solid rgba(0,0,0,.08); }
+.nh-latest__head h3 { font: 400 2.6rem var(--bebas); }
+.nh-latest__head a { font: 400 1.5rem var(--montreal); color: #0530ef; }
+.nh-latest__head a:hover { text-decoration: underline; }
+.nh-row { display: grid; grid-template-columns: 12.2rem 1fr; gap: 1.8rem; align-items: center; min-height: 10.7rem; padding: 1.6rem 2.8rem; border-bottom: .1rem solid rgba(0,0,0,.06); color: inherit; transition: background .2s; }
+.nh-row:hover { background: rgba(5,48,239,.05); }
+.nh-row img { width: 12.2rem; height: 7.4rem; object-fit: cover; border-radius: 1.2rem; background: #eef1fb; }
+.nh-row--art img { object-fit: contain; padding: .8rem; background: linear-gradient(135deg, #0a1348, #0e1c6e); }
+.nh-row small { display: flex; gap: .9rem; font: 400 1.3rem var(--montreal); color: rgba(0,0,0,.5); }
+.nh-row small b { color: #0530ef; font-weight: 500; }
+.nh-row strong { display: block; margin-top: .4rem; font: 500 1.6rem/1.3 var(--montreal); color: #000; }
+.nh-latest__foot { padding: 1.8rem 2.8rem 2rem; }
+
+/* lateral: promo "Ganhe recompensas" */
+.nw-promo {
+  position: relative; display: flex; align-items: center; justify-content: space-between; gap: 2.4rem; min-height: 17.7rem;
+  padding: 2.4rem 3.5rem; border-radius: 2rem; overflow: hidden; color: #fff; isolation: isolate;
+  background: linear-gradient(180deg, #70f5ff 0%, #0530ef 100%);
+}
+.nw-promo::before { content: ""; position: absolute; inset: 0; z-index: -1; background: url("assets/img/bg/hex-plain.png") left top / 30rem 52rem repeat; opacity: .06; }
+.nw-promo__coin { position: absolute; left: 3.5rem; top: 2.4rem; display: inline-flex; align-items: center; gap: .6rem; padding: .5rem 1.1rem .5rem .6rem; border-radius: 10rem; background: rgba(0,0,0,.35); border: .07rem solid rgba(255,255,255,.14); backdrop-filter: blur(5px); font: 400 1.02rem var(--bebas); letter-spacing: .08em; }
+.nw-promo__coin img { width: 1.6rem; height: 1.6rem; object-fit: contain; }
+.nw-promo h3 { max-width: 34rem; margin-top: 3.2rem; font: 400 4.06rem/.95 var(--bebas); letter-spacing: .005em; }
+.nw-promo h3 .grad { background-image: var(--grad-yellow); background-size: 100% 100%; }
+.nw-promo .btn--ghost { flex: none; align-self: flex-end; color: #fff; border-color: rgba(255,255,255,.35); }
+.nw-promo:hover .btn--ghost { border-color: #fff; }
+
+/* ---------- cards de notícia ---------- */
+.nw-cards { display: grid; gap: 2.5rem; }
+.nw-cards--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.nw-cards--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4rem; }
+.nh-card {
+  position: relative; display: flex; flex-direction: column; border-radius: 2.2rem; overflow: hidden; color: #fff;
+  border: .3rem solid transparent; background: linear-gradient(var(--dark), var(--dark)) padding-box, var(--grad-blue) border-box;
+  transition: transform .35s cubic-bezier(.2,.8,.2,1);
+}
+.nh-card:hover { transform: translateY(-.8rem); }
+.nh-card__img { position: relative; display: block; aspect-ratio: 16/9; overflow: hidden; background: #0a1348; }
+.nh-card__img img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.2,.8,.2,1); }
+.nh-card:hover .nh-card__img img { transform: scale(1.06); }
+.nh-card__img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(49,53,71,0) 55%, rgba(49,53,71,.85) 100%); pointer-events: none; }
+.nh-card--art .nh-card__img { display: grid; place-items: center; background: radial-gradient(26rem 26rem at 50% 60%, rgba(112,245,255,.28), transparent 70%), linear-gradient(135deg, #0a1348, #0e1c6e); }
+.nh-card--art .nh-card__img img { width: 38%; height: auto; object-fit: contain; }
+.nh-card__tag { position: absolute; left: 1.6rem; top: 1.6rem; z-index: 1; padding: .5rem 1.4rem; border-radius: 10rem; background: var(--lime); color: #000; font: 400 1.4rem var(--bebas); letter-spacing: .08em; }
+.nh-card__body { display: flex; flex-direction: column; gap: 1.2rem; flex: 1; padding: 2.2rem 2.6rem 2.6rem; }
+.nh-card__meta { display: flex; flex-wrap: wrap; gap: 1rem; font: 400 1.4rem var(--montreal); color: rgba(255,255,255,.65); }
+.nh-card__meta i { font-style: normal; opacity: .5; }
+.nh-card h3 { font: 500 2rem/1.3 var(--montreal); }
+.nh-card h3 a { color: inherit; }
+.nh-card h3 a:hover { color: var(--lime); }
+.nh-card p { font: 300 1.5rem/1.5 var(--montreal); color: rgba(255,255,255,.75); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.nh-card__more { display: inline-flex; align-items: center; gap: .8rem; margin-top: auto; font: 400 1.7rem var(--bebas); letter-spacing: .08em; color: var(--lime); transition: gap .2s; }
+.nh-card__more::after { content: "→"; }
+.nh-card:hover .nh-card__more { gap: 1.4rem; }
+.nh-empty { grid-column: 1 / -1; padding: 6rem 2rem; text-align: center; border-radius: 2.2rem; border: .15rem dashed rgba(0,0,0,.15); font: 400 1.8rem var(--montreal); color: rgba(0,0,0,.55); }
+
+/* ---------- arquivo: cabeçalho, filtros, busca ---------- */
+.nw-archive { padding: 4.4rem 0 7rem; background: #fff; }
+.nh-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 3rem; margin-bottom: 3.6rem; }
+.nh-head h2 { font: 400 5.6rem/1.2 var(--bebas); color: #000; }
+.nh-head p { font: 400 1.7rem/1.25 var(--montreal); color: rgba(0,0,0,.6); text-align: right; }
+.nh-kicker { display: inline-flex; align-items: center; gap: 1rem; font: 400 1.5rem var(--bebas); letter-spacing: .18em; text-transform: uppercase; color: #0530ef; }
+.nh-kicker::before { content: ""; width: 2.6rem; height: .25rem; border-radius: .2rem; background: var(--grad-blue); }
+.nh-kicker--light { color: var(--lime); }
+.nh-kicker--light::before { background: var(--lime); }
+.nh-tools { display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: center; margin-bottom: 2rem; }
+.nh-tools__right { display: flex; flex-wrap: wrap; gap: 1.2rem; align-items: center; justify-content: flex-end; }
+.nh-tools .search { min-width: 30rem; }
+.nh-tools .search .ico { width: 1.8rem; height: 1.8rem; opacity: .6; }
+.nh-select {
+  height: 4.7rem; padding: 0 4rem 0 1.8rem; border-radius: 10rem; border: .1rem solid rgba(0,0,0,.1); background: #fff;
+  font: 400 1.6rem var(--montreal); color: #000; appearance: none; -webkit-appearance: none; cursor: pointer;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' fill='none' stroke='%23000' stroke-opacity='.6' stroke-width='1.6'/></svg>");
+  background-repeat: no-repeat; background-position: right 1.6rem center; background-size: 1.2rem;
+}
+.nh-select:focus, .nh-tools .search:focus-within { outline: 0; border-color: #0530ef; }
+.nh-count { display: flex; align-items: center; justify-content: space-between; gap: 2rem; margin-bottom: 2.4rem; font: 400 1.6rem var(--montreal); color: rgba(0,0,0,.6); }
+.nh-count strong { color: #000; font-weight: 500; }
+.nh-count button { border: 0; background: transparent; font: 400 1.6rem var(--bebas); letter-spacing: .08em; color: #0530ef; cursor: pointer; }
+.nh-count button:hover { text-decoration: underline; }
+.nh-more { display: flex; justify-content: center; margin-top: 4rem; }
+.nh-more .btn[hidden] { display: none; }
+
+/* ---------- "Olha que incrível!": destaque editorial + discussões ---------- */
+.nw-spot { position: relative; padding: 4.5rem 0 6rem; color: #fff; background: linear-gradient(0deg, #2aa7ff 0%, #2f8cff 48%, #0530ef 100%); overflow: visible; }
+.nw-spot__head { display: flex; align-items: center; gap: 2.2rem; margin-bottom: 3.7rem; }
+.nw-spot__head h2 { flex: none; font: 400 4.5rem/1.24 var(--bebas); }
+.nw-spot__head i { flex: 1; height: .3rem; border-radius: .3rem; background: #fff; }
+.nw-spot__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: start; }
+.nw-spot__left { padding-right: 4.9rem; border-right: .2rem solid #fff; }
+.nw-spot__right { position: sticky; top: 2.4rem; padding-left: 3rem; } /* fica fixo enquanto a arte rola */
+.nw-spot__fig { display: block; border-radius: 2rem; overflow: hidden; background: #d9d9d9; aspect-ratio: 811/812; }
+.nw-spot__fig img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(.2,.8,.2,1); will-change: transform; }
+.nw-spot__fig:hover img { transform: scale(1.03); }
+.nw-spot__label { display: block; margin-top: 2.4rem; font: 400 1.7rem var(--montreal); color: rgba(255,255,255,.7); }
+.nw-spot__title { margin-top: .6rem; font: 500 4.5rem/1.2 var(--montreal); color: #fff; }
+.nw-spot__title a { color: inherit; }
+.nw-spot__title a:hover { text-decoration: underline; text-decoration-thickness: .2rem; text-underline-offset: .4rem; }
+.nw-spot__text { margin-top: 2.6rem; font: 400 2.1rem/1.35 var(--montreal); color: #fff; }
+.nw-talk { list-style: none; margin: 0; padding: 0; }
+.nw-talk li { padding: 1.3rem 0 2.4rem; border-bottom: .2rem solid #fff; }
+.nw-talk li:last-child { border-bottom: 0; }
+.nw-talk small { display: block; font: 400 1.7rem var(--montreal); color: rgba(255,255,255,.4); }
+.nw-talk p { margin-top: .8rem; max-width: 83rem; font: 500 2.5rem/1.25 var(--montreal); color: #fff; }
+.nw-talk time { display: block; margin-top: 1.4rem; font: 400 1.7rem var(--montreal); color: rgba(255,255,255,.7); }
+.nw-talk a { color: inherit; }
+.nw-talk a:hover p { text-decoration: underline; text-underline-offset: .4rem; }
+
+/* ---------- mais notícias ---------- */
+.nw-more { padding: 5.7rem 0 6rem; background: #fff; }
+.nw-more h2 { margin-bottom: 3.2rem; text-align: center; font: 400 5.6rem/1.2 var(--bebas); color: #000; }
+
+/* ---------- faixa final ---------- */
+.nh-band .btn--ghost { color: #fff; border-color: rgba(255,255,255,.5); }
+.nh-band .btn--ghost:hover { border-color: #fff; }
+.nh-band .btn .ico { width: 2.2rem; height: 2.2rem; object-fit: contain; }
+
+/* ---------- capas que já trazem o texto (banners oficiais) ---------- */
+.sr-only { position: absolute !important; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.nw-hero--banner { min-height: 0; padding: 0 0 7.6rem; justify-content: flex-start; background: #070b1e; }
+.nw-hero--banner .nw-hero__bg { position: relative; inset: auto; height: auto; aspect-ratio: 16 / 9; display: block; }
+.nw-hero--banner::before { background: none; }
+.nw-hero--banner { padding-bottom: 0; }
+.nw-hero.nw-hero--banner > .nw-hero__meta { position: absolute; left: 2.4rem; top: 2.4rem; z-index: 1; margin: 0; padding: .6rem 1rem; border-radius: 10rem; background: rgba(0,0,0,.45); backdrop-filter: blur(6px); } /* sobre a arte, canto superior */
+.nw-hero--banner .nw-hero__row { position: relative; z-index: 1; justify-content: flex-end; margin: 0; padding: 1.6rem 2.4rem; }
+.nw-hero--banner .lc-hero__lead, .nw-hero--banner .lc-hero__cta { display: none; }
+/* capa quadrada: o quadro vira quadrado e a arte preenche tudo, sem corte */
+.nw-hero--square .nw-hero__bg { aspect-ratio: 1; object-fit: cover; }
+/* todos os cards iguais: quadro 4:3 preenchido pela arte (sem faixas vazias) e corpo de altura fixa */
+.nw-cards .nh-card { height: 100%; }
+.nw-cards .nh-card__img { aspect-ratio: 16 / 9; } /* mesmo formato do destaque */
+.nw-cards .nh-card__img img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.nh-card--square .nh-card__img img { object-position: center 18%; }
+.nh-card--square .nh-card__img::after { background: none; }
+.nw-cards .nh-card__body { height: 23rem; }
+.nw-cards .nh-card h3 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 5.2rem; }
+.nw-cards .nh-card p { -webkit-line-clamp: 2; min-height: 4.5rem; }
+.nw-cards { align-items: stretch; }
+.lc-lead { margin-top: 3.2rem; font: 500 2.2rem/1.5 var(--montreal); color: #000; }
+
+/* ---------- mobile ---------- */
+@media (max-width: 900px) {
+  .nw-wrap { width: calc(100% - 4rem); }
+  .nw-top { padding: 2.8rem 0 4rem; }
+  .nw-title { font-size: 4.4rem; margin-bottom: 2.4rem; }
+  .nw-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .nw-side, .nw-spot__right { position: static; }
+  /* destaque no celular: foto em cima, texto em área escura embaixo */
+  .nw-hero { min-height: 0; padding: 0 0 2.4rem; background: #070b1e; }
+  .nw-hero__bg { position: relative; z-index: 0; width: 100%; height: 22rem; object-fit: cover; transform: none !important; }
+  .nw-hero::before { inset: auto 0 auto 0; top: 0; height: 22rem; background: linear-gradient(180deg, rgba(7,11,30,0) 45%, #070b1e 100%); }
+  .nw-hero__meta { margin-top: -1.2rem; padding: 0 2rem; font-size: 1.3rem; gap: .8rem; }
+  .nw-hero__row { flex-direction: column; align-items: flex-start; gap: 1.8rem; padding: 0 2rem; }
+  .nw-hero h2 { font-size: 3rem; max-width: none; }
+  .nw-hero .btn { width: 100%; }
+  .nw-hero--banner { padding: 0; }
+  .nw-hero--banner .nw-hero__bg { position: relative; height: auto; }
+  .nw-hero.nw-hero--banner > .nw-hero__meta { position: relative; left: auto; top: auto; margin: 1.2rem 1.2rem 0; padding: 0; background: none; backdrop-filter: none; } /* no celular a tarja fica abaixo da arte, sem cobrir o título */
+  .nw-hero--banner { padding-bottom: 1.2rem; }
+  .nw-hero--banner .nw-hero__row { padding: 1.2rem; }
+  .nw-hero--banner .btn { width: 100%; }
+  .nw-hero--square .nw-hero__bg { aspect-ratio: 1; }
+  .nw-cards .nh-card__body { height: auto; }
+  .lc-lead { font-size: 1.8rem; }
+  .nw-sec-head { margin: 3.6rem 0 2.6rem; }
+  .nw-sec-head h2 { font-size: 2.4rem; }
+  .nw-cards--2, .nw-cards--3 { grid-template-columns: 1fr; gap: 2rem; }
+  .nh-latest__head { padding: 0 2rem; }
+  .nh-row { grid-template-columns: 9rem 1fr; padding: 1.4rem 2rem; min-height: 0; }
+  .nh-row img { width: 9rem; height: 6rem; }
+  .nh-latest__foot { padding: 1.6rem 2rem 2rem; }
+  .nw-promo { flex-direction: column; align-items: flex-start; padding: 2.4rem 2.4rem 2.6rem; }
+  .nw-promo__coin { left: 2.4rem; }
+  .nw-promo h3 { font-size: 3.4rem; }
+  .nw-promo .btn--ghost { align-self: stretch; }
+  .nw-archive { padding: 3rem 0 5rem; }
+  .nh-head { flex-direction: column; align-items: flex-start; gap: 1.2rem; }
+  .nh-head h2 { font-size: 4.2rem; }
+  .nh-head p { text-align: left; }
+  .nh-tools { grid-template-columns: 1fr; }
+  .nh-tools__right { justify-content: flex-start; }
+  .nh-tools .search { min-width: 0; flex: 1; }
+  .nh-count { flex-direction: column; align-items: flex-start; gap: .8rem; }
+  .nw-spot { padding: 3.6rem 0 4.8rem; }
+  .nw-spot__head h2 { font-size: 3.4rem; }
+  .nw-spot__grid { grid-template-columns: 1fr; gap: 3.2rem; }
+  .nw-spot__left { padding-right: 0; border-right: 0; }
+  .nw-spot__right { padding-left: 0; border-top: .2rem solid #fff; padding-top: 1.6rem; }
+  .nw-spot__title { font-size: 3.2rem; }
+  .nw-spot__text { font-size: 1.7rem; }
+  .nw-talk p { font-size: 1.9rem; }
+  .nw-more { padding: 4rem 0 5rem; }
+  .nw-more h2 { font-size: 4.2rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nh-card, .nh-card__img img, .nw-hero__bg, .nw-spot__fig img { transition: none; }
+}
+
+/* ---------- animações de entrada (reveladas pelo JS com GSAP) ---------- */
+html.has-gsap [data-nw-reveal]:not([data-revealed]) { opacity: 0; }

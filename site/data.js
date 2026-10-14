@@ -6,9 +6,75 @@ window.PWU = window.PWU || {};
 /* ---------- Notícias ---------- */
 PWU.news = [
   {
+    slug: 'live-coins-live-store',
+    tag: 'Novidade', date: '2026-10-06', featured: true, hero: true,
+    url: 'noticia-live-coins.html',
+    image: 'assets/img/banners-20261012/BannerTwitchRecompensa.jpg', banner: true,
+    gallery: ['assets/img/live-news-20261006/boost-xp-140.png', 'assets/img/live-news-20261006/boost-loot-140.png', 'assets/img/live-news-20261006/boost-catch-140.png', 'assets/img/live-news-20261006/boost-shiny-140.png'],
+    coin: 'assets/img/live-news-20261006/livecoin-44.png', coinLabel: 'Live Coins',
+    highlight: 'recompensas no PWU',
+    cover: 'assets/img/banners-20261012/BannerTwitchRecompensa.jpg',
+    promo: { badge: 'Live Coins', badgeIcon: 'assets/img/live-news-20261006/livecoin-44.png', title: 'Ganhe recompensas no PWU ao fazer suas lives', highlight: 'Ganhe recompensas', label: 'Como participar', href: 'noticia-live-coins.html#como-participar' },
+    title: 'Suas lives agora valem recompensas no PWU',
+    excerpt: 'Acompanhe os nossos parceiros na Twitch, acumule Live Coins e use as moedas na Live Store, dentro do jogo.',
+    body: [
+      'Funciona assim: você assiste às lives dos parceiros do PokeWorld Universe, junta Live Coins enquanto acompanha e depois troca as moedas na Live Store por itens exclusivos com tema Twitch, como mochilas e cosméticos para o seu treinador.',
+      'Quanto mais você acompanha, mais você leva. É a nossa forma de valorizar quem apoia os streamers e a comunidade, e de dar um motivo a mais para ficar de olho nas hunts, nos eventos e nas novidades que passam ao vivo.',
+      '> Parceiros, horários e regras para ganhar moedas saem no Discord e no Instagram do PWU. Ative as notificações!'
+    ]
+  },
+  {
+    slug: 'notas-de-balanceamento', pinned: true,
+    tag: 'Atualização', date: '2026-10-12',
+    image: 'assets/img/banners-20261012/Balanceamento.jpg', banner: true,
+    title: 'Notas de Balanceamento',
+    excerpt: 'Nossa equipe está trabalhando para você escolher seus favoritos e aproveitar o jogo com o máximo de diversão.',
+    body: [
+      'Pokémon das Classes I e II ganham ajustes de vida e ataque para seguirem fortes no meio do jogo. Já os golpes de área das Classes IV e V perdem um pouco de força, porque estavam passando por cima das raridades Épsilon e Beta.',
+      'O Rage também foi revisto: nos níveis Base, Savage, Apex e Oblivion, experiência e drops ficaram proporcionais ao desafio. Quanto mais difícil a hunt, maior a recompensa. A captura das Classes III a V foi ajustada, e os lendários seguem raros de propósito.',
+      '> Achou algo fora da curva depois do patch? Conta pra gente no Discord, no canal de sugestões.'
+    ]
+  },
+  {
+    slug: 'passe-de-batalha', pinned: true,
+    tag: 'Novidade', date: '2026-10-10',
+    image: 'assets/img/banners-20261012/GamePass.jpg', banner: true,
+    title: 'Passe de Batalha: para você desfrutar do melhor',
+    excerpt: 'O Passe de Batalha chega ao PokeWorld Universe com cosméticos e itens únicos para quem joga todo dia.',
+    body: [
+      'A cada missão diária do passe concluída, você sobe de nível e abre novas cartas de recompensa: cosméticos, itens exclusivos e benefícios dentro do jogo. É uma forma de ganhar algo especial só por jogar do seu jeito, todos os dias.',
+      'O visual do passe segue a identidade do PWU, com cartas que revelam as recompensas a cada etapa. Quem começa cedo aproveita mais a temporada e garante itens que não voltam depois.',
+      '> Comece pelos cosméticos e itens únicos e acompanhe as novidades do passe no nosso Discord.'
+    ]
+  },
+  {
+    slug: 'sistema-de-guild', pinned: true,
+    tag: 'Novidade', date: '2026-10-09',
+    image: 'assets/img/banners-20261012/SistemaGuild.jpg', banner: true,
+    title: 'Sistema de Guild: crie a sua guild para dominar o PWU',
+    excerpt: 'Chegou a hora de juntar a turma: crie a sua guild e domine o PWU ao lado dos seus amigos.',
+    body: [
+      'Avance sua guild para receber buffs que ajudam todos os membros nas hunts e para enfrentar bosses excepcionais, que desafiam quem evolui em grupo. Quanto mais forte a guild, maior o desafio e melhor a recompensa.',
+      'Toda guild tem missões e recompensas diárias para fazer em conjunto, e os pontos conquistados alimentam o ranking de guildas. A cada temporada, as melhores colocadas ganham recompensas sazonais exclusivas.',
+      '> Chame seus amigos, escolha o nome da guild e comece a sua história no PWU.'
+    ]
+  },
+  {
+    slug: 'top-ranking', pinned: true,
+    tag: 'Novidade', date: '2026-10-08',
+    image: 'assets/img/banners-20261012/TopRanking2.jpg', banner: true,
+    title: 'Top Ranking: prove que você é o melhor deste universo',
+    excerpt: 'Seja o melhor para ganhar recompensas sazonais! O Top Ranking é a vitrine de quem manda no PokeWorld Universe.',
+    body: [
+      'O ranking funciona por temporadas: você soma pontos de acordo com o seu desempenho e, quando a temporada termina, os primeiros colocados recebem recompensas exclusivas. Cada posição do pódio tem o seu prêmio, e os quatro primeiros aparecem em destaque.',
+      'As recompensas de temporada não voltam depois: quem ficou com o título ou o item é porque estava lá. A cada nova temporada o placar zera, então quem entra agora tem a mesma chance de quem já joga há mais tempo.',
+      '> Prove que você é o melhor deste universo e alcance o Top Ranking para vencer!'
+    ]
+  },
+  {
     slug: 'abertura-pokeworld-universe',
     tag: 'Novidade', date: '2026-11-20', featured: true,
-    image: 'assets/img/art/screenshot-1.jpg',
+    image: 'assets/img/banners-20261012/LumioseCity.jpg', banner: true,
     title: 'O PokeWorld Universe abre em [data]',
     excerpt: 'Servidor de Pokémon com cliente próprio, desenvolvido pela nossa equipe, e uma perspectiva que dá profundidade ao mundo. PWU City inteira, Pokédex das três primeiras gerações e muito mais no dia da abertura.',
     body: [
@@ -160,6 +226,20 @@ PWU.news = [
   },
 ];
 
+/* ---------- Notícias: bloco "Olha que incrível!" ---------- */
+PWU.spotlight = {
+  slug: 'ranking-temporada-11-resultados',
+  image: 'assets/bg-arceus.png',
+  label: 'Notícias',
+  text: 'Confira os resultados completos da Temporada 11 e descubra quem são os 10 melhores treinadores do Brasil nesta edição emocionante. Esta temporada trouxe desafios intensos e batalhas memoráveis, destacando o talento e a estratégia dos competidores que se destacaram entre milhares.',
+  discussions: [
+    { topic: 'Buff no Pikachu? Ou Nerf?', text: 'Você acha que o Pikachu deveria receber um aumento de poder ou uma redução? Compartilhe sua opinião sobre como esse personagem deve ser ajustado para melhorar o equilíbrio do jogo.', when: '20 Set | 23h30m', href: 'https://discord.gg/pokeworlduniverse' },
+    { topic: 'Qual o melhor time para iniciantes?', text: 'Defensor e Suporte vencem mais partidas ou um time só de Atacantes dá conta? Conte qual combinação funcionou para você nas primeiras rotas.', when: '18 Set | 21h10m', href: 'https://discord.gg/pokeworlduniverse' },
+    { topic: 'Shiny hunting: vale a pena?', text: 'Horas de caçada por um brilho diferente. Mostre seu shiny mais raro e diga quanto tempo levou para capturar.', when: '15 Set | 19h45m', href: 'https://discord.gg/pokeworlduniverse' },
+    { topic: 'Sugestões para a Temporada 12', text: 'A região Aurora está chegando. O que você quer ver no próximo Passe de Aventura e nos eventos da temporada?', when: '12 Set | 20h00m', href: 'https://discord.gg/pokeworlduniverse' }
+  ]
+};
+
 /* ---------- Ranking ---------- */
 PWU.ranking = [
   { pos: 1, name: 'Kyan_Maloka', team: 'Aurora Esports', avatar: 'gengar', points: 18420, wins: 412, rate: 71 },
@@ -225,9 +305,9 @@ PWU.trophies = [1, 2, 3, 4, 5, 6, 7].map(function (t) { return 'assets/img/troph
 /* ---------- Pacotes de créditos — SÓ EXIBIÇÃO. O preço real vive no servidor (api/_lib/packages.js). ---------- */
 PWU.coinPackages = [
   { id: 'plus', coins: 108, base: 100, price: 100, bonusPct: 8, bonus: 8 },
-  { id: 'premium', coins: 168, base: 150, price: 150, bonusPct: 12, bonus: 18, badge: 'Mais popular' },
+  { id: 'premium', coins: 168, base: 150, price: 150, bonusPct: 12, bonus: 18 },
   { id: 'master', coins: 236, base: 200, price: 200, bonusPct: 18, bonus: 36 },
-  { id: 'ultra', coins: 500, base: 400, price: 400, bonusPct: 25, bonus: 100 },
+  { id: 'ultra', coins: 500, base: 400, price: 400, bonusPct: 25, bonus: 100, badge: 'Mais popular' },
   { id: 'legend', coins: 1280, base: 1000, price: 1000, bonusPct: 28, bonus: 280 },
   { id: 'mythic', coins: 1950, base: 1500, price: 1500, bonusPct: 30, bonus: 450, badge: 'Melhor valor' }
 ];

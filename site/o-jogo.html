@@ -6,8 +6,10 @@
   <title>O Jogo — Pokeworld Universe</title>
   <meta name="description" content="Conheça o Pokeworld Universe: um mundo online gratuito para explorar, colecionar criaturas e batalhar.">
   <link rel="icon" href="assets/logo-sigla.png">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="pages.css">
+  <link rel="stylesheet" href="styles.css?pwu=profile-20260926-v6">
+  <link rel="stylesheet" href="pages.css?pwu=profile-20260926-v6">
+  <link rel="stylesheet" href="site-imagens-20261006.css?v=1">
+<link rel="stylesheet" href="public-access-20261006.css?v=1">
 </head>
 <body data-page="o-jogo">
 <div class="scroll-progress" aria-hidden="true"></div>
@@ -18,10 +20,10 @@
     <div class="header-shape header-shape--white"></div>
     <div class="header-shape header-shape--grad"></div>
     <a class="logo-sigla" href="index.html"><img src="assets/logo-sigla.png" alt="PWU"></a>
-    <nav class="nav"><a href="o-jogo.html" class="is-active">O JOGO</a><a href="#" class="is-off" aria-disabled="true">wiki</a><a href="download.html">download</a><a href="ranking.html">ranking</a><a href="Donate">loja</a><a href="Donate">doar</a></nav>
+    <nav class="nav"><a href="o-jogo.html" class="is-active">O JOGO</a><a href="#" class="is-off" aria-disabled="true">wiki</a><a class="is-off" href="#" data-pwu-paused="download" data-pwu-paused-href="download.html" aria-disabled="true" tabindex="-1" title="Em breve">download</a><a class="is-off" href="#" data-pwu-paused="ranking" data-pwu-paused-href="ranking.html" aria-disabled="true" tabindex="-1" title="Em breve">ranking</a><a href="noticias.html">notícias</a><a href="Donate">doar</a></nav>
     <div class="topbar-actions">
       <a class="btn-entrar" href="login.html" data-entrar>Iniciar sessão</a>
-      <a class="btn-jogue-agora" href="download.html">JOGUE AGORA</a>
+      <a class="btn-jogue-agora" href="login.html#criar" data-pwu-paused="download" data-pwu-paused-href="download.html" data-pwu-paused-label="JOGUE AGORA">CRIAR CONTA</a>
     </div>
     <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   </header>
@@ -47,7 +49,7 @@
           <p data-text="ojogo.intro.p1">Pokeworld Universe é um jogo online de batalhas em equipe. Dois times de cinco treinadores disputam uma arena, derrotam criaturas selvagens, acumulam energia e marcam pontos nos gols adversários antes do tempo acabar.</p>
           <p data-text="ojogo.intro.p2">Cada criatura evolui durante a partida e desbloqueia novos golpes. A sinergia entre funções, o controle dos objetivos e a comunicação decidem quem sai vitorioso.</p>
           <div class="btn-row" style="margin-top:3rem">
-            <a class="btn btn--yellow" href="download.html">Jogar grátis</a>
+            <a class="btn btn--yellow is-off" href="#" data-pwu-paused="download" data-pwu-paused-href="download.html" aria-disabled="true" tabindex="-1" title="Em breve">Jogar grátis</a>
             
           </div>
         </div>
@@ -89,14 +91,18 @@
 
     <section class="sec sec--white">
       <div class="wrap">
-        <div class="sec__head"><div><h2 class="sec__title">Galeria</h2><p class="sec__sub">Clique para ampliar.</p></div></div>
-        <div class="gallery-grid">
-          <a href="assets/img/qg/qg-3.jpg" data-lightbox data-reveal><img src="assets/img/qg/qg-3.jpg" alt="" loading="lazy"></a>
-          <a href="assets/img/qg/qg-18.jpg" data-lightbox data-reveal><img src="assets/img/qg/qg-18.jpg" alt="" loading="lazy"></a>
-          <a href="assets/img/qg/qg-26.jpg" data-lightbox data-reveal><img src="assets/img/qg/qg-26.jpg" alt="" loading="lazy"></a>
-          <a href="assets/img/qg/qg-34.jpg" data-lightbox data-reveal><img src="assets/img/qg/qg-34.jpg" alt="" loading="lazy"></a>
-          <a href="assets/img/qg/qg-42.jpg" data-lightbox data-reveal><img src="assets/img/qg/qg-42.jpg" alt="" loading="lazy"></a>
-          <a href="assets/img/qg/qg-50.jpg" data-lightbox data-reveal><img src="assets/img/qg/qg-50.jpg" alt="" loading="lazy"></a>
+        <div class="sec__head"><div><h2 class="sec__title">Galeria</h2><p class="sec__sub">Cenas do universo Pokémon. Clique para ampliar.</p></div></div>
+        <div class="gallery-grid gallery-grid--art">
+          <a href="assets/img/pwu-galeria-20261006/encontro-treinadores.jpg" data-lightbox aria-label="Ampliar: Treinadores e Pokémon reunidos para uma refeição"><img src="assets/img/pwu-galeria-20261006/encontro-treinadores.jpg" alt="Treinadores e Pokémon reunidos para uma refeição" width="736" height="521" loading="lazy" decoding="async"></a>
+          <a href="assets/img/pwu-galeria-20261006/cidade-flabebe.jpg" data-lightbox aria-label="Ampliar: Flabébé voando sobre uma avenida de Lumiose"><img src="assets/img/pwu-galeria-20261006/cidade-flabebe.jpg" alt="Flabébé voando sobre uma avenida de Lumiose" width="735" height="519" loading="lazy" decoding="async"></a>
+          <a href="assets/img/pwu-galeria-20261006/torre-latios-latias.jpg" data-lightbox aria-label="Ampliar: Latios e Latias junto à torre de Lumiose"><img src="assets/img/pwu-galeria-20261006/torre-latios-latias.jpg" alt="Latios e Latias junto à torre de Lumiose" width="720" height="982" loading="lazy" decoding="async"></a>
+          <a href="assets/img/pwu-galeria-20261006/festival-pokemon.jpg" data-lightbox aria-label="Ampliar: Charmander, Piplup e Rockruff em uma rua festiva"><img src="assets/img/pwu-galeria-20261006/festival-pokemon.jpg" alt="Charmander, Piplup e Rockruff em uma rua festiva" width="736" height="736" loading="lazy" decoding="async"></a>
+          <a href="assets/img/pwu-galeria-20261006/batalha-dragapult.jpg" data-lightbox aria-label="Ampliar: Batalha Pokémon com Dragapult em uma arena"><img src="assets/img/pwu-galeria-20261006/batalha-dragapult.jpg" alt="Batalha Pokémon com Dragapult em uma arena" width="736" height="427" loading="lazy" decoding="async"></a>
+          <a href="assets/img/pwu-galeria-20261006/viagem-pokemon.jpg" data-lightbox aria-label="Ampliar: Treinadores e Pokémon em um terminal de viagem"><img src="assets/img/pwu-galeria-20261006/viagem-pokemon.jpg" alt="Treinadores e Pokémon em um terminal de viagem" width="736" height="414" loading="lazy" decoding="async"></a>
+          <a href="assets/img/pwu-galeria-20261006/lago-magikarp.jpg" data-lightbox aria-label="Ampliar: Treinador e Pokémon junto a um lago com Magikarp"><img src="assets/img/pwu-galeria-20261006/lago-magikarp.jpg" alt="Treinador e Pokémon junto a um lago com Magikarp" width="735" height="519" loading="lazy" decoding="async"></a>
+          <a href="assets/img/pwu-galeria-20261006/canalave-piplup.jpg" data-lightbox aria-label="Ampliar: Treinadora e Piplup observando os canais ao pôr do sol"><img src="assets/img/pwu-galeria-20261006/canalave-piplup.jpg" alt="Treinadora e Piplup observando os canais ao pôr do sol" width="640" height="1136" loading="lazy" decoding="async"></a>
+          <a href="assets/img/pwu-galeria-20261006/lumiose-fennekin.jpg" data-lightbox aria-label="Ampliar: Treinadora e Fennekin diante da torre de Lumiose"><img src="assets/img/pwu-galeria-20261006/lumiose-fennekin.jpg" alt="Treinadora e Fennekin diante da torre de Lumiose" width="640" height="1136" loading="lazy" decoding="async"></a>
+          <a href="assets/img/pwu-galeria-20261006/lumiose-praca.jpg" data-lightbox aria-label="Ampliar: Treinadores e Pokémon em uma praça arborizada de Lumiose"><img src="assets/img/pwu-galeria-20261006/lumiose-praca.jpg" alt="Treinadores e Pokémon em uma praça arborizada de Lumiose" width="640" height="816" loading="lazy" decoding="async"></a>
         </div>
       </div>
     </section>
@@ -107,7 +113,7 @@
       <div class="wrap" data-reveal>
         <h2>Pronto para a sua primeira batalha?</h2>
         <p>Crie sua conta, baixe o jogo e entre na arena. É grátis.</p>
-        <div class="btn-row"><a class="btn btn--yellow" href="#" data-auth="register">Criar conta</a><a class="btn btn--black" href="download.html">Baixar agora</a></div>
+        <div class="btn-row"><a class="btn btn--yellow" href="#" data-auth="register">Criar conta</a><a class="btn btn--black is-off" href="#" data-pwu-paused="download" data-pwu-paused-href="download.html" aria-disabled="true" tabindex="-1" title="Em breve">Baixar agora</a></div>
       </div>
     </section>
 
@@ -120,27 +126,27 @@
           <img src="assets/logo-sigla.png" alt="Pokeworld Universe">
           <p>Pokeworld Universe é um jogo online moderno para explorar mundos incríveis, colecionar criaturas únicas e batalhar com treinadores do mundo todo.</p>
           <div class="site-footer__social">
-            <a href="#" aria-label="Discord"><img src="assets/social-discord.png" alt="" style="object-fit:contain;width:70%;height:70%"></a>
-            <a href="#" aria-label="Instagram"><img src="assets/social-instagram.svg" alt=""></a>
+            <a href="https://discord.gg/pokeworlduniverse" target="_blank" rel="noopener noreferrer" aria-label="Discord"><img src="assets/social-discord.png" alt="" style="object-fit:contain;width:70%;height:70%"></a>
+            <a href="https://www.instagram.com/pokeworlduniverse/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><img src="assets/social-instagram.svg" alt=""></a>
           </div>
         </div>
         <div>
           <h4>Jogo</h4>
-          <ul><li><a href="o-jogo.html">Sobre o jogo</a></li><li><a href="ranking.html">Ranking</a></li><li><a href="Donate">Doar</a></li></ul>
+          <ul><li><a href="o-jogo.html">Sobre o jogo</a></li><li><a class="is-off" href="#" data-pwu-paused="ranking" data-pwu-paused-href="ranking.html" aria-disabled="true" tabindex="-1" title="Em breve">Ranking</a></li><li><a href="Donate">Doar</a></li></ul>
         </div>
         <div>
           <h4>Suporte</h4>
-          <ul><li><a href="download.html">Baixar</a></li><li><a href="minha-conta.html">Minha conta</a></li><li><a href="tickets.html">Tickets</a></li><li><a href="regras.html">Regras</a></li></ul>
+          <ul><li><a class="is-off" href="#" data-pwu-paused="download" data-pwu-paused-href="download.html" aria-disabled="true" tabindex="-1" title="Em breve">Baixar</a></li><li><a href="minha-conta.html">Minha conta</a></li><li><a href="tickets.html">Tickets</a></li><li><a href="regras.html">Regras</a></li></ul>
         </div>
         <div>
           <h4>Baixe agora</h4>
           <div class="site-footer__baixar">
-            <a class="btn btn--yellow btn--sm" href="download.html">Baixar o launcher</a>
+            <a class="btn btn--yellow btn--sm is-off" href="#" data-pwu-paused="download" data-pwu-paused-href="download.html" aria-disabled="true" tabindex="-1" title="Em breve">Baixar o launcher</a>
           </div>
         </div>
       </div>
       <div class="site-footer__bar">
-        <div class="site-footer__status"><span><i class="live-dot"></i>Servidor online</span><span>Próximo evento</span></div>
+        
         <span>© 2026 Pokeworld Universe.</span>
       </div>
       <p class="copy-pokemon">Pokémon Copyright © 1995 – 2026 Nintendo/Creatures Inc./GAME FREAK Inc. Pokémon e todos os respectivos nomes são marcas registradas da Nintendo 1996 – 2026. PokeWorld Universe não é afiliado à Nintendo, Creatures Inc. e GAME FREAK Inc.</p>
@@ -153,13 +159,13 @@
   <button class="lightbox__close" type="button" aria-label="Fechar">×</button>
   <img class="lightbox__img" src="" alt="">
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="config.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
-<script src="data.js"></script>
-<script src="store.js"></script>
-<script src="ui.js"></script>
-<script src="pages.js"></script>
+<script nonce="yL/JD1DUerDxrxDl4dgXK1GB" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script nonce="yL/JD1DUerDxrxDl4dgXK1GB" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script nonce="yL/JD1DUerDxrxDl4dgXK1GB" src="config.js?pwu=80dee41-20260924b"></script>
+<script nonce="yL/JD1DUerDxrxDl4dgXK1GB" src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script nonce="yL/JD1DUerDxrxDl4dgXK1GB" src="data.js?pwu=80dee41-20260924b"></script>
+<script nonce="yL/JD1DUerDxrxDl4dgXK1GB" src="store.js?pwu=80dee41-20260924b"></script>
+<script nonce="yL/JD1DUerDxrxDl4dgXK1GB" src="ui.js?pwu=security-20260926-v11"></script>
+<script nonce="yL/JD1DUerDxrxDl4dgXK1GB" src="pages.js?pwu=compras-pausadas-20261006"></script>
 </body>
 </html>

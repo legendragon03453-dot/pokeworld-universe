@@ -6,8 +6,16 @@
   <title>Minha Conta — Pokeworld Universe</title>
   <meta name="description" content="Sua conta Pokeworld Universe: dados, treinadores, doações e segurança.">
   <link rel="icon" href="assets/logo-sigla.png">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="pages.css">
+  <link rel="stylesheet" href="styles.css?pwu=profile-20260926-v6">
+  <link rel="stylesheet" href="pages.css?pwu=fotos-treinadores-20260930-v1">
+  <link rel="stylesheet" href="account-header.css?pwu=account-header-20260926-v15">
+  <link rel="stylesheet" href="twitch-link.css?pwu=twitch-roles-20260929-v2">
+  <link rel="stylesheet" href="twitch-visual-20261006.css?v=1">
+  <link rel="stylesheet" href="livecoins-premium-20261006.css?v=1">
+  <link rel="stylesheet" href="twitch-details-20261006.css?v=1">
+  <link rel="stylesheet" href="photo-picker-20261006.css?v=1">
+  <link rel="stylesheet" href="account-cleanup-20261006.css?v=1">
+<link rel="stylesheet" href="public-access-20261006.css?v=1">
 </head>
 <body data-page="minha-conta">
 <div class="scroll-progress" aria-hidden="true"></div>
@@ -18,10 +26,10 @@
     <div class="header-shape header-shape--white"></div>
     <div class="header-shape header-shape--grad"></div>
     <a class="logo-sigla" href="index.html"><img src="assets/logo-sigla.png" alt="PWU"></a>
-    <nav class="nav"><a href="o-jogo.html">O JOGO</a><a href="#" class="is-off" aria-disabled="true">wiki</a><a href="download.html">download</a><a href="ranking.html">ranking</a><a href="Donate">loja</a><a href="Donate">doar</a></nav>
+    <nav class="nav"><a href="o-jogo.html">O JOGO</a><a href="#" class="is-off" aria-disabled="true">wiki</a><a class="is-off" href="#" data-pwu-paused="download" data-pwu-paused-href="download.html" aria-disabled="true" tabindex="-1" title="Em breve">download</a><a class="is-off" href="#" data-pwu-paused="ranking" data-pwu-paused-href="ranking.html" aria-disabled="true" tabindex="-1" title="Em breve">ranking</a><a href="noticias.html">notícias</a><a href="Donate">doar</a></nav>
     <div class="topbar-actions">
       <a class="btn-entrar" href="login.html" data-entrar>Iniciar sessão</a>
-      <a class="btn-jogue-agora" href="download.html">JOGUE AGORA</a>
+      <a class="btn-jogue-agora" href="login.html#criar" data-pwu-paused="download" data-pwu-paused-href="download.html" data-pwu-paused-label="JOGUE AGORA">CRIAR CONTA</a>
     </div>
     <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   </header>
@@ -31,10 +39,11 @@
     <span class="banner__mesh" aria-hidden="true"></span>
     <span class="banner__ball" aria-hidden="true"></span>
     <div class="banner__inner">
-      <nav class="banner__crumb" aria-label="Você está em"><a href="index.html">Início</a><i aria-hidden="true"></i><span>Minha Conta</span></nav>
-      <span class="banner__tag">Área do treinador</span>
-      <h1 class="banner__title">Minha<br>conta</h1>
-      <p class="banner__sub">Gerencie seus dados, seus treinadores e apoie o servidor.</p>
+      <div class="banner__meta">
+        <nav class="banner__crumb" aria-label="Você está em"><a href="index.html">Início</a><i aria-hidden="true"></i><span>Minha Conta</span></nav>
+        <span class="banner__tag">Área do treinador</span>
+      </div>
+      <h1 class="banner__title">Minha conta</h1>
     </div>
   </section>
 
@@ -54,43 +63,87 @@
         <div id="acc" hidden>
           <div class="acc-alert" id="acc-alert" hidden></div>
 
-          <article class="acc-card" data-reveal>
+          <article class="acc-card acc-card--identity" data-reveal>
             <div class="acc-top">
-              <div class="acc-avatar">
-                <img id="acc-avatar" src="assets/logo-sigla.png" alt="Foto de perfil">
-                <a class="acc-avatar__edit" href="perfil.html" aria-label="Trocar foto">Trocar foto</a>
+              <div class="acc-profile">
+                <h2 class="acc-card__title">Minha <span class="grad grad--yellow">conta</span></h2>
+                <div class="acc-avatar">
+                  <img id="acc-avatar" src="assets/logo-sigla.png" alt="Foto de perfil">
+                  <a class="acc-avatar__edit" href="perfil.html" aria-label="Trocar foto">Trocar foto</a>
+                </div>
               </div>
-              <h2 class="acc-card__title">Minha <span class="grad grad--yellow">conta</span></h2>
-            </div>
-            <div class="acc-grid">
-              <div>
+              <div class="acc-grid">
                 <div class="acc-field">
                   <div class="acc-field__head"><h5>Nome de usuário</h5><button type="button" class="acc-toggle" data-toggle="name">mostrar</button></div>
-                  <input type="text" readonly id="acc-name" value=" *  *  *  *  *">
+                  <input type="text" readonly id="acc-name" aria-label="Nome de usuário" value=" *  *  *  *  *">
                 </div>
                 <div class="acc-field">
                   <div class="acc-field__head"><h5>E-mail</h5><button type="button" class="acc-toggle" data-toggle="email">mostrar</button></div>
-                  <input type="text" readonly id="acc-email" value=" *  *  *  *  *">
+                  <input type="text" readonly id="acc-email" aria-label="E-mail" value=" *  *  *  *  *">
                 </div>
               </div>
               <div class="acc-side">
-                <div class="acc-stat acc-stat--moeda"><img src="assets/img/coins/pcoin.png?v=3" alt=""><div><b id="acc-diamonds">0</b><span>Créditos · <a href="#coins" class="acc-buy-link">+ Comprar</a></span></div></div>
-                <div class="acc-stat"><b id="acc-plan">Conta Grátis</b><span>Plano</span></div>
+                <div class="acc-stat acc-stat--moeda"><img src="assets/img/coins/pcoin-clean.svg?v=2" alt=""><div class="acc-stat__balance"><span>Saldo em Pcoins</span><b id="acc-diamonds">0</b></div></div>
+                <a href="#coins" class="acc-buy-link">Obter + Pcoins</a>
+                <div class="acc-stat acc-stat--plan"><span>Seu plano</span><b id="acc-plan">Conta Grátis</b></div>
               </div>
             </div>
             <div class="acc-actions">
-              <a class="btn btn--lime btn--sm" href="tickets.html">Tickets</a>
-              <a class="btn btn--yellow btn--sm" href="Donate">Efetuar doação</a>
+              <a class="btn btn--yellow btn--sm" href="Donate">Doação</a>
               <a class="btn btn--black btn--sm" href="seguranca.html">Segurança</a>
-              <a class="btn btn--twitch btn--sm" href="seguranca.html#twitch">Vincular Twitch</a>
+              <a class="btn btn--lime btn--sm" href="tickets.html">Tickets</a>
+              <button type="button" class="btn btn--twitch btn--sm" id="acc-twitch">Vincular Twitch</button>
               <button type="button" class="btn btn--danger btn--sm" data-acc="logout">Sair</button>
             </div>
+          </article>
+
+          <!-- Twitch: o mesmo vínculo aparece na Live Store do jogo. Preenchido por twitch-link.js. -->
+          <article class="acc-card tw-card" id="twitch" hidden>
+            <div class="acc-card__head">
+              <h2 class="acc-card__title"><svg class="tw-title-ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4.3 3 3 6.5v13.1h4.6V22h2.6l2.4-2.4h3.7l5-5V3H4.3zm15.3 10.8-2.9 2.9h-4.6l-2.4 2.4v-2.4H5.9V4.7h13.7v9.1zM16.6 7.9v5h-1.7v-5h1.7zm-4.6 0v5h-1.7v-5H12z"/></svg>Conta <span class="grad grad--yellow">Twitch</span></h2>
+            </div>
+            <div class="tw-role-heading"><h3>Sou jogador</h3><p>Vincule sua Twitch para ganhar Live Coins assistindo aos canais parceiros. Não precisa de aprovação.</p></div>
+            <div class="tw-account">
+              <div class="tw-avatar" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M4.3 3 3 6.5v13.1h4.6V22h2.6l2.4-2.4h3.7l5-5V3H4.3zm15.3 10.8-2.9 2.9h-4.6l-2.4 2.4v-2.4H5.9V4.7h13.7v9.1zM16.6 7.9v5h-1.7v-5h1.7zm-4.6 0v5h-1.7v-5H12z"/></svg></div>
+              <div class="tw-who">
+                <div class="tw-name"><b id="tw-name">Twitch não vinculada</b></div>
+                <span id="tw-since">Vincule sua conta para ganhar Live Coins assistindo aos parceiros.</span>
+              </div>
+              <div class="tw-buttons">
+                <button type="button" class="btn btn--sm btn--danger" data-tw="unlink"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 15 15 9M8.5 11.5l-2 2a3.5 3.5 0 0 0 5 5l2-2M15.5 12.5l2-2a3.5 3.5 0 0 0-5-5l-2 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Desvincular Twitch</button>
+                <button type="button" class="btn btn--sm btn--twitch" data-tw="link">Vincular como jogador</button>
+              </div>
+            </div>
+            <div class="tw-partner">
+              <div class="tw-role-heading"><p>Faz lives de PWU? Candidate seu canal. A parceria precisa de aprovação da equipe.</p><span id="tw-partner-status" class="tw-partner-status" hidden></span></div>
+              <button type="button" class="btn btn--sm tw-btn-streamer" data-tw="streamer"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 9.5v5l4-2.5z" fill="currentColor"/></svg><span id="tw-partner-label">Seja parceiro</span></button>
+            </div>
+          </article>
+
+          <article class="acc-card tw-card" id="live-coins" hidden>
+            <div class="acc-card__head">
+              <h2 class="acc-card__title"><img class="tw-title-coin" src="assets/img/live/livecoin.png" alt="">Suas <span class="grad grad--yellow">Live Coins</span></h2>
+            </div>
+            <div class="tw-stats">
+              <div class="tw-stat"><i class="tw-stat__ico"><img src="assets/img/live/livecoin.png" alt=""></i><div><span>Saldo atual</span><b id="tw-balance">0</b><small>Live Coins</small></div></div>
+              <div class="tw-stat"><i class="tw-stat__ico tw-stat__ico--item" aria-hidden="true"><img src="assets/img/live/twitch-trophy-20261006.png" alt=""></i><div><span>Acumulado total</span><b id="tw-earned">0</b><small>Live Coins</small></div></div>
+              <div class="tw-stat"><i class="tw-stat__ico tw-stat__ico--item" aria-hidden="true"><img src="assets/img/live/tv-assistir.png" alt=""></i><div><span>Tempo assistido</span><b id="tw-hours">0,0h</b></div></div>
+            </div>
+            <section class="tw-how tw-how--steps" aria-labelledby="tw-how-title">
+              <div class="tw-how__head">
+                <div><span class="tw-how__eyebrow">DE OLHO NA LIVE</span><h3 id="tw-how-title">Como ganhar Live Coins</h3></div>
+              </div>
+              <ol class="tw-how__steps">
+                <li><span class="tw-how__num" aria-hidden="true">01</span><div><h4>Vincule sua Twitch</h4><p>Conecte sua conta como jogador. Não precisa de aprovação.</p></div></li>
+                <li><span class="tw-how__num" aria-hidden="true">02</span><div><h4>Assista aos parceiros</h4><p>Acompanhe as lives dos canais parceiros com sua conta vinculada.</p></div></li>
+                <li><span class="tw-how__num" aria-hidden="true">03</span><div><h4>Troque na Live Store</h4><p>Use suas Live Coins para resgatar recompensas dentro do jogo.</p></div></li>
+              </ol>
+            </section>
           </article>
 
           <article class="acc-card" id="coins" data-reveal>
             <div class="acc-card__head">
               <h2 class="acc-card__title">Efetuar <span class="grad grad--yellow">doação</span></h2>
-              <a class="btn btn--yellow btn--sm" href="Donate">Efetuar doação</a>
             </div>
             <form class="valor-livre" id="f-valor" novalidate>
               <label for="valor-livre">Valor</label>
@@ -106,8 +159,8 @@
 
           <article class="acc-card" data-reveal>
             <div class="acc-card__head">
-              <h2 class="acc-card__title">Meus <span class="grad grad--yellow">treinadores</span> <small id="acc-tcount">(0)</small></h2>
-              <button type="button" class="btn btn--ghost btn--sm" data-acc="new-trainer">+ Novo treinador</button>
+              <h2 class="acc-card__title">Meus <span class="grad grad--yellow">treinadores</span> <small id="acc-tcount" hidden aria-hidden="true"></small></h2>
+              <a class="btn btn--ghost btn--sm" href="onboarding.html?novo=1">+ Novo treinador</a>
             </div>
             <div class="trainers" id="acc-trainers"></div>
           </article>
@@ -121,7 +174,7 @@
       <div class="wrap" data-reveal>
         <h2>Aventuras lendárias te esperam</h2>
         <p>Entre no nosso mundo e seja o melhor. Baixe o cliente e jogue agora.</p>
-        <div class="btn-row"><a class="btn btn--yellow" href="download.html">Jogue agora!</a><a class="btn btn--black" href="https://discord.gg/pokeworlduniverse" target="_blank" rel="noopener">Entrar no Discord</a></div>
+        <div class="btn-row"><a class="btn btn--yellow is-off" href="#" data-pwu-paused="download" data-pwu-paused-href="download.html" aria-disabled="true" tabindex="-1" title="Em breve">Jogue agora!</a><a class="btn btn--black" href="https://discord.gg/pokeworlduniverse" target="_blank" rel="noopener">Entrar no Discord</a></div>
       </div>
     </section>
 
@@ -134,27 +187,27 @@
           <img src="assets/logo-sigla.png" alt="Pokeworld Universe">
           <p>Pokeworld Universe é um jogo online moderno para explorar mundos incríveis, colecionar criaturas únicas e batalhar com treinadores do mundo todo.</p>
           <div class="site-footer__social">
-            <a href="#" aria-label="Discord"><img src="assets/social-discord.png" alt="" style="object-fit:contain;width:70%;height:70%"></a>
-            <a href="#" aria-label="Instagram"><img src="assets/social-instagram.svg" alt=""></a>
+            <a href="https://discord.gg/pokeworlduniverse" target="_blank" rel="noopener noreferrer" aria-label="Discord"><img src="assets/social-discord.png" alt="" style="object-fit:contain;width:70%;height:70%"></a>
+            <a href="https://www.instagram.com/pokeworlduniverse/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><img src="assets/social-instagram.svg" alt=""></a>
           </div>
         </div>
         <div>
           <h4>Jogo</h4>
-          <ul><li><a href="o-jogo.html">Sobre o jogo</a></li><li><a href="ranking.html">Ranking</a></li><li><a href="Donate">Doar</a></li></ul>
+          <ul><li><a href="o-jogo.html">Sobre o jogo</a></li><li><a class="is-off" href="#" data-pwu-paused="ranking" data-pwu-paused-href="ranking.html" aria-disabled="true" tabindex="-1" title="Em breve">Ranking</a></li><li><a href="Donate">Doar</a></li></ul>
         </div>
         <div>
           <h4>Suporte</h4>
-          <ul><li><a href="download.html">Baixar</a></li><li><a href="minha-conta.html">Minha conta</a></li><li><a href="tickets.html">Tickets</a></li><li><a href="regras.html">Regras</a></li></ul>
+          <ul><li><a class="is-off" href="#" data-pwu-paused="download" data-pwu-paused-href="download.html" aria-disabled="true" tabindex="-1" title="Em breve">Baixar</a></li><li><a href="minha-conta.html">Minha conta</a></li><li><a href="tickets.html">Tickets</a></li><li><a href="regras.html">Regras</a></li></ul>
         </div>
         <div>
           <h4>Baixe agora</h4>
           <div class="site-footer__baixar">
-            <a class="btn btn--yellow btn--sm" href="download.html">Baixar o launcher</a>
+            <a class="btn btn--yellow btn--sm is-off" href="#" data-pwu-paused="download" data-pwu-paused-href="download.html" aria-disabled="true" tabindex="-1" title="Em breve">Baixar o launcher</a>
           </div>
         </div>
       </div>
       <div class="site-footer__bar">
-        <div class="site-footer__status"><span><i class="live-dot"></i>Servidor online</span><span>Próximo evento</span></div>
+        
         <span>© 2026 Pokeworld Universe.</span>
       </div>
       <p class="copy-pokemon">Pokémon Copyright © 1995 – 2026 Nintendo/Creatures Inc./GAME FREAK Inc. Pokémon e todos os respectivos nomes são marcas registradas da Nintendo 1996 – 2026. PokeWorld Universe não é afiliado à Nintendo, Creatures Inc. e GAME FREAK Inc.</p>
@@ -164,13 +217,15 @@
 </div>
 
 <div class="pmodal" id="pmodal" hidden><div class="pmodal__bd" data-pclose></div><div class="pmodal__card"><button class="pmodal__close" type="button" data-pclose aria-label="Fechar">×</button><div id="pmodal-body"></div></div></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="config.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
-<script src="data.js"></script>
-<script src="store.js"></script>
-<script src="ui.js"></script>
-<script src="pages.js"></script>
+<script nonce="6SN7hb9FlkA0stiRdtxEmRGX" src="assets/vendor/gsap-3.12.5.min.js"></script>
+<script nonce="6SN7hb9FlkA0stiRdtxEmRGX" src="assets/vendor/ScrollTrigger-3.12.5.min.js"></script>
+<script nonce="6SN7hb9FlkA0stiRdtxEmRGX" src="config.js?pwu=profile-20260926-v4"></script>
+<script nonce="6SN7hb9FlkA0stiRdtxEmRGX" src="assets/vendor/supabase-2.45.4.min.js"></script>
+<script nonce="6SN7hb9FlkA0stiRdtxEmRGX" src="data.js?pwu=popular-400-20260926-v10"></script>
+<script nonce="6SN7hb9FlkA0stiRdtxEmRGX" src="store.js?pwu=profile-20260926-v4"></script>
+<script nonce="6SN7hb9FlkA0stiRdtxEmRGX" src="ui.js?pwu=fotos-treinadores-20260930-v1"></script>
+<script nonce="6SN7hb9FlkA0stiRdtxEmRGX" src="pages.js?pwu=compras-pausadas-20261006"></script>
+<script nonce="6SN7hb9FlkA0stiRdtxEmRGX" src="twitch-link.js?pwu=twitch-partner-flow-20261006-v1"></script>
+<script nonce="6SN7hb9FlkA0stiRdtxEmRGX" src="photo-picker-20261006.js?v=1"></script>
 </body>
 </html>

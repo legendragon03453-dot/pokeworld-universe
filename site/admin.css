@@ -85,7 +85,7 @@ html { font-size: 10px !important; }
 .drawer { position: fixed; inset: 0; z-index: 300; }
 .drawer[hidden] { display: none; }
 .drawer__bd { position: absolute; inset: 0; background: rgba(0,0,0,.55); backdrop-filter: blur(4px); }
-.drawer__panel { position: absolute; top: 0; right: 0; bottom: 0; width: min(64rem, 100%); display: flex; flex-direction: column; background: #131a3a; border-left: .1rem solid rgba(255,255,255,.1); animation: drawer-in .35s cubic-bezier(.2,.8,.2,1); }
+.drawer__panel { position: absolute; top: 0; right: 0; bottom: 0; width: min(64rem, 100%); display: flex; flex-direction: column; background: #131a3a; border-left: .1rem solid rgba(255,255,255,.1); box-shadow: -2rem 0 6rem rgba(0,0,0,.5); animation: drawer-in .35s cubic-bezier(.2,.8,.2,1); }
 @keyframes drawer-in { from { transform: translateX(6rem); opacity: 0; } to { transform: none; opacity: 1; } }
 .drawer__head { display: flex; align-items: center; justify-content: space-between; padding: 2rem 2.6rem; border-bottom: .1rem solid rgba(255,255,255,.08); }
 .drawer__head h3 { font: 400 3rem var(--bebas); }

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comprar RK — Pokeworld Universe</title>
+  <meta name="description" content="Substitua sua Recovery Key por 30 Pcoins, com confirmação de identidade e envio ao e-mail atual da conta.">
+  <link rel="icon" href="assets/logo-sigla.png">
+  <link rel="stylesheet" href="styles.css?pwu=profile-20260926-v6">
+  <link rel="stylesheet" href="pages.css?pwu=profile-20260926-v6">
+  <link rel="stylesheet" href="recovery-purchase.css?pwu=recovery-purchase-page-20260926-v13">
+<link rel="stylesheet" href="public-access-20261006.css?v=1">
+</head>
+<body data-page="comprar-rk">
+<div class="scroll-progress" aria-hidden="true"></div>
+<div class="cursor" aria-hidden="true"><div class="cursor__ring"></div><div class="cursor__dot"></div></div>
+<div class="page page--sub">
+
+  <header class="topbar">
+    <div class="header-shape header-shape--white"></div>
+    <div class="header-shape header-shape--grad"></div>
+    <a class="logo-sigla" href="index.html"><img src="assets/logo-sigla.png" alt="PWU"></a>
+    <nav class="nav"><a href="o-jogo.html">O JOGO</a><a href="#" class="is-off" aria-disabled="true">wiki</a><a class="is-off" href="#" data-pwu-paused="download" data-pwu-paused-href="download.html" aria-disabled="true" tabindex="-1" title="Em breve">download</a><a class="is-off" href="#" data-pwu-paused="ranking" data-pwu-paused-href="ranking.html" aria-disabled="true" tabindex="-1" title="Em breve">ranking</a><a href="noticias.html">notícias</a><a href="Donate">doar</a></nav>
+    <div class="topbar-actions">
+      <a class="btn-entrar" href="login.html" data-entrar>Iniciar sessão</a>
+      <a class="btn-jogue-agora" href="login.html#criar" data-pwu-paused="download" data-pwu-paused-href="download.html" data-pwu-paused-label="JOGUE AGORA">CRIAR CONTA</a>
+    </div>
+    <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </header>
+
+  <main class="rk-page">
+    <a class="voltar" href="minha-conta.html">← Voltar para minha conta</a>
+    <header class="rk-page__head">
+      <p class="rk-page__eyebrow">PROTEÇÃO DA CONTA</p>
+      <h1>Comprar <span>RK</span></h1>
+      <p>Perdeu sua Recovery Key? Substitua por uma nova, enviada ao e-mail atual da sua conta.</p>
+    </header>
+    <div id="rk-purchase-page-status" class="rk-page__status" role="status">Conferindo sua conta…</div>
+    <div id="recovery-purchase" class="rk-page__content" hidden>
+      <p id="recovery-purchase-last" class="rk-page__last" hidden></p>
+      <button type="button" id="recovery-purchase-open" hidden disabled>Continuar com a compra de RK</button>
+      <div id="rk-purchase-page-body"></div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="site-footer__top">
+        <div class="site-footer__brand">
+          <img src="assets/logo-sigla.png" alt="Pokeworld Universe">
+          <p>Pokeworld Universe é um jogo online moderno para explorar mundos incríveis, colecionar criaturas únicas e batalhar com treinadores do mundo todo.</p>
+          <div class="site-footer__social">
+            <a href="#" aria-label="Discord"><img src="assets/social-discord.png" alt="" style="object-fit:contain;width:70%;height:70%"></a>
+            <a href="#" aria-label="Instagram"><img src="assets/social-instagram.svg" alt=""></a>
+          </div>
+        </div>
+        <div>
+          <h4>Jogo</h4>
+          <ul><li><a href="o-jogo.html">Sobre o jogo</a></li><li><a class="is-off" href="#" data-pwu-paused="ranking" data-pwu-paused-href="ranking.html" aria-disabled="true" tabindex="-1" title="Em breve">Ranking</a></li><li><a href="Donate">Doar</a></li></ul>
+        </div>
+        <div>
+          <h4>Suporte</h4>
+          <ul><li><a class="is-off" href="#" data-pwu-paused="download" data-pwu-paused-href="download.html" aria-disabled="true" tabindex="-1" title="Em breve">Baixar</a></li><li><a href="minha-conta.html">Minha conta</a></li><li><a href="tickets.html">Tickets</a></li><li><a href="regras.html">Regras</a></li></ul>
+        </div>
+        <div>
+          <h4>Baixe agora</h4>
+          <div class="site-footer__baixar">
+            <a class="btn btn--yellow btn--sm is-off" href="#" data-pwu-paused="download" data-pwu-paused-href="download.html" aria-disabled="true" tabindex="-1" title="Em breve">Baixar o launcher</a>
+          </div>
+        </div>
+      </div>
+      <div class="site-footer__bar">
+        
+        <span>© 2026 Pokeworld Universe.</span>
+      </div>
+      <p class="copy-pokemon">Pokémon Copyright © 1995 – 2026 Nintendo/Creatures Inc./GAME FREAK Inc. Pokémon e todos os respectivos nomes são marcas registradas da Nintendo 1996 – 2026. PokeWorld Universe não é afiliado à Nintendo, Creatures Inc. e GAME FREAK Inc.</p>
+    </div>
+  </footer>
+
+</div>
+
+<script nonce="NOvJMzsyRhw/E6UVdzGTuvi7" src="assets/vendor/gsap-3.12.5.min.js"></script>
+<script nonce="NOvJMzsyRhw/E6UVdzGTuvi7" src="assets/vendor/ScrollTrigger-3.12.5.min.js"></script>
+<script nonce="NOvJMzsyRhw/E6UVdzGTuvi7" src="config.js?pwu=80dee41-20260924b"></script>
+<script nonce="NOvJMzsyRhw/E6UVdzGTuvi7" src="assets/vendor/supabase-2.45.4.min.js"></script>
+<script nonce="NOvJMzsyRhw/E6UVdzGTuvi7" src="data.js?pwu=80dee41-20260924b"></script>
+<script nonce="NOvJMzsyRhw/E6UVdzGTuvi7" src="store.js?pwu=80dee41-20260924b"></script>
+<script nonce="NOvJMzsyRhw/E6UVdzGTuvi7" src="ui.js?pwu=recovery-purchase-page-20260926-v13"></script>
+<script nonce="NOvJMzsyRhw/E6UVdzGTuvi7" src="recovery-purchase.js?pwu=recovery-purchase-page-20260926-v13"></script>
+</body>
+</html>

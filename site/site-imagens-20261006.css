@@ -1,0 +1,89 @@
+/* Acabamento isolado das artes aprovadas em Download e O Jogo. */
+body[data-page="download"] .launcher-sec {
+  padding-bottom: 7rem;
+  background: radial-gradient(ellipse at 84% 40%, #e8edf9 0, transparent 56%),
+              radial-gradient(ellipse at 15% 95%, #fff3d6 0, transparent 48%), #f7f8fb;
+}
+body[data-page="download"] .launcher { grid-template-columns: 1fr 1.45fr; gap: 5rem; }
+body[data-page="download"] .launcher__janela--art {
+  border: 1px solid #d9b65c;
+  border-radius: 2.4rem;
+  padding: .8rem;
+  background: linear-gradient(140deg, #f9dc83, #ab8333 36%, #f6d683 75%, #c29846);
+  box-shadow: 0 24px 60px -20px #111c4d55, 0 0 0 6px #d7bb6c16;
+}
+body[data-page="download"] .launcher__barra {
+  padding: 1.6rem 1.8rem;
+  border-radius: 1.6rem 1.6rem 0 0;
+  background: #0a1430;
+  color: #fff;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+body[data-page="download"] .launcher__barra .launcher__marca {
+  width: 4rem;
+  height: 3.2rem;
+  aspect-ratio: auto;
+  object-fit: contain;
+}
+body[data-page="download"] .launcher__barra span { margin: 0; font-weight: 500; }
+body[data-page="download"] .launcher__barra small { margin-left: auto; color: #e3c877; font-size: 1.15rem; }
+body[data-page="download"] .launcher__janela .launcher__arte { height: auto; aspect-ratio: auto; object-fit: contain; }
+body[data-page="download"] .launcher__status {
+  border-radius: 0 0 1.6rem 1.6rem;
+  background: #0a1430;
+  padding: 1.8rem;
+  gap: 1.6rem;
+  flex-wrap: wrap;
+}
+body[data-page="download"] .launcher__status > span { font-size: 1.3rem; color: #d4ddeb; }
+body[data-page="download"] .launcher__status > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.6rem;
+  padding: 1.1rem 2rem;
+  border-radius: 1rem;
+  background: var(--grad-yellow);
+  color: #0a1430;
+  font: 400 1.9rem var(--bebas);
+  letter-spacing: .04em;
+  text-decoration: none;
+  transition: box-shadow .2s, transform .2s;
+}
+body[data-page="download"] .launcher__status > a span { color: inherit; }
+body[data-page="download"] .launcher__status > a:hover { box-shadow: 0 4px 16px #ffcb5050; transform: translateY(-2px); }
+body[data-page="o-jogo"] .gallery-grid--art { display: block; columns: 3; column-gap: 2.4rem; }
+body[data-page="o-jogo"] .gallery-grid--art a,
+body[data-page="o-jogo"] .gallery-grid--art a:first-child {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 2.4rem;
+  break-inside: avoid;
+  aspect-ratio: auto;
+  vertical-align: top;
+  border: 1px solid #e1e5ec;
+  border-radius: 1.8rem;
+  background: #0a1430;
+  box-shadow: 0 8px 24px -12px #08142c40;
+}
+body[data-page="o-jogo"] .gallery-grid--art img { display: block; height: auto; object-fit: contain; }
+body[data-page="o-jogo"] .gallery-grid--art a:hover img { transform: none; }
+body[data-page="o-jogo"] .gallery-grid--art a:hover { border-color: #c8a851; }
+body[data-page="o-jogo"] .gallery-grid--art a:focus-visible,
+body[data-page="download"] .launcher__status > a:focus-visible { outline: 3px solid #0530ef; outline-offset: 4px; }
+@media (max-width: 900px) {
+  body[data-page="download"] .launcher { grid-template-columns: 1fr; gap: 3.2rem; }
+  body[data-page="o-jogo"] .gallery-grid--art { columns: 2; column-gap: 1.6rem; }
+  body[data-page="o-jogo"] .gallery-grid--art a { margin-bottom: 1.6rem; }
+}
+@media (max-width: 540px) {
+  body[data-page="download"] .launcher__barra { padding: 1.2rem; }
+  body[data-page="download"] .launcher__barra small { flex-basis: 100%; margin-left: 5rem; }
+  body[data-page="download"] .launcher__status { padding: 1.4rem; }
+  body[data-page="download"] .launcher__status > a { width: 100%; justify-content: center; }
+  body[data-page="o-jogo"] .gallery-grid--art { columns: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body[data-page="download"] .launcher__status > a { transition: none; }
+  body[data-page="download"] .launcher__status > a:hover { transform: none; }
+}

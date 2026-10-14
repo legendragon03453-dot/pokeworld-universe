@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Comece sua jornada — Pokeworld Universe</title>
+  <link rel="icon" href="assets/logo-sigla.png">
+  <link rel="stylesheet" href="styles.css?pwu=profile-20260926-v6">
+  <link rel="stylesheet" href="pages.css?pwu=profile-20260926-v6">
+  <link rel="stylesheet" href="onboarding.css?pwu=recovery-countdown-20260927-v20">
+<link rel="stylesheet" href="public-access-20261006.css?v=1">
+</head>
+<body data-page="onboarding">
+<div class="page page--sub">
+  <header class="topbar">
+    <div class="header-shape header-shape--white"></div>
+    <div class="header-shape header-shape--grad"></div>
+    <a class="logo-sigla" href="index.html"><img src="assets/logo-sigla.png" alt="PWU"></a>
+    <nav class="nav">
+      <a href="o-jogo.html">O JOGO</a>
+      <a href="#" class="is-off" aria-disabled="true">wiki</a>
+      <a class="is-off" href="#" data-pwu-paused="download" data-pwu-paused-href="download.html" aria-disabled="true" tabindex="-1" title="Em breve">download</a>
+      <a class="is-off" href="#" data-pwu-paused="ranking" data-pwu-paused-href="ranking.html" aria-disabled="true" tabindex="-1" title="Em breve">ranking</a>
+      <a href="noticias.html">notícias</a>
+      <a href="Donate">doar</a>
+    </nav>
+    <div class="topbar-actions">
+      <a class="btn-entrar" href="login.html" data-entrar>Iniciar sessão</a>
+      <a class="btn-jogue-agora" href="login.html#criar" data-pwu-paused="download" data-pwu-paused-href="download.html" data-pwu-paused-label="JOGUE AGORA">CRIAR CONTA</a>
+    </div>
+    <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </header>
+<main class="onboarding" id="onboarding" aria-busy="true">
+  <header class="onboarding__head">
+    <span class="onboarding__eyebrow">SUA JORNADA COMEÇA AQUI</span>
+    <h1 id="onboarding-title" tabindex="-1">Prepare sua <span>conta</span></h1>
+    <ol class="onboarding__steps" aria-label="Etapas do cadastro">
+      <li data-stage="email"><b aria-hidden="true">✓</b><span>E-mail confirmado</span></li>
+      <li data-stage="recovery"><b aria-hidden="true">2</b><span>Recovery Key</span></li>
+      <li data-stage="character"><b aria-hidden="true">3</b><span>Seu personagem</span></li>
+    </ol>
+  </header>
+  <section class="onboarding__panel onboarding__status" id="onboarding-status" role="status">
+    <p id="onboarding-status-text">Conferindo sua conta…</p>
+    <button class="ob-button ob-button--secondary" id="onboarding-retry" type="button" hidden>Tentar novamente</button>
+    <a class="ob-link" id="onboarding-login" href="login.html" hidden>Entrar na minha conta</a>
+  </section>
+  <section class="onboarding__panel recovery-panel" id="recovery-panel" aria-labelledby="recovery-title" hidden>
+    <div class="recovery-panel__main">
+      <span class="ob-kicker">ETAPA 2 DE 3</span>
+      <h2 id="recovery-title" tabindex="-1">Guarde sua <span>Recovery Key</span></h2>
+      <p class="ob-intro">Esta chave ajuda você a recuperar o acesso à sua conta. Ela é pessoal e deve ficar em um lugar seguro.</p>
+      <div class="recovery-key">
+        <label for="recovery-key-value">Sua chave de recuperação</label>
+        <textarea id="recovery-key-value" rows="2" readonly spellcheck="false" autocomplete="off" aria-describedby="recovery-title"></textarea>
+        <button class="ob-button ob-button--secondary" id="recovery-copy" type="button">Copiar chave</button>
+      </div>
+      <p class="ob-note" id="recovery-email-status" role="status"></p>
+      <button class="ob-link ob-resend" id="recovery-resend" type="button" hidden>Reenviar chave por e-mail</button>
+      <label class="recovery-confirm" id="recovery-saved-label"><input id="recovery-saved" type="checkbox"><span>Guardei minha Recovery Key</span></label>
+      <p class="ob-message" id="recovery-message" role="status" aria-live="polite"></p>
+      <div class="recovery-next">
+        <div class="recovery-countdown" id="recovery-countdown" hidden>
+          <span class="recovery-countdown__icon" aria-hidden="true">→</span>
+          <div>
+            <p>Próxima etapa em <strong id="recovery-countdown-seconds" role="timer" aria-live="off">10</strong>s</p>
+            <button class="ob-link" id="recovery-countdown-pause" type="button">Ficar nesta etapa</button>
+          </div>
+        </div>
+        <button class="ob-button" id="recovery-continue" type="button" disabled>Continuar agora <span aria-hidden="true">→</span></button>
+      </div>
+    </div>
+    <aside class="recovery-panel__aside" aria-label="Cuidados com sua chave">
+      <h3>Só você deve ter acesso</h3>
+      <ul>
+        <li><strong>Salve em um local privado.</strong><span>Use um gerenciador de senhas ou anote e guarde em segurança.</span></li>
+        <li><strong>Não compartilhe sua chave.</strong><span>Não envie em chats, prints, transmissões ou para outros jogadores.</span></li>
+        <li><strong>Confira antes de continuar.</strong><span>Guarde uma cópia que você consiga encontrar depois.</span></li>
+      </ul>
+    </aside>
+  </section>
+  <section class="onboarding__panel character-panel" id="character-panel" aria-labelledby="character-title" hidden>
+    <div class="character-preview">
+      <span class="ob-kicker">SEU TREINADOR NO PWU</span>
+      <div id="character-preview-art" class="character-preview__art"></div>
+      <strong id="character-preview-name">Seu personagem</strong>
+      <span class="character-preview__world">Galaxy <i>Disponível</i></span>
+      <p>Uma identidade para a sua jornada.</p>
+    </div>
+    <form id="character-form" novalidate>
+      <span class="ob-kicker" id="character-step-label">ETAPA 3 DE 3</span>
+      <h2 id="character-title" tabindex="-1">Crie seu <span>primeiro personagem</span></h2>
+      <div class="character-fields">
+        <label class="ob-field"><span>Nome do personagem</span><input id="character-name" name="name" maxlength="20" minlength="3" required autocomplete="off" aria-describedby="character-name-help character-name-error" placeholder="Ex.: Ash Ketchum"><small class="ob-field__error" id="character-name-error" role="alert" hidden></small></label>
+        <label class="ob-field"><span>Gênero</span><select name="sex" id="character-sex"><option value="1">Masculino</option><option value="0">Feminino</option></select></label>
+      </div>
+      <p id="character-name-help" class="ob-note">De 3 a 20 letras, sem acentos ou números. O espaço entre palavras é opcional.</p>
+      <fieldset class="world-picker"><legend>Escolha seu mundo</legend><div id="world-options"></div></fieldset>
+      <div class="appearance-picker">
+        <div class="appearance-picker__head"><h3>Foto e moldura do treinador</h3><p>Esta foto é só deste personagem. A foto da conta você escolhe no seu perfil.</p></div>
+        <div class="ob-tabs" role="tablist" aria-label="Personalizar foto do treinador">
+          <button type="button" id="ob-tab-portraits" role="tab" aria-selected="true" aria-controls="ob-panel-portraits">Personagem</button>
+          <button type="button" id="ob-tab-cards" role="tab" aria-selected="false" tabindex="-1" aria-controls="ob-panel-cards">Moldura</button>
+        </div>
+        <section id="ob-panel-portraits" role="tabpanel" aria-labelledby="ob-tab-portraits">
+          <div class="ob-carousel" id="ob-portraits" aria-label="Fotos de personagens"></div>
+          <div class="ob-carousel-controls" data-carousel-controls="ob-portraits"><button type="button" data-previous aria-label="Personagens anteriores">←</button><span data-range aria-live="polite"></span><button type="button" data-next aria-label="Próximos personagens">→</button></div>
+        </section>
+        <section id="ob-panel-cards" role="tabpanel" aria-labelledby="ob-tab-cards" hidden>
+          <div class="ob-carousel" id="ob-cards" aria-label="Molduras disponíveis"></div>
+          <div class="ob-carousel-controls" data-carousel-controls="ob-cards"><button type="button" data-previous aria-label="Molduras anteriores">←</button><span data-range aria-live="polite"></span><button type="button" data-next aria-label="Próximas molduras">→</button></div>
+        </section>
+      </div>
+      <p class="ob-message" id="character-message" role="alert"></p>
+      <button class="ob-button" id="character-submit" type="submit">Criar personagem <span aria-hidden="true">→</span></button>
+    </form>
+  </section>
+  <section class="onboarding__panel onboarding-complete" id="onboarding-complete" hidden aria-labelledby="complete-title">
+    <span class="onboarding-complete__check" aria-hidden="true">✓</span>
+    <h2 id="complete-title" tabindex="-1">Sua jornada <span>está pronta!</span></h2>
+    <p id="complete-message">Seu personagem foi criado no mundo Galaxy.</p>
+    <a class="ob-button" href="minha-conta.html">Ir para meu perfil <span aria-hidden="true">→</span></a>
+    <p class="ob-note">No perfil, você também pode ativar a proteção em duas etapas para os acessos ao site.</p>
+    <a class="ob-link" href="seguranca.html#totp-card">Configurar proteção opcional</a>
+  </section>
+  <div class="onboarding__bottom"><span>POKEWORLD UNIVERSE</span><button id="onboarding-logout" type="button">Sair da conta</button></div>
+</main>
+</div>
+<script nonce="brJllL1vYkoyCeQF91CWlhwx" src="config.js?pwu=80dee41-20260924b"></script>
+<script nonce="brJllL1vYkoyCeQF91CWlhwx" src="data.js?pwu=popular-400-20260926-v10"></script>
+<script nonce="brJllL1vYkoyCeQF91CWlhwx" src="ui.js?pwu=onboarding-20260926-v12"></script>
+<script nonce="brJllL1vYkoyCeQF91CWlhwx" type="module" src="onboarding.js?pwu=lobby-prefill-20261001-v1"></script>
+</body>
+</html>

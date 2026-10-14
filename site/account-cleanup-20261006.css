@@ -1,0 +1,18 @@
+/* Refinamentos visuais da conta: contador oculto e título de parceria. */
+body[data-page="minha-conta"] #acc-tcount { display: none !important; }
+body[data-page="minha-conta"] #twitch .tw-partner > .tw-role-heading > h3 {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  max-width: 100%;
+  margin: 0;
+  padding: 12px 24px;
+  border: 1px solid #b884ff;
+  border-radius: 999px;
+  background: var(--tw-purple, #9146ff);
+  color: #fff;
+  font: 400 19px/1 var(--bebas);
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  box-shadow: 0 5px 14px #9146ff24;
+}

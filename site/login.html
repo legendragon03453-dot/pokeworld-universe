@@ -6,9 +6,11 @@
   <title>Entrar — Pokeworld Universe</title>
   <meta name="description" content="Entre ou crie sua conta Pokeworld Universe. A mesma conta do site é a conta do jogo.">
   <link rel="icon" href="assets/logo-sigla.png">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="pages.css">
-  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js" defer></script>
+  <link rel="stylesheet" href="styles.css?pwu=profile-20260926-v6">
+  <link rel="stylesheet" href="pages.css?pwu=profile-20260926-v6">
+  <link rel="stylesheet" href="login-register.css?pwu=onboarding-20260926-v12">
+  <script nonce="ScW7J/kEydfmulInQSWpY0sy" src="assets/vendor/qrcode-generator-1.4.4.min.js" defer></script>
+<link rel="stylesheet" href="public-access-20261006.css?v=1">
 </head>
 <body data-page="login">
 <div class="scroll-progress" aria-hidden="true"></div>
@@ -21,14 +23,14 @@
     <nav class="nav">
       <a href="o-jogo.html">O JOGO</a>
       <a href="#" class="is-off" aria-disabled="true">wiki</a>
-      <a href="download.html">download</a>
-      <a href="ranking.html">ranking</a>
-      <a href="Donate">loja</a>
+      <a class="is-off" href="#" data-pwu-paused="download" data-pwu-paused-href="download.html" aria-disabled="true" tabindex="-1" title="Em breve">download</a>
+      <a class="is-off" href="#" data-pwu-paused="ranking" data-pwu-paused-href="ranking.html" aria-disabled="true" tabindex="-1" title="Em breve">ranking</a>
+      <a href="noticias.html">notícias</a>
       <a href="Donate">doar</a>
     </nav>
     <div class="topbar-actions">
       <a class="btn-entrar" href="login.html" data-entrar>Iniciar sessão</a>
-      <a class="btn-jogue-agora" href="download.html">JOGUE AGORA</a>
+      <a class="btn-jogue-agora" href="login.html#criar" data-pwu-paused="download" data-pwu-paused-href="download.html" data-pwu-paused-label="JOGUE AGORA">CRIAR CONTA</a>
     </div>
     <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   </header>
@@ -41,51 +43,58 @@
       <div class="login-box__head">
         <img src="assets/logo-central.png" alt="Pokeworld Universe">
         <h1>Sua conta <span class="grad grad--yellow">Pokeworld</span></h1>
-        <p>A conta criada aqui é a mesma que você usa para entrar no jogo. Ela guarda seus treinadores, seus créditos e seu progresso.</p>
+        <p class="login-box__intro--default">A conta criada aqui é a mesma que você usa para entrar no jogo. Ela guarda seus treinadores, seus créditos e seu progresso.</p>
+        <p class="login-box__intro--register">Uma só conta para o site, seus treinadores e sua jornada no jogo.</p>
       </div>
 
       <div class="login-tabs" role="tablist">
-        <button class="login-tab is-active" type="button" data-ltab="login" role="tab">Entrar</button>
-        <button class="login-tab" type="button" data-ltab="register" role="tab">Criar conta</button>
+        <button class="login-tab is-active" type="button" data-ltab="login" role="tab" id="login-tab" aria-selected="true" aria-controls="login-form">Entrar</button>
+        <button class="login-tab" type="button" data-ltab="register" role="tab" id="register-tab" aria-selected="false" aria-controls="register-form" tabindex="-1">Criar conta</button>
         <span class="login-tabs__ink"></span>
       </div>
 
-      <form class="login-form" data-lform="login" novalidate>
-        <label class="field"><span>E-mail</span><input type="email" name="email" autocomplete="email" placeholder="treinador@pokeworld.com" required></label>
+      <form class="login-form" data-lform="login" id="login-form" aria-labelledby="login-tab" novalidate>
+        <label class="field"><span>E-mail ou nome da conta</span><input type="text" name="email" autocomplete="username" maxlength="254" autocapitalize="none" spellcheck="false" placeholder="Seu e-mail ou nome de acesso ao jogo" required></label>
+        <details class="login-account-choice">
+          <summary>Uso o mesmo e-mail em mais de uma conta</summary>
+          <label class="field"><span>Nome da conta ou de um personagem</span><input type="text" name="accountIdentifier" maxlength="254" autocomplete="off" autocapitalize="none" spellcheck="false" aria-describedby="login-account-help" placeholder="Nome completo"><small id="login-account-help">Informe seu e-mail acima e o nome da conta ou de um personagem dela aqui.</small></label>
+        </details>
         <label class="field"><span>Senha</span><span class="field__pw"><input type="password" name="password" autocomplete="current-password" placeholder="Sua senha" required><button type="button" class="field__eye" aria-label="Mostrar senha"><i class="ico ico-eye" aria-hidden="true"></i></button></span></label>
         <div class="login-row">
           <label class="check"><input type="checkbox" name="terms" required><i></i><span>Li e aceito <a href="regras.html" target="_blank" rel="noopener">as regras</a>.</span></label>
           <a class="login-forgot" href="#" data-lforgot>Esqueci minha senha</a>
         </div>
-        <p class="auth__error" hidden></p>
+        <p class="auth__error" role="alert" hidden></p>
         <button class="auth__submit" type="submit"><span>Entrar no Pokeworld</span></button>
         <p class="auth__switch">Ainda não tem conta? <a href="#" data-lgoto="register">Criar agora</a></p>
       </form>
 
-      <form class="login-form login-form--reg" data-lform="register" hidden novalidate>
+      <form class="login-form login-form--reg" data-lform="register" id="register-form" aria-labelledby="register-tab" hidden novalidate>
         <div class="login-grid">
-          <label class="field"><span>E-mail</span><input type="email" name="email" autocomplete="email" placeholder="treinador@pokeworld.com" required></label>
+          <label class="field login-grid__email"><span>E-mail</span><input type="email" name="email" autocomplete="email" placeholder="treinador@pokeworld.com" required></label>
           <div class="login-grid__pw">
-            <label class="field"><span>Nova senha</span><span class="field__pw"><input type="password" name="password" autocomplete="new-password" placeholder="Mínimo de 8 caracteres" minlength="8" required><button type="button" class="field__eye" aria-label="Mostrar senha"><i class="ico ico-eye" aria-hidden="true"></i></button></span></label>
-            <div class="strength" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            <label class="field"><span>Nova senha</span><span class="field__pw"><input type="password" name="password" autocomplete="new-password" placeholder="Mínimo de 8 caracteres" minlength="8" aria-describedby="register-password-help" required><button type="button" class="field__eye" aria-label="Mostrar senha"><i class="ico ico-eye" aria-hidden="true"></i></button></span></label>
           </div>
           <label class="field"><span>Confirmar senha</span><input type="password" name="confirm" autocomplete="new-password" placeholder="Repita a senha" required></label>
-          <ul class="login-dicas">
-            <li>Pelo menos 8 caracteres</li>
-            <li>Misture maiúsculas e minúsculas</li>
-            <li>Inclua um número ou símbolo</li>
-          </ul>
+          <div class="login-password-help" id="register-password-help">
+            <div class="login-password-help__head"><b>Uma senha mais segura</b><div class="strength" aria-hidden="true"><i></i><i></i><i></i><i></i></div></div>
+            <ul class="login-dicas">
+              <li>Pelo menos 8 caracteres</li>
+              <li>Letras maiúsculas e minúsculas</li>
+              <li>Números ou símbolos</li>
+            </ul>
+          </div>
         </div>
-        <div class="doisfa">
-          <p class="doisfa__titulo">Verificação em duas etapas <em>obrigatória</em></p>
-          <p class="doisfa__texto">Logo depois de criar a conta você ativa o autenticador no celular. Leva menos de um minuto e protege seus créditos e treinadores.</p>
-          <div class="doisfa__opcoes">
-            <div class="doisfa__op"><i class="doisfa__ico" aria-hidden="true"><i class="ico ico-mail" aria-hidden="true"></i></i><div><b>Por e-mail</b><span>Código no seu e-mail sempre que entrar de um computador novo.</span></div></div>
-            <div class="doisfa__op"><i class="doisfa__ico" aria-hidden="true"><i class="ico ico-shield" aria-hidden="true"></i></i><div><b>Por aplicativo</b><span>Google Authenticator, Authy ou similar. Ativado no próximo passo.</span></div></div>
+        <div class="register-protection">
+          <i class="register-protection__icon ico ico-mail" aria-hidden="true"></i>
+          <div>
+            <h2>Confirme seu e-mail</h2>
+            <p>No próximo passo, enviaremos um código para concluir o cadastro. Ao entrar em um novo aparelho, você também confirma o acesso por e-mail.</p>
+            <p class="register-protection__pending">Depois, guarde sua Recovery Key e crie seu primeiro personagem. A proteção em duas etapas pode ser configurada no perfil.</p>
           </div>
         </div>
         <label class="check"><input type="checkbox" name="terms" required><i></i><span>Li e aceito <a href="regras.html" target="_blank" rel="noopener">as regras</a>.</span></label>
-        <p class="auth__error" hidden></p>
+        <p class="auth__error" role="alert" hidden></p>
         <button class="auth__submit" type="submit"><span>Criar minha conta</span></button>
         <p class="auth__switch">Já tem conta? <a href="#" data-lgoto="login">Entrar</a></p>
       </form>
@@ -93,11 +102,11 @@
   </main>
 </div>
 
-<script src="config.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
-<script src="data.js"></script>
-<script src="store.js"></script>
-<script src="ui.js"></script>
-<script src="login.js"></script>
+<script nonce="ScW7J/kEydfmulInQSWpY0sy" src="config.js?pwu=80dee41-20260924b"></script>
+<script nonce="ScW7J/kEydfmulInQSWpY0sy" src="assets/vendor/supabase-2.45.4.min.js"></script>
+<script nonce="ScW7J/kEydfmulInQSWpY0sy" src="data.js?pwu=80dee41-20260924b"></script>
+<script nonce="ScW7J/kEydfmulInQSWpY0sy" src="store.js?pwu=80dee41-20260924b"></script>
+<script nonce="ScW7J/kEydfmulInQSWpY0sy" src="ui.js?pwu=onboarding-20260926-v12"></script>
+<script nonce="ScW7J/kEydfmulInQSWpY0sy" src="login.js?pwu=criar-login-20261001-v1"></script>
 </body>
 </html>

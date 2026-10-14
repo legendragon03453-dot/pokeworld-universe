@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Loja — Pokeworld Universe</title>
-  <meta name="description" content="Loja do Pokeworld Universe: criaturas, trajes, gemas e Passe de Aventura.">
+  <title>Doar — Pokeworld Universe</title>
+  <meta name="description" content="Apoie o Pokeworld Universe e ganhe mais créditos.">
   <link rel="icon" href="assets/logo-sigla.png">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="pages.css">
+  <link rel="stylesheet" href="styles.css?pwu=profile-20260926-v6">
+  <link rel="stylesheet" href="pages.css?pwu=profile-20260926-v6">
+<link rel="stylesheet" href="public-access-20261006.css?v=1">
 </head>
-<body data-page="loja">
+<body data-page="doar">
 <div class="scroll-progress" aria-hidden="true"></div>
 <div class="cursor" aria-hidden="true"><div class="cursor__ring"></div><div class="cursor__dot"></div></div>
 <div class="page page--sub">
@@ -18,49 +19,49 @@
     <div class="header-shape header-shape--white"></div>
     <div class="header-shape header-shape--grad"></div>
     <a class="logo-sigla" href="index.html"><img src="assets/logo-sigla.png" alt="PWU"></a>
-    <nav class="nav"><a href="o-jogo.html">O JOGO</a><a href="#" class="is-off" aria-disabled="true">wiki</a><a href="download.html">download</a><a href="ranking.html">ranking</a><a href="Donate">loja</a><a href="Donate">doar</a></nav>
+    <nav class="nav"><a href="o-jogo.html">O JOGO</a><a href="#" class="is-off" aria-disabled="true">wiki</a><a class="is-off" href="#" data-pwu-paused="download" data-pwu-paused-href="download.html" aria-disabled="true" tabindex="-1" title="Em breve">download</a><a class="is-off" href="#" data-pwu-paused="ranking" data-pwu-paused-href="ranking.html" aria-disabled="true" tabindex="-1" title="Em breve">ranking</a><a href="noticias.html">notícias</a><a href="Donate" class="is-active">doar</a></nav>
     <div class="topbar-actions">
       <a class="btn-entrar" href="login.html" data-entrar>Iniciar sessão</a>
-      <a class="btn-jogue-agora" href="download.html">JOGUE AGORA</a>
+      <a class="btn-jogue-agora" href="login.html#criar" data-pwu-paused="download" data-pwu-paused-href="download.html" data-pwu-paused-label="JOGUE AGORA">CRIAR CONTA</a>
     </div>
     <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   </header>
 
-  <section class="banner" style="--bg:url('assets/img/bg/sky.jpg')">
+  <section class="banner banner--blend banner--solo" style="--bg:url('assets/img/bg/stadium-blue.jpg')">
     <span class="banner__glow" aria-hidden="true"></span>
     <span class="banner__mesh" aria-hidden="true"></span>
     <span class="banner__ball" aria-hidden="true"></span>
     <div class="banner__inner">
-      <nav class="banner__crumb" aria-label="Você está em"><a href="index.html">Início</a><i aria-hidden="true"></i><span>Loja</span></nav>
-      <span class="banner__tag">Loja oficial</span>
-      <h1 class="banner__title">Loja<br>Pokeworld</h1>
-      <p class="banner__sub">Novas criaturas, trajes exclusivos e o Passe de Aventura da temporada.</p>
-    </div><div class="banner__stage"><img class="banner__art" src="assets/img/art/player-girl.png?v=3" alt=""></div>
+      <nav class="banner__crumb" aria-label="Você está em"><a href="index.html">Início</a><i aria-hidden="true"></i><span>Doar</span></nav>
+      <span class="banner__tag">Apoie o servidor</span>
+      <h1 class="banner__title">Ganhe mais <span class="grad grad--yellow">créditos</span></h1>
+      
+    </div>
   </section>
 
   <main class="sub">
 
-    <section class="sec">
+    <section class="sec sec--dark sec--textura doar-packs-sec" id="pacotes">
+      <span class="doar-moedas" aria-hidden="true"></span>
       <div class="wrap">
-        <div class="sec__head">
-          <div class="chips">
-            <button class="chip is-active" type="button" data-filter="todos">Todos</button>
-            <button class="chip" type="button" data-filter="pokemon">Criaturas</button>
-            <button class="chip" type="button" data-filter="traje">Holo-trajes</button>
-            <button class="chip" type="button" data-filter="gemas">Gemas</button>
-            <button class="chip" type="button" data-filter="passe">Passe</button>
-          </div>
-          <div class="wallet"><div><img class="coin" src="assets/img/coins/pcoin.png?v=3" alt=""><b>24.500</b> créditos</div><div><i class="gem"></i><b>380</b> gemas</div></div>
+        <div class="doar-topo">
+          <p class="doar-topo__oi">Olá, <b id="doar-nome">treinador</b></p>
+          <p class="doar-topo__saldo" id="doar-saldo" hidden><img src="assets/img/coins/pcoin-clean.svg?v=2" alt=""><span>Seu saldo</span><b>0</b></p>
         </div>
-        <div class="shop-gate" id="shop-gate" hidden>
-          <div class="shop-gate__card">
-            <img src="assets/logo-sigla.png" alt="">
-            <h3>Entre para acessar a loja</h3>
-            <p>Você precisa estar conectado à sua conta Pokeworld para ver e comprar itens.</p>
-            <div class="btn-row" style="justify-content:center"><a class="btn btn--yellow" href="#" data-auth="login">Iniciar sessão</a><a class="btn btn--ghost" href="#" data-auth="register">Criar conta</a></div>
+        <form class="valor-livre" id="f-valor" novalidate>
+          <label for="valor-livre">Valor</label>
+          <div class="valor-livre__linha">
+            <span class="valor-livre__moeda">R$</span>
+            <input id="valor-livre" name="valor" type="text" inputmode="decimal" autocomplete="off" placeholder="Digite o valor que quiser, ex.: 137,50">
+            <button type="submit" disabled aria-disabled="true" title="Compras temporariamente indisponíveis">Donate</button>
           </div>
+          <p class="valor-livre__dica"><span id="valor-livre-dica">A partir de R$ 100 você já ganha bônus.</span></p>
+        </form>
+        <div class="packs packs--3 packs--6" id="doar-packs"></div>
+        <div class="bonus-meter" id="bonus-meter" aria-hidden="true">
+          <div class="bonus-meter__trilho"><i class="bonus-meter__fill"></i><img class="bonus-meter__moeda" src="assets/img/coins/pcoin-clean.svg?v=2" alt=""></div>
+          <div class="bonus-meter__pontos"></div>
         </div>
-        <div class="shop-grid" id="shop-grid"></div>
       </div>
     </section>
 
@@ -73,27 +74,27 @@
           <img src="assets/logo-sigla.png" alt="Pokeworld Universe">
           <p>Pokeworld Universe é um jogo online moderno para explorar mundos incríveis, colecionar criaturas únicas e batalhar com treinadores do mundo todo.</p>
           <div class="site-footer__social">
-            <a href="#" aria-label="Discord"><img src="assets/social-discord.png" alt="" style="object-fit:contain;width:70%;height:70%"></a>
-            <a href="#" aria-label="Instagram"><img src="assets/social-instagram.svg" alt=""></a>
+            <a href="https://discord.gg/pokeworlduniverse" target="_blank" rel="noopener noreferrer" aria-label="Discord"><img src="assets/social-discord.png" alt="" style="object-fit:contain;width:70%;height:70%"></a>
+            <a href="https://www.instagram.com/pokeworlduniverse/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><img src="assets/social-instagram.svg" alt=""></a>
           </div>
         </div>
         <div>
           <h4>Jogo</h4>
-          <ul><li><a href="o-jogo.html">Sobre o jogo</a></li><li><a href="ranking.html">Ranking</a></li><li><a href="Donate">Doar</a></li></ul>
+          <ul><li><a href="o-jogo.html">Sobre o jogo</a></li><li><a class="is-off" href="#" data-pwu-paused="ranking" data-pwu-paused-href="ranking.html" aria-disabled="true" tabindex="-1" title="Em breve">Ranking</a></li><li><a href="Donate">Doar</a></li></ul>
         </div>
         <div>
           <h4>Suporte</h4>
-          <ul><li><a href="download.html">Baixar</a></li><li><a href="minha-conta.html">Minha conta</a></li><li><a href="tickets.html">Tickets</a></li><li><a href="regras.html">Regras</a></li></ul>
+          <ul><li><a class="is-off" href="#" data-pwu-paused="download" data-pwu-paused-href="download.html" aria-disabled="true" tabindex="-1" title="Em breve">Baixar</a></li><li><a href="minha-conta.html">Minha conta</a></li><li><a href="tickets.html">Tickets</a></li><li><a href="regras.html">Regras</a></li></ul>
         </div>
         <div>
           <h4>Baixe agora</h4>
           <div class="site-footer__baixar">
-            <a class="btn btn--yellow btn--sm" href="download.html">Baixar o launcher</a>
+            <a class="btn btn--yellow btn--sm is-off" href="#" data-pwu-paused="download" data-pwu-paused-href="download.html" aria-disabled="true" tabindex="-1" title="Em breve">Baixar o launcher</a>
           </div>
         </div>
       </div>
       <div class="site-footer__bar">
-        <div class="site-footer__status"><span><i class="live-dot"></i>Servidor online</span><span>Próximo evento</span></div>
+        
         <span>© 2026 Pokeworld Universe.</span>
       </div>
       <p class="copy-pokemon">Pokémon Copyright © 1995 – 2026 Nintendo/Creatures Inc./GAME FREAK Inc. Pokémon e todos os respectivos nomes são marcas registradas da Nintendo 1996 – 2026. PokeWorld Universe não é afiliado à Nintendo, Creatures Inc. e GAME FREAK Inc.</p>
@@ -102,19 +103,14 @@
 
 </div>
 
-<button class="cart-fab" id="cart-fab" type="button"><i class="ico ico-cart" aria-hidden="true"></i> Carrinho <b>0</b></button>
-<aside class="cart" id="cart">
-  <div class="cart__head">Seu carrinho <button type="button" data-cart-close aria-label="Fechar">×</button></div>
-  <div class="cart__list"></div>
-  <div class="cart__foot"><div class="cart__total"><span>Total</span><b>R$ 0,00</b></div><button class="btn btn--yellow" type="button" data-checkout>Finalizar compra</button></div>
-</aside>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="config.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
-<script src="data.js"></script>
-<script src="store.js"></script>
-<script src="ui.js"></script>
-<script src="pages.js"></script>
+<div class="pmodal" id="pmodal" hidden><div class="pmodal__bd" data-pclose></div><div class="pmodal__card"><button class="pmodal__close" type="button" data-pclose aria-label="Fechar">×</button><div id="pmodal-body"></div></div></div>
+<script nonce="mDmhw5GO5XgqqA00WT0PJ4hU" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script nonce="mDmhw5GO5XgqqA00WT0PJ4hU" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script nonce="mDmhw5GO5XgqqA00WT0PJ4hU" src="config.js?pwu=80dee41-20260924b"></script>
+<script nonce="mDmhw5GO5XgqqA00WT0PJ4hU" src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script nonce="mDmhw5GO5XgqqA00WT0PJ4hU" src="data.js?pwu=popular-400-20260926-v10"></script>
+<script nonce="mDmhw5GO5XgqqA00WT0PJ4hU" src="store.js?pwu=80dee41-20260924b"></script>
+<script nonce="mDmhw5GO5XgqqA00WT0PJ4hU" src="ui.js?pwu=security-20260926-v11"></script>
+<script nonce="mDmhw5GO5XgqqA00WT0PJ4hU" src="pages.js?pwu=compras-pausadas-20261006"></script>
 </body>
 </html>

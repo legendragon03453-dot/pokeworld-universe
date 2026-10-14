@@ -1,0 +1,167 @@
+/* Seletores de foto: cartões e controles PWU, sem barra horizontal nativa. */
+body[data-page="minha-conta"] .pmodal__card:has(.foto-picker) {
+  width: min(1000px, 100%);
+  padding: 30px;
+  border-width: 1px;
+  border-color: #8d9ac04d;
+  background: linear-gradient(125deg, #202c4a, #141d35 70%);
+  box-shadow: 0 28px 90px #050b1b80;
+}
+body[data-page="minha-conta"] .foto-picker {
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 26px;
+  margin-top: 8px;
+  margin-bottom: 24px;
+}
+body[data-page="minha-conta"] .foto-picker__summary {
+  align-self: center;
+  min-width: 0;
+}
+body[data-page="minha-conta"] .foto-picker__summary h3 {
+  margin: 0 0 12px;
+  font-size: 25px;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+body[data-page="minha-conta"] .foto-picker__summary .sub {
+  margin: 12px 0 0;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #b9c4d9;
+}
+body[data-page="minha-conta"] .foto-picker__preview {
+  margin: 0;
+  padding: 16px;
+  border: 1px solid #fcd05c35;
+  border-radius: 20px;
+  background: radial-gradient(ellipse at top, #354769, #131d34 80%);
+}
+body[data-page="minha-conta"] .foto-picker__opts { min-width: 0; }
+body[data-page="minha-conta"] .foto-picker__heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+body[data-page="minha-conta"] .foto-picker__heading h4 {
+  margin: 0;
+  color: #ffda77;
+  font-size: 22px;
+}
+body[data-page="minha-conta"] .foto-picker__nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+body[data-page="minha-conta"] .foto-picker__nav button,
+body[data-page="perfil"] .profile-carousel__controls button {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid #fcd05c66;
+  border-radius: 50%;
+  background: #fcd05c0d;
+  color: #ffda77;
+  cursor: pointer;
+  transition: background .18s, border-color .18s;
+}
+body[data-page="minha-conta"] .foto-picker__nav svg { width: 18px; height: 18px; }
+body[data-page="minha-conta"] .foto-picker__nav button:hover:not(:disabled),
+body[data-page="perfil"] .profile-carousel__controls button:hover:not(:disabled) {
+  background: #fcd05c;
+  color: #14213e;
+  border-color: #fcd05c;
+}
+body[data-page="minha-conta"] .foto-picker__nav button:disabled { opacity: .3; cursor: default; }
+body[data-page="minha-conta"] .foto-picker__range {
+  min-width: 78px;
+  color: #bbc8df;
+  font: 500 12px/1.3 var(--montreal);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+body[data-page="minha-conta"] .foto-picker__row {
+  --foto-columns: 5;
+  --foto-gap: 10px;
+  grid-auto-columns: calc((100% - (var(--foto-columns) - 1) * var(--foto-gap)) / var(--foto-columns));
+  gap: var(--foto-gap);
+  padding: 3px 0 4px;
+  margin-bottom: 20px;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+body[data-page="minha-conta"] .foto-picker__row::-webkit-scrollbar,
+body[data-page="perfil"] .profile-grid::-webkit-scrollbar { display: none; height: 0; }
+body[data-page="perfil"] .profile-grid { scrollbar-width: none; padding-bottom: 3px; }
+body[data-page="minha-conta"] .foto-opt {
+  min-width: 0;
+  padding: 6px;
+  border: 1px solid #a4b9dc33;
+  border-radius: 14px;
+  background: #ffffff05;
+  scroll-snap-align: start;
+}
+body[data-page="minha-conta"] .foto-opt:hover { border-color: #fcd05c99; background: #fcd05c08; }
+body[data-page="minha-conta"] .foto-opt[aria-pressed="true"] {
+  border-color: #fcd05c;
+  background: #fcd05c15;
+  box-shadow: inset 0 0 0 1px #fcd05c66;
+}
+body[data-page="minha-conta"] .foto-opt[aria-pressed="true"]::after {
+  content: '✓';
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fcd05c;
+  color: #14213e;
+  font: 700 13px/20px Arial, sans-serif;
+  text-align: center;
+}
+body[data-page="minha-conta"] .foto-opt small {
+  min-height: 28px;
+  display: grid;
+  place-items: center;
+  margin: 4px 0 0;
+  white-space: normal;
+  font-size: 12px;
+  line-height: 1.2;
+  color: #dbe5f6;
+}
+body[data-page="minha-conta"] .foto-picker :is(button, .foto-opt):focus-visible {
+  outline: 2px solid #ffda77;
+  outline-offset: -2px;
+}
+@media (max-width: 960px) {
+  body[data-page="minha-conta"] .foto-picker { grid-template-columns: 220px minmax(0, 1fr); gap: 20px; }
+  body[data-page="minha-conta"] .foto-picker__row { --foto-columns: 4; }
+}
+@media (max-width: 720px) {
+  body[data-page="minha-conta"] .pmodal:has(.foto-picker) { padding: 12px; }
+  body[data-page="minha-conta"] .pmodal__card:has(.foto-picker) { padding: 24px 18px; }
+  body[data-page="minha-conta"] .foto-picker { grid-template-columns: minmax(0, 1fr); margin-top: 16px; gap: 18px; }
+  body[data-page="minha-conta"] .foto-picker__preview { width: 160px; margin: 0 auto; padding: 10px; border-radius: 16px; }
+  body[data-page="minha-conta"] .foto-picker__summary { text-align: center; }
+  body[data-page="minha-conta"] .foto-picker__row { --foto-columns: 3; --foto-gap: 8px; }
+  body[data-page="minha-conta"] .foto-picker__heading { gap: 8px; }
+  body[data-page="minha-conta"] .foto-picker__heading h4 { font-size: 20px; }
+  body[data-page="minha-conta"] .foto-picker__nav { gap: 6px; }
+  body[data-page="minha-conta"] .foto-picker__range { min-width: 64px; font-size: 11px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body[data-page="minha-conta"] .foto-picker__nav button,
+  body[data-page="perfil"] .profile-carousel__controls button { transition: none; }
+}
+@media (max-width: 360px) {
+  body[data-page="minha-conta"] .foto-picker__heading h4 { font-size: 18px; }
+  body[data-page="minha-conta"] .foto-picker__nav { gap: 4px; }
+  body[data-page="minha-conta"] .foto-picker__range { min-width: 52px; }
+}

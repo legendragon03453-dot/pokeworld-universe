@@ -1,0 +1,3 @@
+/* Recursos temporariamente desativados; cadastro permanece aberto. */
+a[data-pwu-paused][aria-disabled="true"] { cursor: default; opacity: .55; }
+a[data-pwu-paused][aria-disabled="true"]:hover { transform: none; }

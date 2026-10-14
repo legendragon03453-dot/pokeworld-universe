@@ -3,91 +3,312 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wiki — Pokeworld Universe</title>
-  <meta name="description" content="Compêndio de criaturas do Pokeworld Universe.">
+  <title>Pokeworld Universe</title>
   <link rel="icon" href="assets/logo-sigla.png">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="pages.css">
+  <link rel="stylesheet" href="styles.css?pwu=profile-20260926-v6">
+<link rel="stylesheet" href="public-access-20261006.css?v=1">
 </head>
-<body data-page="wiki">
+<body>
 <div class="scroll-progress" aria-hidden="true"></div>
 <div class="cursor" aria-hidden="true"><div class="cursor__ring"></div><div class="cursor__dot"></div></div>
-<div class="page page--sub">
+<div class="page">
 
-  <header class="topbar">
+  <!-- ===================== HERO ===================== -->
+  <section class="hero">
+    <img class="hero__bg" src="assets/hero-bg.png" alt="">
+    <img class="hero__logo-central" src="assets/logo-central.png" alt="Pokeworld Universe">
+
+    <!-- Intro em vídeo (desktop): intro.mp4 toca uma vez, depois loop.mp4 fica em loop -->
+    <div class="hero__video" aria-hidden="true">
+      <video class="hero__intro" muted playsinline preload="auto" poster="assets/hero-video-poster.jpg"
+             data-src="assets/intro.mp4"></video>
+      <video class="hero__loop" muted playsinline loop preload="auto"
+             data-src="assets/loop.mp4"></video>
+    </div>
+
     <div class="header-shape header-shape--white"></div>
     <div class="header-shape header-shape--grad"></div>
-    <a class="logo-sigla" href="index.html"><img src="assets/logo-sigla.png" alt="PWU"></a>
-    <nav class="nav"><a href="o-jogo.html">O JOGO</a><a href="#" class="is-off" aria-disabled="true">wiki</a><a href="download.html">download</a><a href="ranking.html">ranking</a><a href="Donate">loja</a><a href="Donate">doar</a></nav>
+
+    <a class="logo-sigla" href="#"><img src="assets/logo-sigla.png" alt="PWU"></a>
+
+    <nav class="nav">
+      <a href="o-jogo.html">O JOGO</a>
+      <a href="#" class="is-off" aria-disabled="true">wiki</a>
+      <a class="is-off" href="#" data-pwu-paused="download" data-pwu-paused-href="download.html" aria-disabled="true" tabindex="-1" title="Em breve">download</a>
+      <a class="is-off" href="#" data-pwu-paused="ranking" data-pwu-paused-href="ranking.html" aria-disabled="true" tabindex="-1" title="Em breve">ranking</a>
+      <a href="noticias.html">notícias</a>
+      <a href="Donate">doar</a>
+    </nav>
     <div class="topbar-actions">
       <a class="btn-entrar" href="login.html" data-entrar>Iniciar sessão</a>
-      <a class="btn-jogue-agora" href="download.html">JOGUE AGORA</a>
+      <a class="btn-jogue-agora" href="login.html#criar" data-pwu-paused="download" data-pwu-paused-href="download.html" data-pwu-paused-label="JOGUE AGORA">CRIAR CONTA</a>
     </div>
-    <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
-  </header>
 
-  <section class="banner" style="--bg:url('assets/img/qg/qg-3.jpg')">
-    <span class="banner__glow" aria-hidden="true"></span>
-    <span class="banner__mesh" aria-hidden="true"></span>
-    <span class="banner__ball" aria-hidden="true"></span>
-    <div class="banner__inner">
-      <nav class="banner__crumb" aria-label="Você está em"><a href="index.html">Início</a><i aria-hidden="true"></i><span>Wiki</span></nav>
-      <span class="banner__tag">Compêndio</span>
-      <h1 class="banner__title" data-text="wiki.banner.title">Todas as<br>criaturas</h1>
-      <p class="banner__sub" data-text="wiki.banner.sub">Funções, alcance, dificuldade e estatísticas de cada criatura disponível.</p>
-    </div><div class="banner__stage"><img class="banner__art" src="assets/img/art/trainer-azul.png" alt=""></div>
+    <button class="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <div class="cta-card">
+      <h1 class="cta-card__title"><span data-text="home.cta.title">Comece agora sua aventura no</span> <span class="grad">pokeworld</span></h1>
+      <div class="cta-card__buttons">
+        <a class="pill pill--yellow" href="#" data-auth="login">Iniciar sessão</a>
+        <a class="pill pill--black" href="login.html#criar" data-pwu-paused="download" data-pwu-paused-href="download.html" data-pwu-paused-label="jogue grátis">CRIAR CONTA</a>
+      </div>
+    </div>
+
+    <div class="trailer">
+      <video class="trailer__video" src="assets/video/pokemon-qg.mp4" poster="assets/video/pokemon-qg.jpg" muted loop playsinline preload="none" aria-hidden="true"></video>
+      <button class="trailer__play" type="button" data-trailer><i aria-hidden="true"></i><span>Assistir trailer</span></button>
+    </div>
+
+    
+
+    <!-- ===================== ABOUT (dentro do hero no desktop, seção própria no mobile) ===================== -->
+    <div class="about">
+      <div class="about__white"></div>
+      <div class="about__swoosh"></div>
+      <div class="about__blue"></div>
+
+      <div class="about-card">
+        <div class="about-card__body"></div>
+        <div class="about-card__head"></div>
+        <h2 class="about-card__title">O que é o <span class="grad">PokeWorld Universe</span></h2>
+      </div>
+
+      <img class="about__grid" src="assets/grid-floor.png" alt="">
+      <div class="about__particles" aria-hidden="true"></div>
+      <img class="about__pokeball" src="assets/pokebola.png" alt="">
+
+      <p class="about__text" data-text="home.about.text">O PokeWorld Universe é um mundo Pokémon online moderno e <b>GRÁTIS</b>, que convida você a explorar regiões e cidades incríveis e colecionar pokémon únicos. Com cliente próprio desenvolvido pela nossa equipe, o jogo traz uma perspectiva que dá profundidade ao mundo e cidades construídas do zero, como a nossa PWU City.</p>
+
+      <a class="btn-jogar" href="login.html#criar" data-pwu-paused="download" data-pwu-paused-href="download.html" data-pwu-paused-label="
+        &lt;span class=&quot;btn-jogar__text&quot;&gt;JOGAR &lt;span class=&quot;grad&quot;&gt;GRÁTIS&lt;/span&gt;&lt;/span&gt;
+        &lt;img class=&quot;btn-jogar__icon&quot; src=&quot;assets/d-btn-pokeball.svg&quot; alt=&quot;&quot;&gt;
+      ">
+        <span class="btn-jogar__text">CRIAR <span class="grad">CONTA</span></span>
+        <img class="btn-jogar__icon" src="assets/d-btn-pokeball.svg" alt="">
+      </a>
+
+      <div class="corner corner--left"></div>
+      <div class="corner corner--right"></div>
+    </div>
   </section>
 
-  <main class="sub">
+  <!-- ===================== SISTEMAS DO JOGO ===================== -->
+  <section class="systems">
+    <h2 class="systems__title">Sistemas do<span class="grad"> jogo</span></h2>
 
-    <section class="sec">
-      <div class="wrap">
-        <div class="dex-tools">
-          <div class="chips">
-            <button class="chip is-active" type="button" data-role="todos">Todos</button>
-            <button class="chip" type="button" data-role="atacante">Atacante</button>
-            <button class="chip" type="button" data-role="versatil">Versátil</button>
-            <button class="chip" type="button" data-role="defensor">Defensor</button>
-            <button class="chip" type="button" data-role="suporte">Suporte</button>
-            <button class="chip" type="button" data-role="velocista">Velocista</button>
-          </div>
-          <label class="search"><i class="ico ico-search" aria-hidden="true"></i> <input id="dex-search" type="search" placeholder="Buscar criatura"></label>
+    <div class="sys-grid">
+      <article class="sys-card">
+        <div class="sys-card__head"></div>
+        <img class="sys-card__icon" src="assets/d-sys-icon.svg" alt="">
+        <div class="sys-card__dots"><i></i><i></i><i></i></div>
+        <h3 class="sys-card__title">Mundo livre para explorar</h3>
+        <p class="sys-card__text">Voe pelo mapa, use montarias e descubra cidades construídas do zero, como PWU City, com torre central, bairros e hunts espalhadas pela cidade.</p>
+      </article>
+      <article class="sys-card">
+        <div class="sys-card__head"></div>
+        <img class="sys-card__icon" src="assets/d-sys-icon.svg" alt="">
+        <div class="sys-card__dots"><i></i><i></i><i></i></div>
+        <h3 class="sys-card__title">Ascensão estelar e evolução</h3>
+        <p class="sys-card__text">Leve sua criatura além da forma final com a ascensão estelar, subindo estrelas para desbloquear poder. Com evolução por pedras, helds e boost, o time fica do jeito que você montar.</p>
+      </article>
+      <article class="sys-card">
+        <div class="sys-card__head"></div>
+        <img class="sys-card__icon" src="assets/d-sys-icon.svg" alt="">
+        <div class="sys-card__dots"><i></i><i></i><i></i></div>
+        <h3 class="sys-card__title">Guildas com bosses e buffs</h3>
+        <p class="sys-card__text">Junte seu grupo, encare bosses exclusivos de guilda e libere buffs que valem para todos os membros. Quanto mais ativa a guilda, mais forte cada treinador fica.</p>
+      </article>
+      <article class="sys-card">
+        <div class="sys-card__head"></div>
+        <img class="sys-card__icon" src="assets/d-sys-icon.svg" alt="">
+        <div class="sys-card__dots"><i></i><i></i><i></i></div>
+        <h3 class="sys-card__title">Ranking de treinadores</h3>
+        <p class="sys-card__text">Quem está no topo do servidor aparece aqui: level, catches, conquistas e a disputa entre guildas.</p>
+      </article>
+      <article class="sys-card">
+        <div class="sys-card__head"></div>
+        <img class="sys-card__icon" src="assets/d-sys-icon.svg" alt="">
+        <div class="sys-card__dots"><i></i><i></i><i></i></div>
+        <h3 class="sys-card__title">Tasks e conquistas progressivas</h3>
+        <p class="sys-card__text">Complete tarefas diárias e por região para avançar em trilhas de recompensa. Quanto mais longe você chega, melhores os itens e as liberações.</p>
+      </article>
+      <article class="sys-card sys-card--desktop-only">
+        <div class="sys-card__head"></div>
+        <img class="sys-card__icon" src="assets/d-sys-icon.svg" alt="">
+        <div class="sys-card__dots"><i></i><i></i><i></i></div>
+        <h3 class="sys-card__title">Battle Pass exclusivo</h3>
+        <p class="sys-card__text">Cada temporada traz um passe com níveis de recompensa: cosméticos, itens e addons que só aparecem ali. Joga, sobe os níveis e leva o que a temporada oferece.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== JUNTE-SE À COMUNIDADE ===================== -->
+  <section class="community" id="comunidade">
+    <div class="community__inner">
+      <div class="community__text" data-reveal>
+        <span class="eyebrow eyebrow--light">Nossa comunidade</span>
+        <h2 class="community__title">Junte-se à <span class="grad grad--yellow">comunidade</span></h2>
+        <p>Treinadores de todo o mundo, eventos, suporte direto da equipe e updates em primeira mão. Tudo acontece no nosso Discord. Faça parte!</p>
+        <div class="community__cta">
+          <a class="pill pill--discord pill--lg" href="https://discord.gg/pokeworlduniverse" target="_blank" rel="noopener"><span class="pill__ico"><img src="assets/social-discord.png" alt=""></span><span class="txt">Entrar no Discord</span></a>
+          <a class="community__ig" href="https://instagram.com/pokeworlduniverse" target="_blank" rel="noopener"><img src="assets/social-instagram.svg" alt="">@pokeworlduniverse</a>
         </div>
-        <p class="sec__sub" style="margin-bottom:2rem;display:flex;justify-content:space-between;align-items:center;gap:2rem"><span><b id="dex-count">0</b> criaturas encontradas</span></p>
-        <div class="dex-grid" id="dex-grid"></div>
       </div>
-    </section>
+    </div>
+  </section>
 
-  </main>
+  <!-- ===================== ÚLTIMAS NOTÍCIAS ===================== -->
+  <section class="news" hidden>
+    <h2 class="news__title">ÚLTIMAS <span class="grad grad--news">NOTÍCIAS</span></h2>
+    <div class="news__line"></div>
 
-  <footer class="site-footer">
+    <div class="news__list">
+      <article class="news-card">
+        <div class="news-card__bg"></div>
+        <a class="news-card__img" href="noticia.html?id=temporada-12-regiao-aurora"><img src="assets/img/news/article-15.jpg" alt=""></a>
+        <span class="news-card__badge">NOVO</span>
+        <span class="news-card__date">4 de novembro, 2026</span>
+        <h3 class="news-card__title"><a href="noticia.html?id=temporada-12-regiao-aurora">Temporada 12 chega com a região Aurora e 6 novas criaturas</a></h3>
+        <a class="news-card__link" href="noticia.html?id=temporada-12-regiao-aurora">Saiba mais</a>
+      </article>
+      <article class="news-card">
+        <div class="news-card__bg"></div>
+        <a class="news-card__img" href="noticia.html?id=campeonato-mundial-2026"><img src="assets/img/news/article-24.jpg" alt=""></a>
+        <span class="news-card__badge">NOVO</span>
+        <span class="news-card__date">28 de outubro, 2026</span>
+        <h3 class="news-card__title"><a href="noticia.html?id=campeonato-mundial-2026">Campeonato Mundial 2026: inscrições abertas para as classificatórias</a></h3>
+        <a class="news-card__link" href="noticia.html?id=campeonato-mundial-2026">Saiba mais</a>
+      </article>
+      <article class="news-card">
+        <div class="news-card__bg"></div>
+        <a class="news-card__img" href="noticia.html?id=balanceamento-outubro"><img src="assets/img/news/article-17.jpg" alt=""></a>
+        <span class="news-card__badge">NOVO</span>
+        <span class="news-card__date">21 de outubro, 2026</span>
+        <h3 class="news-card__title"><a href="noticia.html?id=balanceamento-outubro">Notas de balanceamento: Raichu de Alola, Gengar e Mewtwo recebem ajustes</a></h3>
+        <a class="news-card__link" href="noticia.html?id=balanceamento-outubro">Saiba mais</a>
+      </article>
+    </div>
+
+    <a class="btn-veja" href="noticias.html">
+      <span class="btn-veja__text">VEJA MAIS</span>
+      <img class="btn-veja__icon" src="assets/d-veja-pokeball.svg" alt="">
+    </a>
+  </section>
+
+  <!-- ===================== JOGUE EM 3 PASSOS ===================== -->
+  <section class="steps-sec" id="como-jogar">
+    <div class="steps-sec__inner">
+      <div class="steps-sec__head" data-reveal>
+        <span class="eyebrow eyebrow--gold">Comece em minutos</span>
+        <h2 class="steps-sec__title">Jogue em apenas <span class="grad grad--yellow">3 passos</span></h2>
+      </div>
+      <div class="steps-path" aria-hidden="true"></div>
+      <div class="steps-grid">
+        <article class="step-card" data-reveal>
+          <span class="step-card__ghost">01</span>
+          <h3>Baixe o cliente</h3>
+          <p>Cerca de 3 minutos para criar a conta e se aventurar.</p>
+          <a class="step-card__link is-off" href="#" data-pwu-paused="download" data-pwu-paused-href="download.html" aria-disabled="true" tabindex="-1" title="Em breve">Baixar agora →</a>
+        </article>
+        <article class="step-card" data-reveal>
+          <span class="step-card__ghost">02</span>
+          <h3>Crie seu treinador</h3>
+          <p>Crie sua conta de forma gratuita e se aventure no nosso universo.</p>
+          <a class="step-card__link" href="#" data-auth="register">Criar conta →</a>
+        </article>
+        <article class="step-card" data-reveal>
+          <span class="step-card__ghost">03</span>
+          <h3>Capture o primeiro</h3>
+          <p>Explore, lance e capture. PWU City inteira espera por você.</p>
+          <a class="step-card__link is-off" href="#" data-pwu-paused="download" data-pwu-paused-href="download.html" aria-disabled="true" tabindex="-1" title="Em breve">Baixar agora →</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SUA LENDA COMEÇA HOJE ===================== -->
+  <section class="legend-sec" id="sua-lenda">
+    <div class="legend-sec__glow" aria-hidden="true"></div>
+    <div class="legend-sec__inner">
+      <div class="legend-sec__text" data-reveal>
+        <span class="eyebrow eyebrow--light">Pronto para capturar?</span>
+        <h2 class="legend-sec__title">Sua lenda<br>começa <span class="grad grad--yellow">hoje</span></h2>
+        <p>Baixe o cliente oficial, crie seu treinador e entre no Pokeworld. O cliente é o mesmo em qualquer lugar: seu progresso, seu time e seu ranking te acompanham.</p>
+        <div class="legend-sec__cta">
+          <a class="pill pill--yellow pill--lg is-off" href="#" data-pwu-paused="download" data-pwu-paused-href="download.html" aria-disabled="true" tabindex="-1" title="Em breve">Baixar cliente</a>
+          <a class="pill pill--discord pill--lg" href="https://discord.gg/pokeworlduniverse" target="_blank" rel="noopener"><span class="pill__ico"><img src="assets/social-discord.png" alt=""></span><span class="txt">Entrar no Discord</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PALCO DE SCROLL: imagem cheia -> esteira de cards -> fade preto + conteúdo final ===================== -->
+  <section class="stage" id="stage">
+    <div class="stage__sticky">
+      <div class="stage__frame">
+        <div class="marquee marquee--1" data-dir="1"><div class="marquee__track"></div></div>
+        <div class="marquee marquee--2" data-dir="-1"><div class="marquee__track"></div></div>
+        <div class="marquee marquee--3" data-dir="1"><div class="marquee__track"></div></div>
+
+        <video class="stage__hero" src="assets/video/mapas/mapa-09.mp4" poster="assets/video/mapas/mapa-09.jpg" muted loop playsinline autoplay preload="metadata"></video>
+
+        <div class="stage__overlay"></div>
+
+        <div class="stage__content">
+          <div class="footer__box"></div>
+          <div class="footer__tag">Comece sua Aventura</div>
+          <h2 class="footer__title">pokeworld universe</h2>
+
+          <div class="footer__badges">
+            <a class="badge-launcher is-off" href="#" data-pwu-paused="download" data-pwu-paused-href="download.html" aria-disabled="true" tabindex="-1" title="Em breve"><b>Baixar o launcher</b><span>Windows 10 e 11 · 64 bits</span></a>
+          </div>
+
+          <div class="footer__white"></div>
+          
+          <div class="footer__social">
+            <span>Nossas redes sociais:</span>
+            <div class="footer__social-icons">
+              <a class="social social--discord" href="https://discord.gg/pokeworlduniverse" target="_blank" rel="noopener noreferrer" aria-label="Discord"><img src="assets/social-discord.png" alt=""></a>
+              <a class="social social--instagram" href="https://www.instagram.com/pokeworlduniverse/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><img src="assets/social-instagram.svg" alt=""></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <p class="copy-pokemon copy-pokemon--home">Pokémon Copyright © 1995 – 2026 Nintendo/Creatures Inc./GAME FREAK Inc. Pokémon e todos os respectivos nomes são marcas registradas da Nintendo 1996 – 2026. PokeWorld Universe não é afiliado à Nintendo, Creatures Inc. e GAME FREAK Inc.</p>
+
+  <footer class="site-footer site-footer--mobile">
     <div class="wrap">
       <div class="site-footer__top">
         <div class="site-footer__brand">
           <img src="assets/logo-sigla.png" alt="Pokeworld Universe">
           <p>Pokeworld Universe é um jogo online moderno para explorar mundos incríveis, colecionar criaturas únicas e batalhar com treinadores do mundo todo.</p>
           <div class="site-footer__social">
-            <a href="#" aria-label="Discord"><img src="assets/social-discord.png" alt="" style="object-fit:contain;width:70%;height:70%"></a>
-            <a href="#" aria-label="Instagram"><img src="assets/social-instagram.svg" alt=""></a>
+            <a href="https://discord.gg/pokeworlduniverse" target="_blank" rel="noopener" aria-label="Discord"><img src="assets/social-discord.png" alt="" style="object-fit:contain;width:70%;height:70%"></a>
+            <a href="https://www.instagram.com/pokeworlduniverse/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><img src="assets/social-instagram.svg" alt=""></a>
           </div>
         </div>
         <div>
           <h4>Jogo</h4>
-          <ul><li><a href="o-jogo.html">Sobre o jogo</a></li><li><a href="ranking.html">Ranking</a></li><li><a href="Donate">Doar</a></li></ul>
+          <ul><li><a href="o-jogo.html">Sobre o jogo</a></li><li><a class="is-off" href="#" data-pwu-paused="ranking" data-pwu-paused-href="ranking.html" aria-disabled="true" tabindex="-1" title="Em breve">Ranking</a></li></ul>
         </div>
         <div>
           <h4>Suporte</h4>
-          <ul><li><a href="download.html">Baixar</a></li><li><a href="minha-conta.html">Minha conta</a></li><li><a href="tickets.html">Tickets</a></li><li><a href="regras.html">Regras</a></li></ul>
+          <ul><li><a class="is-off" href="#" data-pwu-paused="download" data-pwu-paused-href="download.html" aria-disabled="true" tabindex="-1" title="Em breve">Baixar</a></li><li><a href="minha-conta.html">Minha conta</a></li><li><a href="Donate">Doar</a></li><li><a href="regras.html">Regras</a></li></ul>
         </div>
         <div>
           <h4>Baixe agora</h4>
           <div class="site-footer__baixar">
-            <a class="btn btn--yellow btn--sm" href="download.html">Baixar o launcher</a>
+            <a class="btn btn--yellow btn--sm is-off" href="#" data-pwu-paused="download" data-pwu-paused-href="download.html" aria-disabled="true" tabindex="-1" title="Em breve">Baixar o launcher</a>
           </div>
         </div>
       </div>
       <div class="site-footer__bar">
-        <div class="site-footer__status"><span><i class="live-dot"></i>Servidor online</span><span>Próximo evento</span></div>
+        
         <span>© 2026 Pokeworld Universe.</span>
       </div>
       <p class="copy-pokemon">Pokémon Copyright © 1995 – 2026 Nintendo/Creatures Inc./GAME FREAK Inc. Pokémon e todos os respectivos nomes são marcas registradas da Nintendo 1996 – 2026. PokeWorld Universe não é afiliado à Nintendo, Creatures Inc. e GAME FREAK Inc.</p>
@@ -96,14 +317,27 @@
 
 </div>
 
-<div class="dex-modal" id="dex-modal" hidden><div class="dex-modal__bd"></div><div class="dex-modal__card"></div></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="config.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
-<script src="data.js"></script>
-<script src="store.js"></script>
-<script src="ui.js"></script>
-<script src="pages.js"></script>
+<div class="video-modal" id="video-modal" hidden>
+  <div class="video-modal__bd" data-vclose></div>
+  <div class="video-modal__box">
+    <button class="video-modal__close" type="button" data-vclose aria-label="Fechar">×</button>
+    <video id="video-modal-player" src="assets/video/pokemon-qg.mp4" poster="assets/video/pokemon-qg.jpg" controls playsinline preload="none"></video>
+  </div>
+</div>
+
+<!-- Lightbox dos cards -->
+<div class="lightbox" id="lightbox" hidden>
+  <button class="lightbox__close" type="button" aria-label="Fechar">×</button>
+  <img class="lightbox__img" src="" alt="">
+</div>
+<script nonce="DEv1VM/ghZv3t+Wxkcxi7gyM" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script nonce="DEv1VM/ghZv3t+Wxkcxi7gyM" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script nonce="DEv1VM/ghZv3t+Wxkcxi7gyM" src="config.js?pwu=80dee41-20260924b"></script>
+<script nonce="DEv1VM/ghZv3t+Wxkcxi7gyM" src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script nonce="DEv1VM/ghZv3t+Wxkcxi7gyM" src="data.js?pwu=80dee41-20260924b"></script>
+<script nonce="DEv1VM/ghZv3t+Wxkcxi7gyM" src="store.js?pwu=80dee41-20260924b"></script>
+<script nonce="DEv1VM/ghZv3t+Wxkcxi7gyM" src="ui.js?pwu=security-20260926-v11"></script>
+<script nonce="DEv1VM/ghZv3t+Wxkcxi7gyM" src="main.js?pwu=80dee41-20260924b"></script>
+<script nonce="DEv1VM/ghZv3t+Wxkcxi7gyM" src="animations.js?pwu=80dee41-20260924b"></script>
 </body>
 </html>

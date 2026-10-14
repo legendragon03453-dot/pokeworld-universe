@@ -1,0 +1,69 @@
+/* Suas Live Coins: mesmo tema roxo aprovado no cartão Conta Twitch. */
+body[data-page="minha-conta"] #live-coins.tw-card {
+  background: linear-gradient(115deg, #24234f, #171d40 58%, #171333) padding-box,
+    linear-gradient(115deg, #ad75ff, #9146ff 50%, #553095) border-box;
+  box-shadow: 0 14px 36px #080c2026, inset 0 1px 0 #ffffff06;
+}
+body[data-page="minha-conta"] #live-coins .tw-stats {
+  grid-template-columns: minmax(0, 1.15fr) repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+body[data-page="minha-conta"] #live-coins .tw-stat {
+  min-height: 128px;
+  padding: 24px;
+  gap: 18px;
+  border: 1px solid #b884ff40;
+  border-radius: 20px;
+  background: linear-gradient(115deg, #2b2852, #222043);
+  box-shadow: inset 0 1px 0 #ffffff09;
+}
+body[data-page="minha-conta"] #live-coins .tw-stat:first-child {
+  background: linear-gradient(105deg, #9146ff, #7a32df 58%, #6425b5);
+  border-color: #b884ff;
+  box-shadow: 0 8px 24px #9146ff1c, inset 0 1px 0 #ffffff24;
+}
+body[data-page="minha-conta"] #live-coins .tw-stat span {
+  color: #d8ccec;
+  font-size: 13px;
+  letter-spacing: .06em;
+}
+body[data-page="minha-conta"] #live-coins .tw-stat b { font-size: 42px; }
+body[data-page="minha-conta"] #live-coins .tw-stat small { color: #d8ccec; font-size: 14px; margin-left: 6px; }
+body[data-page="minha-conta"] #live-coins .tw-stat__ico {
+  width: 54px;
+  height: 54px;
+  color: #d8baff;
+  background: #9146ff1f;
+  border-color: #b884ff66;
+}
+body[data-page="minha-conta"] #live-coins .tw-stat__ico img { width: 44px; height: 44px; }
+body[data-page="minha-conta"] #live-coins .tw-stat:first-child .tw-stat__ico {
+  background: #ffffff1f;
+  border-color: #ffffff45;
+  box-shadow: 0 0 0 4px #ffffff0a;
+}
+body[data-page="minha-conta"] #live-coins .tw-stat:first-child :is(span, small) { color: #fff; }
+body[data-page="minha-conta"] #live-coins .tw-stat:first-child b {
+  font-size: 48px;
+  color: #fff;
+  background: none;
+  -webkit-text-fill-color: currentColor;
+}
+body[data-page="minha-conta"] #live-coins .tw-how--steps {
+  background: linear-gradient(115deg, #211f43, #211a40);
+  border-color: #b884ff40;
+  box-shadow: inset 0 1px 0 #ffffff08;
+}
+body[data-page="minha-conta"] #live-coins .tw-how__steps li {
+  background: #ffffff05;
+  border-color: #b884ff33;
+}
+@media (max-width: 900px) {
+  body[data-page="minha-conta"] #live-coins .tw-stats { grid-template-columns: 1fr; }
+  body[data-page="minha-conta"] #live-coins .tw-stat { min-height: 112px; }
+}
+@media (max-width: 420px) {
+  body[data-page="minha-conta"] #live-coins .tw-stat { padding: 20px; gap: 16px; }
+  body[data-page="minha-conta"] #live-coins .tw-stat__ico { width: 48px; height: 48px; }
+  body[data-page="minha-conta"] #live-coins .tw-stat__ico img { width: 40px; height: 40px; }
+}

@@ -1723,12 +1723,18 @@ body.is-locked { overflow: hidden; }
 .auth__buy:hover { background: rgba(112,244,255,.12); border-color: #70f5ff; }
 
 /* chip de usuário logado */
-.user-chip { display: flex; align-items: center; gap: .8rem; padding: .4rem 1.2rem .4rem .5rem; border-radius: 10rem; background: rgba(0,0,0,.45); color: #fff; font: 500 1.4rem var(--montreal); backdrop-filter: blur(6px); white-space: nowrap; }
-.user-chip a { display: flex; align-items: center; gap: .8rem; color: inherit; max-width: 18rem; overflow: hidden; text-overflow: ellipsis; }
-.user-chip span { overflow: hidden; text-overflow: ellipsis; }
-.user-chip img { width: 3.2rem; height: 3.2rem; border-radius: 50%; object-fit: contain; background: #fff; }
-.user-chip button { border: 0; background: rgba(255,255,255,.15); color: #fff; padding: .4rem 1rem; border-radius: 10rem; font: 400 1.3rem var(--bebas); letter-spacing: .06em; cursor: pointer; }
-.user-chip button:hover { background: var(--grad-yellow); color: #000; }
+.user-chip { display: flex; align-items: center; gap: 8px; padding: 0; background: transparent; color: #fff; white-space: nowrap; }
+.user-chip a { display: flex; align-items: center; gap: 8px; color: inherit; min-width: 0; text-decoration: none; }
+.user-chip span { display: block; max-width: 154px; height: 44px; padding: 0 12px; overflow: hidden; text-overflow: ellipsis; border: 1px solid #fcd05cb3; border-radius: 11px; background: linear-gradient(135deg,#193952,#102641); font: 500 13px/42px var(--montreal); }
+.user-chip img { display: block; width: 44px; height: 44px; flex: 0 0 44px; border: 0; border-radius: 0; object-fit: contain; background: transparent; }
+.user-chip button { display: grid; place-items: center; width: 44px; height: 44px; flex: 0 0 44px; padding: 0; border: 1px solid #8fdbea66; border-radius: 11px; background: #193952; color: #fff; font: 400 16px/1 var(--bebas); letter-spacing: .025em; cursor: pointer; }
+.user-chip button:hover { background: var(--grad-yellow); border-color: #fcd05c; color: #112447; }
+.user-chip a:focus-visible, .user-chip button:focus-visible { outline: 2px solid #fff2b1; outline-offset: 3px; border-radius: 11px; }
+@media (min-width: 901px) {
+  .topbar:has(.user-chip) .topbar-actions { top: calc((10rem - 44px) / 2); }
+  .topbar:has(.user-chip) .nav { left: 28rem; right: calc(30.2rem + 258px); transform: none; justify-content: space-between; gap: 12px; }
+}
+
 
 
 /* menu mobile */

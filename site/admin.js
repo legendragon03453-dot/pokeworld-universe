@@ -16,8 +16,8 @@
      Login
      ===================================================================== */
   var loginBox = $('#admin-login'), loginForm = $('#admin-login-form'), panel = $('#admin');
-  $('#admin-mode-text').textContent = isSupabase ? 'Conectado ao Supabase. Entre com uma conta marcada como admin.' : 'Entre com o e-mail e a senha de administrador.';
-  // o e-mail é pedido nos dois modos (no local, quem confere é /api/admin-login)
+  $('#admin-mode-text').textContent = isSupabase ? 'Conectado ao Supabase. Entre com uma conta marcada como admin.' : 'Modo local (sem Supabase). Use a senha definida em config.js.';
+  if (!isSupabase) $('#admin-email-field').hidden = true;
   var badge = $('#admin-mode-badge');
   badge.textContent = isSupabase ? '● Supabase conectado' : '○ Modo local (navegador)';
   badge.classList.toggle('is-supabase', isSupabase);
@@ -47,14 +47,12 @@
         if (!r.data || !r.data.is_admin) { sb.auth.signOut(); throw new Error('Esta conta não tem permissão de admin. Rode: update profiles set is_admin = true where email = \'' + email + '\';'); }
       });
     } else {
-      p = fetch('/api/admin-login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email, password: pass }) })
-        .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { if (!r.ok) throw new Error(d.error || 'Não foi possível entrar.'); return d; }); })
-        .then(function (d) { sessionStorage.setItem('pwu_admin', '1'); sessionStorage.setItem('pwu_admin_token', d.token || ''); });
+      p = new Promise(function (res, rej) { setTimeout(function () { pass === (cfg.LOCAL_ADMIN_PASSWORD || 'pokeworld') ? res() : rej(new Error('Senha incorreta.')); }, 400); }).then(function () { sessionStorage.setItem('pwu_admin', '1'); });
     }
     p.then(function () { showError(loginForm, ''); enter(); }).catch(function (err) { showError(loginForm, err.message); }).finally(function () { btn.classList.remove('is-loading'); btn.disabled = false; });
   });
   $('#admin-logout').addEventListener('click', function () {
-    if (isSupabase) sb.auth.signOut(); else sessionStorage.removeItem('pwu_admin'); sessionStorage.removeItem('pwu_admin_token');
+    if (isSupabase) sb.auth.signOut(); else sessionStorage.removeItem('pwu_admin');
     location.reload();
   });
   checkSession().then(function (ok) { if (ok) enter(); });
@@ -249,7 +247,7 @@
       '<li>Em <b>Project Settings → API</b>, copie a <b>URL</b> e a chave <b>anon public</b> e cole em <code>site/config.js</code>.</li>' +
       '<li>Crie sua conta pelo site (Iniciar sessão → Criar conta) e marque-a como admin:<pre>update public.profiles set is_admin = true where email = \'seu@email.com\';</pre></li>' +
       '<li>Publique o site de novo (<code>vercel deploy --prod</code>).</li></ol></div>' +
-      (!isSupabase ? '<div class="cfg-card"><h3>Modo local</h3><p>O acesso é validado no servidor (variáveis ADMIN_EMAIL e ADMIN_PASSWORD_HASH na Vercel).</p><div style="margin-top:1.2rem"><button type="button" class="btn btn--ghost btn--sm" id="reset-local">Apagar alterações locais</button></div></div>' : '');
+      (!isSupabase ? '<div class="cfg-card"><h3>Modo local</h3><p>Senha do painel definida em <code>config.js</code> (LOCAL_ADMIN_PASSWORD).</p><div style="margin-top:1.2rem"><button type="button" class="btn btn--ghost btn--sm" id="reset-local">Apagar alterações locais</button></div></div>' : '');
     var r = $('#reset-local'); if (r) r.addEventListener('click', function () { if (confirm('Apagar todas as alterações feitas em modo local?')) { store.resetLocal(); renderAll(); PWU.toast('Alterações locais apagadas.'); } });
   }
 

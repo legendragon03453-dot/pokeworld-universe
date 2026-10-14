@@ -1,0 +1,45 @@
+/* Avisos da Twitch e pequenos detalhes do painel Live Coins. */
+body[data-page="minha-conta"] #acc-alert {
+  margin-bottom: 28px;
+  padding: 20px 24px;
+  border: 1px solid #edc66c80;
+  border-radius: 20px;
+  background: linear-gradient(115deg, #42331d, #30273a);
+  color: #ffe8a5;
+  font: 500 16px/1.5 var(--montreal);
+  overflow-wrap: anywhere;
+  box-shadow: inset 0 1px 0 #ffffff0a;
+}
+body[data-page="minha-conta"] #acc-alert[data-notice-topic="twitch"]:not(.is-warn):not(.is-err) {
+  border-color: #b884ff;
+  background: linear-gradient(105deg, #9146ff, #7a32df 58%, #6425b5);
+  color: #fff;
+  box-shadow: 0 8px 24px #9146ff1c, inset 0 1px 0 #ffffff24;
+}
+body[data-page="minha-conta"] #acc-alert.is-err {
+  border-color: #ff9d9980;
+  background: #492635;
+  color: #ffd4d0;
+}
+body[data-page="minha-conta"] #live-coins .tw-stat__ico--item {
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+body[data-page="minha-conta"] #live-coins .tw-stat__ico--item img {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+}
+body[data-page="minha-conta"] #live-coins .tw-how__steps li {
+  align-items: center;
+}
+body[data-page="minha-conta"] #live-coins .tw-how__num {
+  align-self: center;
+  padding-top: 2px;
+  box-sizing: border-box;
+}
+@media (max-width: 420px) {
+  body[data-page="minha-conta"] #acc-alert { padding: 18px; font-size: 15px; }
+  body[data-page="minha-conta"] #live-coins .tw-stat__ico--item img { width: 48px; height: 48px; }
+}

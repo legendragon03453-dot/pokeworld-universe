@@ -1,0 +1,70 @@
+/* Minha Conta: Conta Twitch + Suas Live Coins (o mesmo vínculo aparece na Live Store do jogo). */
+body[data-page="minha-conta"] #acc-twitch { cursor: pointer; }
+body[data-page="minha-conta"] #acc-twitch:disabled { opacity: .75; cursor: wait; }
+body[data-page="minha-conta"] #acc-twitch.is-linked::before,
+.tw-card .tw-btn-streamer.is-partner::before { content: ""; display: inline-block; width: .9rem; height: .9rem; border-radius: 50%; background: #46d38b; box-shadow: 0 0 0 .3rem rgba(70,211,139,.25); }
+
+.tw-card[hidden], .tw-card [hidden] { display: none !important; }
+.tw-card .acc-card__title { display: flex; align-items: center; gap: 1.2rem; }
+.tw-card .tw-title-ico { width: 3.4rem; height: 3.4rem; color: #a970ff; flex: none; }
+.tw-card .tw-title-coin { width: 3.8rem; height: 3.8rem; flex: none; filter: drop-shadow(0 .4rem .8rem rgba(0,0,0,.45)); }
+
+/* Conta Twitch */
+.tw-role-heading { min-width: 0; }
+.tw-role-heading h3 { margin: 0; font: 500 2.2rem/1.2 var(--montreal); color: #fff; }
+.tw-role-heading p { margin: .6rem 0 0; font: 400 1.5rem/1.55 var(--montreal); color: rgba(255,255,255,.72); }
+.tw-card > .tw-role-heading { margin-top: 2.4rem; }
+.tw-account { display: flex; align-items: center; gap: 2rem; margin-top: 2.4rem; padding: 2rem 2.4rem; border-radius: 1.8rem;
+  background: linear-gradient(100deg, rgba(145,70,255,.22), rgba(145,70,255,.06) 60%, rgba(255,255,255,.03)); border: .1rem solid rgba(169,112,255,.35); }
+.tw-avatar { width: 7.2rem; height: 7.2rem; flex: none; display: grid; place-items: center; border-radius: 50%; color: #fff;
+  background: radial-gradient(circle at 30% 25%, #b58bff, #7b3fe4 55%, #4b1fa3); box-shadow: 0 0 0 .4rem rgba(169,112,255,.25), 0 .8rem 2.4rem rgba(80,30,180,.45); }
+.tw-avatar svg { width: 3.6rem; height: 3.6rem; }
+.tw-card:not(.is-linked) .tw-avatar { filter: grayscale(.7) brightness(.8); }
+.tw-who { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: .4rem; }
+.tw-name { display: flex; align-items: center; gap: .8rem; min-width: 0; }
+.tw-name b { font: 500 2.6rem/1.1 var(--montreal); color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tw-card:not(.is-linked) .tw-name b { white-space: normal; }
+.tw-verified { width: 2.4rem; height: 2.4rem; flex: none; color: #46d38b; }
+.tw-card:not(.is-linked) .tw-verified { display: none; }
+#tw-since { font: 400 1.5rem var(--montreal); color: rgba(255,255,255,.62); }
+.tw-buttons { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 1rem; }
+.tw-buttons .btn svg { width: 2rem; height: 2rem; flex: none; }
+.tw-btn-streamer { background: rgba(169,112,255,.16); color: #e4d4ff; border: .15rem solid rgba(169,112,255,.6); }
+.tw-btn-streamer:hover { background: rgba(169,112,255,.28); }
+.tw-partner { display: flex; align-items: center; justify-content: space-between; gap: 2.4rem; margin-top: 2.4rem; padding-top: 2.4rem; border-top: .1rem solid rgba(255,255,255,.14); }
+.tw-partner .tw-btn-streamer { flex: none; }
+.tw-partner .tw-btn-streamer svg { width: 2rem; height: 2rem; flex: none; }
+.tw-partner-status { display: block; margin-top: .8rem; font: 500 1.4rem/1.5 var(--montreal); color: #d7c2ff; overflow-wrap: anywhere; }
+.tw-buttons .is-attention { animation: tw-pulse 1.4s ease-in-out 4; }
+@keyframes tw-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(145,70,255,.55); } 50% { box-shadow: 0 0 0 1rem rgba(145,70,255,0); } }
+
+/* Suas Live Coins */
+.tw-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.6rem; margin-top: 2.4rem; }
+.tw-stat { display: flex; align-items: center; gap: 1.6rem; padding: 2rem 2.2rem; border-radius: 1.8rem; background: rgba(255,255,255,.04); border: .1rem solid rgba(255,255,255,.09); }
+.tw-stat__ico { width: 5.6rem; height: 5.6rem; flex: none; display: grid; place-items: center; border-radius: 50%; font-style: normal;
+  background: radial-gradient(circle, rgba(169,112,255,.28), rgba(169,112,255,.08)); border: .1rem solid rgba(169,112,255,.4); color: #d7c2ff; }
+.tw-stat__ico svg { width: 2.6rem; height: 2.6rem; }
+.tw-stat__ico img { width: 4.4rem; height: 4.4rem; object-fit: contain; }
+.tw-stat span { display: block; font: 500 1.3rem var(--montreal); letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.55); }
+.tw-stat b { font: 400 3.8rem/1 var(--bebas); background: var(--grad-yellow); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.tw-stat small { margin-left: .6rem; font: 500 1.5rem var(--montreal); color: rgba(255,255,255,.75); }
+.tw-how { display: flex; gap: 1.4rem; margin-top: 1.6rem; padding: 1.8rem 2.2rem; border-radius: 1.8rem; background: rgba(220,238,75,.06); border: .1rem solid rgba(220,238,75,.28); }
+.tw-how i { width: 3.2rem; height: 3.2rem; flex: none; display: grid; place-items: center; border-radius: 50%; background: rgba(220,238,75,.14); color: var(--lime); font-style: normal; }
+.tw-how i svg { width: 1.8rem; height: 1.8rem; }
+.tw-how b { display: block; font: 500 1.7rem var(--montreal); color: #fff; }
+.tw-how p { margin-top: .4rem; font: 400 1.5rem/1.55 var(--montreal); color: rgba(255,255,255,.72); }
+.tw-how strong { color: #fff; font-weight: 600; }
+
+/* Painel "Seja parceiro" */
+.tw-modal .tw-rules { margin: 0 0 1.6rem 2rem; font: 400 1.5rem/1.6 var(--montreal); color: rgba(255,255,255,.78); }
+.tw-modal .tw-note { margin: 0 0 2rem; font-size: 1.35rem; line-height: 1.5; color: rgba(255,255,255,.6); }
+.tw-modal .tw-warn { margin: 0 0 1.6rem; font-size: 1.45rem; color: #ffe08a; }
+.tw-modal .tw-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 1rem; }
+.tw-modal button.btn { cursor: pointer; }
+
+@media (max-width: 900px) {
+  .tw-account { flex-wrap: wrap; }
+  .tw-partner { flex-wrap: wrap; }
+  .tw-buttons { width: 100%; justify-content: flex-start; }
+  .tw-stats { grid-template-columns: 1fr; }
+}

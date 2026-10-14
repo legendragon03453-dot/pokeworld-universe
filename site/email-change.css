@@ -1,0 +1,71 @@
+.email-change__badge{border:1px solid #6483a9;border-radius:999px;background:#0a2140;padding:.5rem 1rem;color:#d6e7ff;font-size:12px;white-space:nowrap}
+.email-change__layout{display:grid;grid-template-columns:minmax(20rem,.8fr) minmax(0,1.35fr);gap:2.4rem;margin-top:2.4rem;align-items:start}
+.email-change__summary{background:#081b35;border:1px solid #315276;border-radius:1.4rem;padding:2rem;min-width:0}
+.email-change__summary dl{margin:0;display:grid;gap:1.6rem}
+.email-change__summary dl>div+div{border-top:1px solid #284361;padding-top:1.5rem}
+.email-change__summary dt{font-size:12px;color:#acc2df;margin-bottom:.45rem}
+.email-change__summary dd{margin:0;color:#f5f8ff;font-size:14px;line-height:1.5;overflow-wrap:anywhere}
+.email-change__summary .email-change__date{color:#ffdb7d}
+.email-change__form{min-width:0}
+.email-change__form h3,.email-change__info h3{font:700 18px/1.3 Rubik,Arial,sans-serif;color:#fff;margin:0 0 1rem}
+.email-change__form p,.email-change__info p{font-size:14px;line-height:1.6;color:#c5d8f0;margin:0 0 1.7rem}
+.email-change__form .field{display:flex;flex-direction:column;gap:.65rem;margin-bottom:1.6rem}
+.email-change__form .field>span{font-size:13px;color:#e1edff}
+.email-change__form .field>input{width:100%;min-width:0;height:46px;box-sizing:border-box;background:#07172d;border:1px solid #526f94;border-radius:.85rem;color:#fff;padding:1rem 1.3rem;font:400 16px/1.4 Rubik,Arial,sans-serif}
+.email-change__form .field>input:focus-visible{outline:2px solid #ffce58;outline-offset:3px;border-color:#ffce58}
+.email-change__codes{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}
+.email-change__actions{display:flex;flex-wrap:wrap;gap:1rem;align-items:center;margin-top:1.7rem}
+.email-change__actions .btn{font-size:15px;min-height:44px;white-space:normal;text-align:center}
+.email-change__quiet{background:transparent;border:1px solid #587396;border-radius:999px;padding:1.05rem 1.6rem;color:#dfebff;cursor:pointer;font:500 13px/1.3 Rubik,Arial,sans-serif;min-height:44px}
+.email-change__quiet:focus-visible,.email-change .btn:focus-visible{outline:2px solid #ffce58;outline-offset:3px}
+.email-change__quiet:hover{background:#173753}
+.email-change button:disabled{opacity:.5;cursor:not-allowed}
+.email-change__cancel{color:#ffc5ad;border-color:#916044}
+.email-change__message{padding:1.25rem 1.4rem;background:#241e27;border:1px solid #9d7169;border-radius:.9rem;color:#ffe0cf;font-size:13px;line-height:1.5;margin-top:1.5rem;overflow-wrap:anywhere}
+.email-change__message:empty{display:none}
+.email-change__note{color:#acc2df;font-size:12px;line-height:1.55;margin-top:1.5rem}
+.email-change__layout--overview{grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:2rem;background:rgba(5,15,41,.38);border:1px solid rgba(145,183,230,.22);border-radius:1.2rem;padding:1.6rem 2rem;margin-top:1.8rem}
+.email-change__layout--overview>.email-change__summary{padding:0;border:0;background:none}
+.email-change__layout--overview>.email-change__info{text-align:right}
+.email-change__layout--overview .btn{min-height:38px;font-size:16px}
+.email-change__info .email-change__overview-status{font-size:12px;margin:0 0 .8rem}
+.email-change__help{margin-top:2rem;padding-top:1.8rem;border-top:1px solid rgba(174,201,235,.16)}
+.email-change__help h3{margin:0 0 1.2rem;color:#fff;font:500 16px/1.3 var(--montreal,Arial,sans-serif)}
+.email-change__instructions{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem 2.4rem;margin:0;padding:0;color:#c5d8f0;font:400 13px/1.5 var(--montreal,Arial,sans-serif)}
+.email-change__instructions li{position:relative;padding-left:1.5rem}
+.email-change__instructions li::before{content:"*";position:absolute;left:0;top:.12em;color:#ffcf59;font-weight:700}
+.email-change__steps{list-style:none;display:flex;align-items:center;gap:2.2rem;margin:2rem 0 0;padding:0;font:400 12px/1.3 var(--montreal,Arial,sans-serif);color:#9fb4d1}
+.email-change__steps li{display:flex;align-items:center;gap:.7rem;min-width:0;min-height:24px;padding:0}
+.email-change__steps i{font:400 13px/1 var(--montreal,Arial,sans-serif);border:1px solid #49607f;border-radius:50%;width:20px;height:20px;display:grid;place-items:center;flex-shrink:0;box-sizing:border-box}
+.email-change__steps [aria-current=step]{color:#ffdc83}
+.email-change__steps [aria-current=step] i{background:var(--grad-yellow,linear-gradient(180deg,#ffd35b,#eca738));border-color:transparent;color:#07162d}
+.email-change__steps .is-complete{color:#70dce8}
+.email-change__steps .is-complete i{border-color:#438391}
+/* Opções de segurança em linhas amplas; formulários mantêm a largura útil. */
+body[data-page="seguranca"] .doisfa__opcoes--conta{grid-template-columns:minmax(0,1fr);gap:1.2rem}
+body[data-page="seguranca"] .doisfa__opcoes--conta .doisfa__op{display:grid;grid-template-columns:3.8rem minmax(0,1fr) auto;column-gap:1.6rem;row-gap:0;align-items:center;min-height:9.6rem;padding:2rem 2.2rem}
+body[data-page="seguranca"] .doisfa__opcoes--conta .doisfa__ico{grid-column:1;grid-row:1;width:3.8rem;height:3.8rem;align-self:center}
+body[data-page="seguranca"] .doisfa__opcoes--conta .doisfa__op>div,body[data-page="seguranca"] .doisfa__opcoes--conta .totp{display:contents}
+body[data-page="seguranca"] .doisfa__summary{grid-column:2;grid-row:1;min-width:0}
+body[data-page="seguranca"] .doisfa__summary>b{display:flex;align-items:center;flex-wrap:wrap;gap:.6rem 1rem;font-size:1.6rem;line-height:1.35}
+body[data-page="seguranca"] .doisfa__summary em{margin:0;padding:.35rem .8rem;letter-spacing:0;line-height:1.2}
+body[data-page="seguranca"] .doisfa__summary>span{max-width:48ch;margin-top:.6rem}
+body[data-page="seguranca"] .doisfa__opcoes--conta .totp>.btn{grid-column:3;grid-row:1;justify-self:end;min-width:22rem;min-height:3.8rem;white-space:normal;text-align:center}
+body[data-page="seguranca"] .doisfa__opcoes--conta .totp>.btn[hidden]{display:none}
+body[data-page="seguranca"] .doisfa__opcoes--conta .totp>:not(.btn){grid-column:2/-1;min-width:0}
+body[data-page="seguranca"] .doisfa__opcoes--conta .totp__aviso{margin:1.2rem 0 0;line-height:1.5;overflow-wrap:anywhere}
+body[data-page="seguranca"] .doisfa__opcoes--conta .totp__aviso[hidden]{display:none}
+body[data-page="seguranca"] .doisfa__opcoes--conta .totp__setup{margin-top:1.6rem}
+@media(max-width:700px){
+body[data-page="seguranca"] .doisfa__opcoes--conta .doisfa__op{grid-template-columns:3.4rem minmax(0,1fr);column-gap:1.2rem;padding:1.6rem;min-height:0}
+body[data-page="seguranca"] .doisfa__opcoes--conta .doisfa__ico{width:3.4rem;height:3.4rem}
+body[data-page="seguranca"] .doisfa__summary>b{font-size:1.5rem;gap:.5rem .8rem}
+body[data-page="seguranca"] .doisfa__opcoes--conta .totp>.btn{grid-column:1/-1;grid-row:auto;justify-self:stretch;min-width:0;min-height:4.2rem;margin-top:1.4rem}
+body[data-page="seguranca"] .doisfa__opcoes--conta .totp>:not(.btn){grid-column:1/-1}
+}
+.email-change-complete h2{font:700 25px/1.3 Rubik,Arial,sans-serif;color:#ffe09a;margin:0 0 1.5rem}
+.email-change-complete p{font-size:15px;line-height:1.7;color:#d6e5f9;max-width:65rem}
+.email-change-complete .btn{margin-top:1.5rem}
+body.email-change-completed #acc-gate{display:none!important}
+@media(max-width:700px){.email-change__layout{grid-template-columns:1fr;gap:1.8rem}.email-change__summary{padding:1.6rem}.email-change__summary dl{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.3rem}.email-change__summary dl>div+div{border:0;padding:0}.email-change__summary dl>div:has(.email-change__date){grid-column:1/-1}.email-change__steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;font-size:11px}.email-change__steps li{flex-direction:column;gap:.55rem;text-align:center;align-self:start}.email-change__layout--overview{gap:1.4rem;padding:1.6rem}.email-change__layout--overview>.email-change__summary{padding:0}.email-change__layout--overview>.email-change__info{text-align:left}.email-change__instructions{grid-template-columns:1fr;gap:.8rem}.email-change__form .field>input{font-size:16px}.email-change__actions{align-items:stretch}.email-change__actions .btn{flex:1 1 100%}.email-change__quiet{flex:1 1 auto}.email-change__codes{grid-template-columns:1fr;gap:0}.email-change .acc-card__head{gap:1rem;align-items:flex-start;flex-wrap:wrap}}
+@media(max-width:360px){.email-change__summary dl{grid-template-columns:1fr}.email-change__steps{gap:.6rem}.email-change__actions{flex-direction:column}}

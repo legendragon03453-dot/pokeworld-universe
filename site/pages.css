@@ -429,6 +429,32 @@ body[data-page="minha-conta"] .acc-sec { padding-top: 5rem; }
 .trainer .world { display: block; margin-top: .2rem; font: 400 1.3rem var(--bebas); letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.6); }
 .trainer .rm { position: absolute; top: 1rem; right: 1rem; width: 2.8rem; height: 2.8rem; border: 0; border-radius: 50%; background: rgba(255,255,255,.08); color: #fff; cursor: pointer; opacity: 0; transition: opacity .2s; }
 .trainer:hover .rm { opacity: 1; }
+/* Foto de cada treinador (fotos-treinadores-20260930): a do personagem, separada da foto da conta */
+.trainer img { height: 12rem; }
+.trainer__vazio { display: grid; place-items: center; align-content: center; gap: .4rem; width: 9rem; height: 12rem; margin: 0 auto; border-radius: 1.4rem; border: .15rem dashed rgba(255,255,255,.25); background: rgba(0,0,0,.18); color: rgba(255,255,255,.45); }
+.trainer__vazio svg { width: 4.4rem; height: 4.4rem; }
+.trainer__vazio small { font: 400 1.3rem var(--bebas); letter-spacing: .12em; text-transform: uppercase; }
+.trainer.is-online .world { color: #70f5ff; }
+.trainer__foto { margin-top: 1.2rem; padding: .7rem 1.6rem; border-radius: 10rem; border: .15rem solid rgba(255,255,255,.35); background: transparent; color: #fff; font: 400 1.5rem/1 var(--bebas); letter-spacing: .08em; white-space: nowrap; cursor: pointer; transition: border-color .2s, color .2s, background .2s; }
+.trainer__foto:hover, .trainer__foto:focus-visible { border-color: #70f5ff; color: #70f5ff; outline: 0; }
+.trainer--sem-foto .trainer__foto { border-color: var(--lime); color: var(--lime); }
+.trainers__hint { margin: .8rem 0 1.8rem; font: 400 1.5rem/1.5 var(--montreal); color: rgba(255,255,255,.62); }
+.pmodal__card:has(.foto-picker) { width: min(96rem, 100%); }
+.foto-picker { display: grid; grid-template-columns: 22rem minmax(0, 1fr); gap: 2.4rem; align-items: start; margin-bottom: 1.8rem; }
+.foto-picker__preview svg { display: block; width: 100%; height: auto; }
+.foto-picker h4 { margin: 0 0 .8rem; font: 400 2rem var(--bebas); letter-spacing: .06em; color: rgba(255,255,255,.85); }
+.foto-picker__row { display: grid; grid-auto-flow: column; grid-auto-columns: 7.4rem; gap: .8rem; overflow-x: auto; padding: .2rem .2rem .8rem; margin-bottom: 1.4rem; }
+.foto-opt { position: relative; padding: .4rem; border-radius: 1rem; border: .15rem solid rgba(255,255,255,.12); background: rgba(255,255,255,.04); color: #fff; cursor: pointer; transition: border-color .2s, background .2s; }
+.foto-opt svg { display: block; width: 100%; height: auto; }
+.foto-opt:hover { border-color: #70f5ff; }
+.foto-opt[aria-pressed="true"] { border-color: var(--lime); background: rgba(220,238,75,.12); }
+.foto-opt small { display: block; margin-top: .3rem; font: 500 1.1rem var(--montreal); color: rgba(255,255,255,.75); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.foto-opt__vazio { display: grid; place-items: center; aspect-ratio: 3 / 4; border-radius: .8rem; background: #13254d; font: 400 1.6rem var(--bebas); color: rgba(255,255,255,.6); }
+@media (max-width: 700px) {
+  .foto-picker { grid-template-columns: minmax(0, 1fr); }
+  .foto-picker__preview { width: 16rem; margin: 0 auto; }
+  .trainer__foto { padding: .7rem 1.1rem; }
+}
 .trainers__empty { grid-column: 1 / -1; padding: 4rem 2rem; border-radius: 2rem; border: .15rem dashed rgba(255,255,255,.18); text-align: center; font: 400 1.7rem/1.5 var(--montreal); color: rgba(255,255,255,.65); }
 .acc-alert { margin-bottom: 2.4rem; padding: 1.6rem 2rem; border-radius: 1.4rem; font: 500 1.6rem var(--montreal); background: rgba(62,207,142,.15); border: .1rem solid rgba(62,207,142,.5); color: #9af0c6; }
 .acc-alert.is-warn { background: rgba(252,208,92,.12); border-color: rgba(252,208,92,.5); color: #ffe08a; }
@@ -459,7 +485,7 @@ body[data-page="minha-conta"] .acc-sec { padding-top: 5rem; }
 }
 .pack em::before, .pack__bonus::before {
   content: ""; width: 2.6rem; height: 2.6rem; flex: none;
-  background: url("assets/img/coins/pcoin.png?v=3") center / contain no-repeat;
+  background: url("assets/img/coins/pcoin-clean.svg?v=2") center / contain no-repeat;
 }
 .pack em.is-none { visibility: hidden; }
 .pack .btn { width: 100%; margin-top: 1.6rem; padding: 1.1rem 1rem; }
@@ -1170,7 +1196,7 @@ body[data-page="doar"] #pacotes.doar-packs-sec { padding: .6rem 0 7rem; overflow
 
 /* moedas subindo devagar ao fundo */
 .doar-moedas { position: absolute; inset: 0; z-index: 0 !important; overflow: hidden; pointer-events: none; }
-.doar-moedas i { position: absolute; bottom: -6rem; width: var(--s); height: var(--s); background: url("assets/img/coins/pcoin.png?v=3") center / contain no-repeat; opacity: 0; animation: moedaSobe var(--d) linear infinite; animation-delay: var(--a); }
+.doar-moedas i { position: absolute; bottom: -6rem; width: var(--s); height: var(--s); background: url("assets/img/coins/pcoin-clean.svg?v=2") center / contain no-repeat; opacity: 0; animation: moedaSobe var(--d) linear infinite; animation-delay: var(--a); }
 @keyframes moedaSobe { 0% { transform: translateY(0) rotate(0); opacity: 0; } 12% { opacity: .22; } 85% { opacity: .18; } 100% { transform: translateY(-80rem) rotate(260deg); opacity: 0; } }
 
 @media (max-width: 1100px) { .bonus-meter { display: none; } .packs--6 .pack { transform: none; } }
@@ -1344,3 +1370,136 @@ body[data-page="pagamento"] .pay-way { padding: 1.8rem 2.2rem 2rem; }
 .totp-step__carregando { font: 400 1.3rem var(--montreal); color: #333; text-align: center; padding: 1rem; }
 .totp-step__chave { margin: 1.2rem 0 1.6rem; font: 400 1.35rem var(--montreal); color: rgba(255,255,255,.6); }
 .totp-step__chave code { display: inline-block; margin-top: .4rem; padding: .3rem .8rem; border-radius: .6rem; background: rgba(255,255,255,.08); font: 500 1.4rem ui-monospace, Menlo, monospace; letter-spacing: .08em; color: #fcd05c; word-break: break-all; }
+
+/* Dados do Pix integrados ao formulário de pagamento. */
+.pay-way__label { display: flex; align-items: center; gap: 1rem; }
+.pay-way__qr { width: 3.4rem; height: 3.4rem; flex: none; }
+.payment-payer { display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: start; gap: 1.6rem; margin: 2.4rem 0; font-family: var(--montreal); }
+.payment-payer > div, .payment-payer .cupom { min-width: 0; }
+body[data-page="pagamento"] .payment-payer .cupom { margin: 0; }
+body[data-page="pagamento"] .payment-payer label { display: block; margin-bottom: .8rem; font: 400 1.9rem var(--bebas); letter-spacing: .12em; color: #fcd05c; }
+.payment-payer input { width: 100%; min-width: 0; height: 4.8rem; padding: 1.2rem 1.5rem; border: .15rem solid rgba(255,255,255,.25); border-radius: 1.2rem; background: rgba(0,0,0,.2); color: #fff; font: 400 1.6rem var(--montreal); }
+.payment-payer input::placeholder { color: rgba(255,255,255,.4); }
+.payment-payer input:focus { outline: 0; border-style: solid; border-color: #fcd05c; }
+.payment-payer input[aria-invalid="true"] { border-color: #f87171; }
+.payment-payer .cupom__linha { gap: .8rem; }
+.payment-payer .cupom__linha button { height: 4.8rem; padding: 0 1.6rem; }
+.payment-payer .payment-payer__error { grid-column: 1 / -1; font: 400 1.4rem/1.5 var(--montreal); color: #ffd9d9; }
+.pay-way:focus-visible { outline: .25rem solid #fcd05c; outline-offset: .4rem; }
+@media (max-width: 600px) { .payment-payer { grid-template-columns: 1fr; } }
+
+/* Tall profile card preserves all of the selected artwork. */
+body[data-page="minha-conta"] .acc-avatar { width: clamp(150px,19rem,210px); height: auto; aspect-ratio: 3 / 4; margin-bottom: 12px; }
+body[data-page="minha-conta"] .acc-avatar img { border: 0; border-radius: 0; object-fit: contain; background: transparent; }
+body[data-page="minha-conta"] .acc-avatar__edit { font-size: 14px; padding: 8px 17px; bottom: -12px; }
+
+@media (max-width: 420px) { body[data-page="minha-conta"] .acc-top { align-items: flex-start; flex-wrap: wrap; } }
+
+/* A compact identity banner keeps account information near the first fold. */
+body:is([data-page="minha-conta"], [data-page="perfil"]) .banner { min-height: 0; padding: 12px 0 18px; }
+body:is([data-page="minha-conta"], [data-page="perfil"]) .banner__inner { width: calc(100% - 40px); padding: 0; }
+body:is([data-page="minha-conta"], [data-page="perfil"]) .banner__meta { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px 12px; }
+body:is([data-page="minha-conta"], [data-page="perfil"]) .banner__crumb { margin: 0; font-size: 12px; }
+body:is([data-page="minha-conta"], [data-page="perfil"]) .banner__tag { padding: 4px 10px; font-size: 11px; }
+body:is([data-page="minha-conta"], [data-page="perfil"]) .banner__title { font-size: clamp(32px,3vw,40px); line-height: 1; margin-top: 8px; }
+body:is([data-page="minha-conta"], [data-page="perfil"]) .banner__sub { margin-top: 6px; padding-top: 8px; font-size: 13px; line-height: 1.4; max-width: 520px; }
+body:is([data-page="minha-conta"], [data-page="perfil"]) .banner--blend::after { height: 50px; }
+body:is([data-page="minha-conta"], [data-page="perfil"]) .banner__ball { width: 220px; height: 220px; margin: -110px 0 0 -110px; }
+body:is([data-page="minha-conta"], [data-page="perfil"]) .acc-sec { padding-top: 20px; }
+@media (max-width: 720px) {
+  body:is([data-page="minha-conta"], [data-page="perfil"]) .banner { padding: 10px 0 14px; }
+  body:is([data-page="minha-conta"], [data-page="perfil"]) .banner__sub { font-size: 12px; }
+  body:is([data-page="minha-conta"], [data-page="perfil"]) .acc-sec { padding-top: 18px; }
+}
+
+/* Account summary: the icon, balance and action form one aligned block. */
+body[data-page="minha-conta"] .acc-side { align-self: start; flex-direction: column; gap: 12px; text-align: left; padding: 18px; border: 1px solid #75c6ef33; border-radius: 18px; background: linear-gradient(145deg,#173557cc,#081b3a99); box-shadow: inset 0 1px 0 #ffffff0c; }
+body[data-page="minha-conta"] .acc-stat--moeda { justify-content: flex-start; gap: 14px; }
+body[data-page="minha-conta"] .acc-stat--moeda img { width: 48px; height: 54px; }
+body[data-page="minha-conta"] .acc-stat__balance { min-width: 0; flex: 1; }
+body[data-page="minha-conta"] .acc-stat__balance > span { display: block; font-size: 12px; color: #bad0e7; margin-bottom: 4px; }
+body[data-page="minha-conta"] .acc-stat__balance b { font-size: clamp(28px,3.4rem,36px); overflow-wrap: anywhere; }
+body[data-page="minha-conta"] .acc-stat__balance b.is-unavailable { font: 400 13px/1.4 var(--montreal); color: #c1cfdf; background: none; -webkit-text-fill-color: currentColor; }
+body[data-page="minha-conta"] .acc-buy-link { display: flex; align-items: center; justify-content: center; min-height: 38px; padding: 7px 12px; border-radius: 10px; text-decoration: none; font: 400 19px var(--bebas); letter-spacing: .02em; color: #102443; background: var(--grad-yellow); }
+body[data-page="minha-conta"] .acc-buy-link:hover { filter: brightness(1.08); }
+body[data-page="minha-conta"] .acc-stat--plan { padding-top: 14px; border-top: 1px solid #adc8e529; }
+body[data-page="minha-conta"] .acc-stat--plan span { display: block; font-size: 12px; color: #bad0e7; margin-bottom: 6px; }
+body[data-page="minha-conta"] .acc-stat--plan b { font-size: 26px; line-height: 1.15; color: #f4df9f; background: none; -webkit-text-fill-color: currentColor; }
+
+
+/* Keep the balance beside the identity, with account fields spanning the row below. */
+body[data-page="minha-conta"] .acc-top { display: grid; grid-template-columns: auto minmax(0,1fr) minmax(220px,26rem); align-items: center; gap: 24px; }
+body[data-page="minha-conta"] .acc-top > .acc-card__title { min-width: 0; font-size: clamp(30px,3vw,48px); line-height: 1.05; }
+body[data-page="minha-conta"] .acc-top > .acc-side { align-self: center; }
+body[data-page="minha-conta"] .acc-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; margin-top: 28px; }
+body[data-page="minha-conta"] .acc-grid > .acc-field { min-width: 0; margin-bottom: 0; }
+body[data-page="minha-conta"] .acc-field__head { gap: 10px; margin-bottom: 8px; }
+body[data-page="minha-conta"] .acc-field h5 { font-size: 18px; }
+body[data-page="minha-conta"] .acc-toggle { font-size: 13px; padding: 4px 12px; }
+body[data-page="minha-conta"] .acc-field input { font-size: 17px; padding: 14px 16px; }
+body[data-page="minha-conta"] .acc-buy-link:focus-visible { outline: 2px solid #fff3b0; outline-offset: 4px; }
+@media (min-width: 701px) and (max-width: 1000px) {
+  body[data-page="minha-conta"] .acc-top { grid-template-columns: auto minmax(0,1fr); gap: 16px 24px; }
+  body[data-page="minha-conta"] .acc-avatar { grid-column: 1; grid-row: 1 / 3; }
+  body[data-page="minha-conta"] .acc-top > .acc-card__title { grid-column: 2; grid-row: 1; align-self: end; }
+  body[data-page="minha-conta"] .acc-top > .acc-side { grid-column: 2; grid-row: 2; align-self: start; }
+}
+@media (max-width: 700px) {
+  body[data-page="minha-conta"] .acc-top { grid-template-columns: auto minmax(0,1fr); gap: 22px 18px; }
+  body[data-page="minha-conta"] .acc-top > .acc-side { grid-column: 1 / -1; width: 100%; }
+  body[data-page="minha-conta"] .acc-grid { grid-template-columns: 1fr; gap: 20px; margin-top: 24px; }
+}
+@media (max-width: 380px) {
+  body[data-page="minha-conta"] .acc-top { column-gap: 12px; }
+  body[data-page="minha-conta"] .acc-top > .acc-card__title { font-size: 28px; }
+  body[data-page="minha-conta"] .acc-avatar { width: 132px; }
+}
+
+/* Compact account heading and Pix shown directly on the payment page. */
+body:is([data-page="minha-conta"], [data-page="pagamento"]) .banner__inner { z-index: 5; }
+body[data-page="minha-conta"] .banner { padding-bottom: 14px; }
+body[data-page="pagamento"] .banner { padding: 14px 0 20px !important; }
+body[data-page="pagamento"] .banner__title { font-size: clamp(32px,3vw,42px) !important; line-height: 1.05; }
+body[data-page="pagamento"] .banner__crumb { font-size: 12px; margin-bottom: 6px; }
+body[data-page="pagamento"] .banner--blend::after { height: 30px !important; }
+#payment-setup[hidden], .pix-inline[hidden] { display: none; }
+/* The desktop layout uses the available width; small screens keep a single column. */
+#acc-packs .pack small, #doar-packs .pack small { max-width: 100%; margin-top: 5px; color: #cbd9ea; font-size: 14px; line-height: 1.2; letter-spacing: .11em; }
+.pix-inline { position: relative; display: grid; grid-template-columns: 304px minmax(0,1fr); align-items: center; gap: 42px; width: min(1020px,100%); margin: 0 auto; padding: 36px 42px 36px 32px; border: 1px solid #799db055; border-radius: 24px; background: radial-gradient(ellipse at 0 0,#20485c88,transparent 62%),linear-gradient(115deg,#12304a,#091d38 68%,#0b2040); box-shadow: inset 0 1px 0 #d3ecff1a,0 20px 60px #0000002b; outline: none; }
+.pix-inline::before { content: ""; position: absolute; left: 36px; right: 36px; top: -1px; height: 2px; background: linear-gradient(90deg,transparent,#ffe29a99 25%,#ffd16766 70%,transparent); pointer-events: none; }
+.pix-inline__scan { display: grid; place-items: center; min-width: 0; padding: 12px; border: 1px solid #a6d4e521; border-radius: 18px; background: #03152b4d; box-shadow: inset 0 1px 12px #00000014; }
+.pix-inline__qr { display: block; width: min(280px,100%); height: auto; aspect-ratio: 1; object-fit: contain; margin: 0; border: 4px solid #efc45d; background: #fff; box-shadow: 0 0 0 1px #845b24,0 8px 24px #00000026; }
+.pix-inline__details { position: relative; min-width: 0; padding: 8px 0 8px 34px; }
+.pix-inline__details::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: linear-gradient(180deg,transparent,#91c3de55 20%,#91c3de55 80%,transparent); }
+.pix-inline__details > label { display: block; margin-bottom: 16px; color: #ffe09a; font: 400 30px/1 var(--bebas); letter-spacing: .035em; }
+.pix-inline textarea { display: block; width: 100%; height: 132px; resize: none; padding: 16px 18px; border: 1px solid #87aec544; border-radius: 12px; background: #031428b3; color: #dcebf5; font: 400 13px/1.6 ui-monospace,Consolas,monospace; overflow-wrap: anywhere; scrollbar-color: #58768e #031428; }
+.pix-inline textarea:focus-visible { outline: 2px solid #f6d278; outline-offset: 3px; }
+.pix-inline__copy { display: block; width: 100%; min-height: 52px; margin-top: 18px; padding: 13px 18px; border: 1px solid #ffe59b; border-radius: 12px; background: linear-gradient(180deg,#ffdd76,#efb13f); box-shadow: inset 0 1px 0 #fff3bdcc,0 3px 0 #97621e66; color: #102443; font: 400 23px/1 var(--bebas); letter-spacing: .04em; cursor: pointer; transition: filter .15s,box-shadow .15s; }
+.pix-inline__copy:hover { filter: brightness(1.06); box-shadow: inset 0 1px 0 #fff3bdcc,0 3px 0 #97621e66,0 4px 18px #f7c4551c; }
+.pix-inline__copy:disabled { opacity: .75; cursor: wait; }
+.pix-inline__copy:focus-visible { outline: 2px solid #fff3b0; outline-offset: 4px; }
+.pix-inline__message { margin-top: 12px; color: #d6e9f5; font: 400 13px/1.45 var(--montreal); }
+body[data-page="pagamento"].has-inline-pix .wrap--narrow { width: min(1100px,calc(100% - 64px)); }
+body[data-page="pagamento"].has-inline-pix .acc-sec { padding-top: 30px; padding-bottom: 62px; }
+@media (min-width: 701px) and (max-width: 1000px) {
+ .pix-inline { grid-template-columns: 260px minmax(0,1fr); gap: 24px; padding: 28px; }
+ .pix-inline__scan { padding: 8px; }
+ .pix-inline__details { padding-left: 24px; }
+ .pix-inline__details > label { font-size: 27px; }
+ .pix-inline textarea { padding: 12px; }
+}
+@media (max-width: 700px) {
+ body[data-page="pagamento"].has-inline-pix .wrap--narrow { width: calc(100% - 32px); }
+ body[data-page="pagamento"].has-inline-pix .acc-sec { padding-top: 20px; padding-bottom: 32px; }
+ .pix-inline { grid-template-columns: minmax(0,1fr); gap: 24px; width: min(440px,100%); padding: 24px; border-radius: 20px; }
+ .pix-inline__scan { justify-self: center; width: min(304px,100%); padding: 10px; }
+ .pix-inline__details { padding: 0; }
+ .pix-inline__details::before { display: none; }
+ .pix-inline__details > label { margin-bottom: 12px; font-size: 26px; }
+ .pix-inline textarea { height: 110px; padding: 12px; font-size: 12px; }
+ .pix-inline__copy { min-height: 48px; margin-top: 14px; font-size: 21px; }
+}
+@media (max-width: 360px) {
+ .pix-inline { padding: 18px; gap: 20px; }
+ .pix-inline__scan { padding: 8px; }
+}

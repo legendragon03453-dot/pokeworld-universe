@@ -3,136 +3,110 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Download — Pokeworld Universe</title>
-  <meta name="description" content="Baixe o launcher do Pokeworld Universe para PC.">
+  <title>Entrar — Pokeworld Universe</title>
+  <meta name="description" content="Entre ou crie sua conta Pokeworld Universe. A mesma conta do site é a conta do jogo.">
   <link rel="icon" href="assets/logo-sigla.png">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="pages.css">
+  <link rel="stylesheet" href="styles.css?pwu=profile-20260926-v6">
+  <link rel="stylesheet" href="pages.css?pwu=profile-20260926-v6">
+  <link rel="stylesheet" href="login-register.css?pwu=onboarding-20260926-v12">
+  <script nonce="DcPzr7DVSsyilrxtC/+EjbZk" src="assets/vendor/qrcode-generator-1.4.4.min.js" defer></script>
+<link rel="stylesheet" href="public-access-20261006.css?v=1">
 </head>
-<body data-page="download">
+<body data-page="login">
 <div class="scroll-progress" aria-hidden="true"></div>
-<div class="cursor" aria-hidden="true"><div class="cursor__ring"></div><div class="cursor__dot"></div></div>
-<div class="page page--sub">
 
+<div class="page page--sub">
   <header class="topbar">
     <div class="header-shape header-shape--white"></div>
     <div class="header-shape header-shape--grad"></div>
     <a class="logo-sigla" href="index.html"><img src="assets/logo-sigla.png" alt="PWU"></a>
-    <nav class="nav"><a href="o-jogo.html">O JOGO</a><a href="#" class="is-off" aria-disabled="true">wiki</a><a href="download.html" class="is-active">download</a><a href="ranking.html">ranking</a><a href="Donate">loja</a><a href="Donate">doar</a></nav>
+    <nav class="nav">
+      <a href="o-jogo.html">O JOGO</a>
+      <a href="#" class="is-off" aria-disabled="true">wiki</a>
+      <a class="is-off" href="#" data-pwu-paused="download" data-pwu-paused-href="download.html" aria-disabled="true" tabindex="-1" title="Em breve">download</a>
+      <a class="is-off" href="#" data-pwu-paused="ranking" data-pwu-paused-href="ranking.html" aria-disabled="true" tabindex="-1" title="Em breve">ranking</a>
+      <a href="noticias.html">notícias</a>
+      <a href="Donate">doar</a>
+    </nav>
     <div class="topbar-actions">
       <a class="btn-entrar" href="login.html" data-entrar>Iniciar sessão</a>
-      <a class="btn-jogue-agora" href="download.html">JOGUE AGORA</a>
+      <a class="btn-jogue-agora" href="login.html#criar" data-pwu-paused="download" data-pwu-paused-href="download.html" data-pwu-paused-label="JOGUE AGORA">CRIAR CONTA</a>
     </div>
     <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   </header>
 
-  <section class="banner" style="--bg:url('assets/img/bg/stadium-light.jpg')">
-    <span class="banner__glow" aria-hidden="true"></span>
-    <span class="banner__mesh" aria-hidden="true"></span>
-    <span class="banner__ball" aria-hidden="true"></span>
-    <div class="banner__inner">
-      <nav class="banner__crumb" aria-label="Você está em"><a href="index.html">Início</a><i aria-hidden="true"></i><span>Download</span></nav>
-      <span class="banner__tag">Grátis para jogar</span>
-      <h1 class="banner__title">Baixe e<br>jogue agora</h1>
-      <p class="banner__sub">Baixe o launcher para Windows. Ele instala o jogo e mantém tudo atualizado sozinho.</p><div class="banner__selos"><span><i></i>Grátis para sempre</span><span><i></i>Windows 10 e 11</span><span><i></i>Atualização automática</span></div>
-    </div><div class="banner__stage banner__stage--duo"><img class="banner__art banner__art--2" src="assets/img/art/leon.png" alt=""><img class="banner__art" src="assets/img/art/ash.png" alt=""></div>
-  </section>
+  <main class="login-page">
+    <img class="login-page__art login-page__art--l" src="assets/img/art/player-girl.png?v=3" alt="" aria-hidden="true">
+    <img class="login-page__art login-page__art--r" src="assets/img/art/player-boy.png?v=3" alt="" aria-hidden="true">
 
-  <main class="sub">
+    <section class="login-box" id="login-box">
+      <div class="login-box__head">
+        <img src="assets/logo-central.png" alt="Pokeworld Universe">
+        <h1>Sua conta <span class="grad grad--yellow">Pokeworld</span></h1>
+        <p class="login-box__intro--default">A conta criada aqui é a mesma que você usa para entrar no jogo. Ela guarda seus treinadores, seus créditos e seu progresso.</p>
+        <p class="login-box__intro--register">Uma só conta para o site, seus treinadores e sua jornada no jogo.</p>
+      </div>
 
-    <section class="sec launcher-sec">
-      <div class="wrap launcher">
-        <div class="launcher__texto" data-reveal>
-          <span class="launcher__tag"><i class="ico ico-windows" aria-hidden="true"></i> Windows 10 e 11 · 64 bits</span>
-          <h2 class="sec__title">Launcher oficial<br><span class="grad">para PC</span></h2>
-          <p class="launcher__desc">Um instalador leve que baixa o jogo, aplica as atualizações sozinho e abre direto na tela de login. Você instala uma vez e nunca mais se preocupa com versão.</p>
-          <ul class="launcher__lista">
-            <li><i class="ico ico-check" aria-hidden="true"></i><div><b>Atualiza sozinho</b><span>Cada patch chega pelo launcher, sem baixar tudo de novo.</span></div></li>
-            <li><i class="ico ico-check" aria-hidden="true"></i><div><b>Instalação em minutos</b><span>Download inicial leve; o restante vem em segundo plano.</span></div></li>
-            <li><i class="ico ico-check" aria-hidden="true"></i><div><b>Mesma conta do site</b><span>Entre com o e-mail e a senha que você criou aqui.</span></div></li>
-          </ul>
-          <div class="launcher__acoes">
-            <a class="btn btn--yellow btn--lg" href="#" id="dl-pc" data-require-auth><i class="ico ico-download" aria-hidden="true"></i> Baixar o launcher</a>
-            <span class="launcher__versao" id="size-pc">v12.0.1 · grátis</span>
+      <div class="login-tabs" role="tablist">
+        <button class="login-tab is-active" type="button" data-ltab="login" role="tab" id="login-tab" aria-selected="true" aria-controls="login-form">Entrar</button>
+        <button class="login-tab" type="button" data-ltab="register" role="tab" id="register-tab" aria-selected="false" aria-controls="register-form" tabindex="-1">Criar conta</button>
+        <span class="login-tabs__ink"></span>
+      </div>
+
+      <form class="login-form" data-lform="login" id="login-form" aria-labelledby="login-tab" novalidate>
+        <label class="field"><span>E-mail ou nome da conta</span><input type="text" name="email" autocomplete="username" maxlength="254" autocapitalize="none" spellcheck="false" placeholder="Seu e-mail ou nome de acesso ao jogo" required></label>
+        <details class="login-account-choice">
+          <summary>Uso o mesmo e-mail em mais de uma conta</summary>
+          <label class="field"><span>Nome da conta ou de um personagem</span><input type="text" name="accountIdentifier" maxlength="254" autocomplete="off" autocapitalize="none" spellcheck="false" aria-describedby="login-account-help" placeholder="Nome completo"><small id="login-account-help">Informe seu e-mail acima e o nome da conta ou de um personagem dela aqui.</small></label>
+        </details>
+        <label class="field"><span>Senha</span><span class="field__pw"><input type="password" name="password" autocomplete="current-password" placeholder="Sua senha" required><button type="button" class="field__eye" aria-label="Mostrar senha"><i class="ico ico-eye" aria-hidden="true"></i></button></span></label>
+        <div class="login-row">
+          <label class="check"><input type="checkbox" name="terms" required><i></i><span>Li e aceito <a href="regras.html" target="_blank" rel="noopener">as regras</a>.</span></label>
+          <a class="login-forgot" href="#" data-lforgot>Esqueci minha senha</a>
+        </div>
+        <p class="auth__error" role="alert" hidden></p>
+        <button class="auth__submit" type="submit"><span>Entrar no Pokeworld</span></button>
+        <p class="auth__switch">Ainda não tem conta? <a href="#" data-lgoto="register">Criar agora</a></p>
+      </form>
+
+      <form class="login-form login-form--reg" data-lform="register" id="register-form" aria-labelledby="register-tab" hidden novalidate>
+        <div class="login-grid">
+          <label class="field login-grid__email"><span>E-mail</span><input type="email" name="email" autocomplete="email" placeholder="treinador@pokeworld.com" required></label>
+          <div class="login-grid__pw">
+            <label class="field"><span>Nova senha</span><span class="field__pw"><input type="password" name="password" autocomplete="new-password" placeholder="Mínimo de 8 caracteres" minlength="8" aria-describedby="register-password-help" required><button type="button" class="field__eye" aria-label="Mostrar senha"><i class="ico ico-eye" aria-hidden="true"></i></button></span></label>
+          </div>
+          <label class="field"><span>Confirmar senha</span><input type="password" name="confirm" autocomplete="new-password" placeholder="Repita a senha" required></label>
+          <div class="login-password-help" id="register-password-help">
+            <div class="login-password-help__head"><b>Uma senha mais segura</b><div class="strength" aria-hidden="true"><i></i><i></i><i></i><i></i></div></div>
+            <ul class="login-dicas">
+              <li>Pelo menos 8 caracteres</li>
+              <li>Letras maiúsculas e minúsculas</li>
+              <li>Números ou símbolos</li>
+            </ul>
           </div>
         </div>
-        <div class="launcher__janela" data-reveal>
-          <div class="launcher__barra"><i></i><i></i><i></i><span>PokeWorld Universe Launcher</span></div>
-          <img src="assets/img/qg/qg-18.jpg" alt="PWU City vista pelo jogo" loading="lazy">
-          <div class="launcher__status"><span><i class="live-dot"></i>Servidor online</span><b>Jogar</b></div>
+        <div class="register-protection">
+          <i class="register-protection__icon ico ico-mail" aria-hidden="true"></i>
+          <div>
+            <h2>Confirme seu e-mail</h2>
+            <p>No próximo passo, enviaremos um código para concluir o cadastro. Ao entrar em um novo aparelho, você também confirma o acesso por e-mail.</p>
+            <p class="register-protection__pending">Depois, guarde sua Recovery Key e crie seu primeiro personagem. A proteção em duas etapas pode ser configurada no perfil.</p>
+          </div>
         </div>
-      </div>
+        <label class="check"><input type="checkbox" name="terms" required><i></i><span>Li e aceito <a href="regras.html" target="_blank" rel="noopener">as regras</a>.</span></label>
+        <p class="auth__error" role="alert" hidden></p>
+        <button class="auth__submit" type="submit"><span>Criar minha conta</span></button>
+        <p class="auth__switch">Já tem conta? <a href="#" data-lgoto="login">Entrar</a></p>
+      </form>
     </section>
-
-    <section class="sec sec--dark">
-      <div class="wrap">
-        <div class="sec__head"><div><h2 class="sec__title">Como <span class="grad">instalar</span></h2><p class="sec__sub">Três passos e você está na arena.</p></div></div>
-        <div class="steps">
-          <div class="step" data-reveal><h3>Crie sua conta Pokeworld</h3><p>Use seu e-mail para criar uma conta gratuita. É ela que guarda seu progresso.</p></div>
-          <div class="step" data-reveal><h3>Baixe o jogo</h3><p>Clique em Baixar o launcher acima. O download inicial é leve e o restante do conteúdo é baixado pelo próprio launcher.</p></div>
-          <div class="step" data-reveal><h3>Entre e complete o tutorial</h3><p>O tutorial leva 5 minutos e já libera sua primeira criatura e as moedas iniciais.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="sec">
-      <div class="wrap--narrow">
-        <div class="sec__head"><div><h2 class="sec__title">Requisitos <span class="grad">mínimos</span></h2></div></div>
-        <table class="req" data-reveal>
-          <thead><tr><th>Plataforma</th><th>Sistema</th><th>Memória</th><th>Armazenamento</th></tr></thead>
-          <tbody>
-            <tr><td>PC</td><td>Windows 10 64 bits</td><td>8 GB</td><td>8 GB livres · GTX 1050</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-
   </main>
-
-  <footer class="site-footer">
-    <div class="wrap">
-      <div class="site-footer__top">
-        <div class="site-footer__brand">
-          <img src="assets/logo-sigla.png" alt="Pokeworld Universe">
-          <p>Pokeworld Universe é um jogo online moderno para explorar mundos incríveis, colecionar criaturas únicas e batalhar com treinadores do mundo todo.</p>
-          <div class="site-footer__social">
-            <a href="#" aria-label="Discord"><img src="assets/social-discord.png" alt="" style="object-fit:contain;width:70%;height:70%"></a>
-            <a href="#" aria-label="Instagram"><img src="assets/social-instagram.svg" alt=""></a>
-          </div>
-        </div>
-        <div>
-          <h4>Jogo</h4>
-          <ul><li><a href="o-jogo.html">Sobre o jogo</a></li><li><a href="ranking.html">Ranking</a></li><li><a href="Donate">Doar</a></li></ul>
-        </div>
-        <div>
-          <h4>Suporte</h4>
-          <ul><li><a href="download.html">Baixar</a></li><li><a href="minha-conta.html">Minha conta</a></li><li><a href="tickets.html">Tickets</a></li><li><a href="regras.html">Regras</a></li></ul>
-        </div>
-        <div>
-          <h4>Baixe agora</h4>
-          <div class="site-footer__baixar">
-            <a class="btn btn--yellow btn--sm" href="download.html">Baixar o launcher</a>
-          </div>
-        </div>
-      </div>
-      <div class="site-footer__bar">
-        <div class="site-footer__status"><span><i class="live-dot"></i>Servidor online</span><span>Próximo evento</span></div>
-        <span>© 2026 Pokeworld Universe.</span>
-      </div>
-      <p class="copy-pokemon">Pokémon Copyright © 1995 – 2026 Nintendo/Creatures Inc./GAME FREAK Inc. Pokémon e todos os respectivos nomes são marcas registradas da Nintendo 1996 – 2026. PokeWorld Universe não é afiliado à Nintendo, Creatures Inc. e GAME FREAK Inc.</p>
-    </div>
-  </footer>
-
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="config.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
-<script src="data.js"></script>
-<script src="store.js"></script>
-<script src="ui.js"></script>
-<script src="pages.js"></script>
+<script nonce="DcPzr7DVSsyilrxtC/+EjbZk" src="config.js?pwu=80dee41-20260924b"></script>
+<script nonce="DcPzr7DVSsyilrxtC/+EjbZk" src="assets/vendor/supabase-2.45.4.min.js"></script>
+<script nonce="DcPzr7DVSsyilrxtC/+EjbZk" src="data.js?pwu=80dee41-20260924b"></script>
+<script nonce="DcPzr7DVSsyilrxtC/+EjbZk" src="store.js?pwu=80dee41-20260924b"></script>
+<script nonce="DcPzr7DVSsyilrxtC/+EjbZk" src="ui.js?pwu=onboarding-20260926-v12"></script>
+<script nonce="DcPzr7DVSsyilrxtC/+EjbZk" src="login.js?pwu=criar-login-20261001-v1"></script>
 </body>
 </html>

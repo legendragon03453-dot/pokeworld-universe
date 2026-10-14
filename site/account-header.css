@@ -1,0 +1,183 @@
+/* Account identity: portrait, private details and balance share one row. */
+body[data-page="minha-conta"] .acc-sec > .wrap--narrow {
+  width: min(1100px, calc(100% - 64px));
+}
+body[data-page="minha-conta"] .acc-card--identity {
+  padding: 32px;
+}
+body[data-page="minha-conta"] .acc-card--identity .acc-top {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr) 248px;
+  align-items: center;
+  gap: 32px;
+}
+body[data-page="minha-conta"] .acc-card--identity .acc-profile {
+  min-width: 0;
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+}
+body[data-page="minha-conta"] .acc-card--identity .acc-card__title {
+  margin: 0;
+  font-size: 40px;
+  line-height: 1;
+  text-align: center;
+}
+body[data-page="minha-conta"] .acc-card--identity .acc-avatar {
+  grid-column: auto;
+  grid-row: auto;
+  width: 100%;
+  max-width: 240px;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  margin: 0 0 16px;
+}
+body[data-page="minha-conta"] .acc-card--identity .acc-avatar__edit {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  bottom: -16px;
+  padding: 8px 22px;
+  box-shadow: 0 3px 12px #03112855;
+}
+body[data-page="minha-conta"] .acc-card--identity .acc-grid {
+  min-width: 0;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 26px;
+  margin: 0;
+  padding: 22px 0;
+}
+body[data-page="minha-conta"] .acc-card--identity .acc-field__head {
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+body[data-page="minha-conta"] .acc-card--identity .acc-field h5 {
+  font-size: 16px;
+  line-height: 1.35;
+}
+body[data-page="minha-conta"] .acc-card--identity .acc-toggle {
+  flex: none;
+  min-height: 32px;
+  padding: 6px 13px;
+}
+body[data-page="minha-conta"] .acc-card--identity .acc-field input {
+  min-width: 0;
+  min-height: 50px;
+  font-size: 16px;
+  padding: 13px 15px;
+  border-color: #b6d4ee30;
+}
+body[data-page="minha-conta"] .acc-card--identity .acc-side {
+  grid-column: auto;
+  grid-row: auto;
+  align-self: center;
+  min-width: 0;
+  width: 100%;
+  gap: 18px;
+  padding: 24px 20px;
+}
+body[data-page="minha-conta"] .acc-card--identity .acc-stat--moeda {
+  gap: 12px;
+}
+body[data-page="minha-conta"] .acc-card--identity .acc-stat__balance > span,
+body[data-page="minha-conta"] .acc-card--identity .acc-stat--plan span {
+  font-size: 13px;
+}
+body[data-page="minha-conta"] .acc-card--identity .acc-stat--plan {
+  padding-top: 18px;
+}
+body[data-page="minha-conta"] .acc-card--identity .acc-buy-link {
+  min-height: 44px;
+}
+body[data-page="minha-conta"] .acc-card--identity .acc-actions {
+  gap: 12px;
+  margin-top: 28px;
+  padding-top: 24px;
+}
+body[data-page="minha-conta"] .acc-card--identity .acc-actions > .btn {
+  min-height: 44px;
+  padding: 12px 20px;
+  font-size: 18px;
+}
+body[data-page="minha-conta"] .acc-card--identity :is(.acc-toggle, .acc-avatar__edit, input):focus-visible {
+  outline: 2px solid #ffe393;
+  outline-offset: 4px;
+}
+@media (min-width: 941px) and (max-width: 1180px) {
+  body[data-page="minha-conta"] .acc-card--identity .acc-top {
+    grid-template-columns: 210px minmax(0, 1fr) 220px;
+    gap: 24px;
+  }
+  body[data-page="minha-conta"] .acc-card--identity .acc-card__title {
+    font-size: 36px;
+  }
+  body[data-page="minha-conta"] .acc-card--identity .acc-side {
+    padding: 22px 16px;
+  }
+}
+@media (min-width: 701px) and (max-width: 940px) {
+  body[data-page="minha-conta"] .acc-card--identity .acc-top {
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 26px 32px;
+  }
+  body[data-page="minha-conta"] .acc-card--identity .acc-profile {
+    grid-row: 1 / 3;
+    align-self: start;
+  }
+  body[data-page="minha-conta"] .acc-card--identity .acc-grid {
+    padding: 0;
+    gap: 20px;
+  }
+  body[data-page="minha-conta"] .acc-card--identity .acc-side {
+    grid-column: 2;
+    padding: 20px;
+  }
+}
+@media (max-width: 700px) {
+  body[data-page="minha-conta"] .acc-sec > .wrap--narrow {
+    width: calc(100% - 32px);
+  }
+  body[data-page="minha-conta"] .acc-card--identity {
+    padding: 24px 20px;
+  }
+  body[data-page="minha-conta"] .acc-card--identity .acc-top {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+  body[data-page="minha-conta"] .acc-card--identity .acc-profile {
+    gap: 18px;
+  }
+  body[data-page="minha-conta"] .acc-card--identity .acc-card__title {
+    font-size: 36px;
+  }
+  body[data-page="minha-conta"] .acc-card--identity .acc-avatar {
+    width: min(220px, 100%);
+  }
+  body[data-page="minha-conta"] .acc-card--identity .acc-grid {
+    padding: 0;
+    gap: 20px;
+  }
+  body[data-page="minha-conta"] .acc-card--identity .acc-side {
+    padding: 22px;
+  }
+  body[data-page="minha-conta"] .acc-card--identity .acc-toggle {
+    min-height: 40px;
+  }
+  body[data-page="minha-conta"] .acc-card--identity .acc-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  body[data-page="minha-conta"] .acc-card--identity .acc-actions > .btn {
+    padding: 12px 8px;
+    min-height: 44px;
+    font-size: 18px;
+    white-space: normal;
+  }
+  body[data-page="minha-conta"] .acc-card--identity .acc-actions > :last-child {
+    grid-column: 1 / -1;
+  }
+}
